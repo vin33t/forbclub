@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Edit User Page')
+@section('title', 'Role Management')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -67,7 +67,7 @@
                                 <tr>
                                   <td>{{ $role->name }}</td>
                                   <td>{{ $role->users()->count() }}</td>
-                                  <td>{{ $role->permissions()->count() }}</td>
+                                  <td>{{ \Spatie\Permission\Models\Permission::all()->count()  == $role->permissions()->count() ? 'All' : $role->permissions()->count() }}</td>
                                   <td>
                                     <a  href="{{ route('create.role') }}"><button type="button" class="btn btn-icon btn-primary mr-1 mb-1"><i class="feather icon-edit"></i></button></a>
 {{--                                    <button type="button" class="btn btn-icon btn-danger mr-1 mb-1"><i class="feather icon-trash" id="type-success"></i></button>--}}

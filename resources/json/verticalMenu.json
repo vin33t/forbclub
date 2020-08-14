@@ -36,6 +36,14 @@
       "permission": "view-role"
     },
     {
+      "url": "employee",
+      "name": "Employee",
+      "icon": "feather icon-users",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-employee"
+    },
+    {
       "url": "",
       "navheader": "Apps",
       "icon": ""

@@ -30,4 +30,8 @@ Route::group([
       Route::get('user', 'AuthController@user');
   });
 });
+      Route::get('vineet', function (){
+        return 'Vineet';
+      });
+
 

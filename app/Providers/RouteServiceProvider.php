@@ -43,6 +43,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapSettingsRoutes();
 
+      $this->mapEmployeeRoutes();
+
+
         //
     }
 
@@ -73,6 +76,14 @@ class RouteServiceProvider extends ServiceProvider
         ->namespace($this->namespace)
         ->group(base_path('routes/app/settings.php'));
     }
+
+  protected function mapEmployeeRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('employee')
+      ->group(base_path('routes/app/employee.php'));
+  }
 
     /**
      * Define the "api" routes for the application.

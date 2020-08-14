@@ -9,11 +9,24 @@ class RoleAndPermissionSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-      \Spatie\Permission\Models\Permission::create(['guard_name' => 'web', 'name' => 'create-role']);
-      \Spatie\Permission\Models\Permission::create(['guard_name' => 'web', 'name' => 'view-role']);
-      \Spatie\Permission\Models\Permission::create(['guard_name' => 'web', 'name' => 'update-role']);
-      \Spatie\Permission\Models\Permission::create(['guard_name' => 'web', 'name' => 'delete-role']);
+  public function run()
+  {
+//      Role Permissions
+    \App\PermissionGroup::create([
+      'group_name' => 'Role',
+      'group_permissions' => 'view-role,update-role,create-role,delete-role'
+    ]);
+    \App\PermissionGroup::create([
+      'group_name' => 'Employee',
+      'group_permissions' => 'view-employee,update-employee,create-employee,delete-employee'
+    ]);
+    $superAdmin = \Spatie\Permission\Models\Role::create(['guard_name' => 'web', 'name' => 'super-admin']);
+    foreach (\App\PermissionGroup::all() as $group){
+      foreach (explode(',', $group->group_permissions) as $permission) {
+       \Spatie\Permission\Models\Permission::create(['guard_name' => 'web', 'name' => $permission]);
+       $superAdmin->givePermissionTo($permission);
+      }
+  }
+
     }
 }

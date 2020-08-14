@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Create Role')
+@section('title', 'Edit Employee')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -24,21 +24,69 @@
         <div class="card-body">
           <!-- users edit media object ends -->
           <!-- users edit account form start -->
-          <form novalidate method="POST" action="{{ route('create.role') }}">
+          <form novalidate method="POST" action="{{ route('edit.employee',['id'=>$employee->id]) }}">
             @csrf
             <div class="row">
-              <div class="col-12 col-sm-6">
+              <div class="col-12 col-sm-3">
                 <div class="form-group">
                   <div class="controls">
-                    <label>Role Name</label>
-                    <input type="text" class="form-control" placeholder="Role Name" value="" name="roleName" required
-                           data-validation-required-message="This username field is required">
+                    <label>Employee Name</label>
+                    <input type="text" class="form-control" placeholder="Employee Name" value="{{ $employee->name }}"
+                           name="emplName" required
+                           data-validation-required-message="Employee name can not be empty">
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-sm-6">
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <div class="controls">
+                    <label>Employee Phone</label>
+                    <input type="number" class="form-control" placeholder="Employee Phone"
+                           value="{{ $employee->phone }}" name="emplPhone" required
+                           data-validation-required-message="Employee phone can not be empty">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <div class="controls">
+                    <label>Employee Email</label>
+                    <input type="email" class="form-control" placeholder="Employee Email" value="{{ $employee->email }}"
+                           name="emplEmail" required
+                           data-validation-required-message="Employee email can not be empty">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <div class="controls">
+                    <label>Employee Department</label>
+                    <input type="text" class="form-control" placeholder="Employee Department"
+                           value="{{ $employee->department }}" name="emplDepartment" required
+                           data-validation-required-message="Employee Department can not be empty">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-6">
+                <div class="text-bold-600 font-medium-2">
+                  Employee Roles
+                </div>
+                <p>Use <code>Roles</code> to assign access to different parts of the app. One employee can have more
+                  than one <code>Role</code> attached. Super Admin role contains the highest level of privileges.</p>
+                <div class="form-group">
+                  <select class="select2 form-control" multiple="multiple">
+                    @foreach(\Spatie\Permission\Models\Role::all() as $role)
+                      <option value="{{ $role->name }}"
+                              @if($employee->User->hasRole($role->name)) selected @endif>{{ str_replace('-',' ',strtoupper($role->name)) }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
               <div class="col-12">
+                <code>Only Select if you want the user to have a specific permission that the Role assigned might not
+                  have.</code>
                 <div class="table-responsive border rounded px-1 ">
                   <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
                       class="feather icon-lock mr-50 "></i>Permissions</h6>
@@ -73,7 +121,8 @@
                 </div>
               </div>
               <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Create Role</button>
+                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Update Employee</button>
+                {{--                <button type="reset" class="btn btn-outline-warning">Reset</button>--}}
               </div>
             </div>
           </form>
@@ -96,5 +145,7 @@
 @section('page-script')
   {{-- Page js files --}}
   <script src="{{ asset(mix('js/scripts/pages/app-user.js')) }}"></script>
+  <script src="{{ asset(mix('js/scripts/forms/select/form-select2.js')) }}"></script>
+
 
 @endsection

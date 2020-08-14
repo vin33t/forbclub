@@ -79,15 +79,14 @@ class LoginController extends Controller
       return Redirect::route('login',['revoked'])->with(['message'=>'Login Revoked']);
     }
     $ipData = Http::get('http://api.ipstack.com/'. request()->getClientIp() .'?access_key=4326e660ef68ae733ba724dace0ff95c')->json();
-//    $ipData = Http::get('http://api.ipstack.com/43.255.166.90?access_key=4326e660ef68ae733ba724dace0ff95c')->json();
     $agent = new \Jenssegers\Agent\Agent();
     $platform = $agent->platform();
     $browser = $agent->browser();
     Auth::user()->LoginLog()->create([
       'ip' => request()->getClientIp(),
       'time'=> Carbon::now(),
-      'browser'=> 'Name: '. $browser . ' | Version: '.$agent->version($browser),
-      'platform'=> 'Name: '. $platform . ' | Version: '.$agent->version($platform),
+      'browser'=> $browser . ' - '.$agent->version($browser),
+      'platform'=> $platform . ' - '.$agent->version($platform),
       'device'=> $agent->deviceType(),
       'location'=> $ipData['city'].', '.$ipData['country_name']. ', '.$ipData['zip'],
       'long_lat'=> $ipData['longitude'].', '.$ipData['latitude'],

@@ -18,10 +18,23 @@ class EmployeeSeeder extends Seeder
           'phone'=>'8091004910',
           'department'=>'IT',
         ]);
-        $employee->user()->create([
-          'name' => $employee->name,
-          'email' => $employee->email,
-          'password' => Hash::make('password'),
-        ]);
+      $user = $employee->user()->create([
+        'name' => $employee->name,
+        'email' => $employee->email,
+        'password' => Hash::make('password'),
+      ]);
+      $user->assignRole(\Spatie\Permission\Models\Role::findByName('super-admin'));
+
+
+//            $faker = Faker\Factory::create();
+//      foreach (range(1,36) as $index) {
+//        \App\Employee::create([
+//          'name'=>$faker->name,
+//          'email'=>$faker->email,
+//          'phone'=>$faker->e164PhoneNumber,
+//          'department'=>'IT',
+//        ]);
+//      }
+
     }
 }

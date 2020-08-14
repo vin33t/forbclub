@@ -34,10 +34,11 @@
             <li class="navigation-header">
               <span>{{ $menu->navheader }}</span>
             </li>
-          @elseif(isset($menu->role) || isset($menu->permission))
-            @hasanyrole($menu->role)
-              @include('panels.navItems',['menu'=>$menu])
-            @endrole
+          @elseif(isset($menu->role))
+             @hasanyrole($menu->role)
+                @include('panels.navItems',['menu'=>$menu])
+              @endrole
+          @elseif(isset($menu->permission))
             @can($menu->permission)
               @include('panels.navItems',['menu'=>$menu])
             @endcan
