@@ -28,6 +28,7 @@ class CreateSoldPackagesTable extends Migration
       $table->string('modeOfPayment')->nullable();
       $table->string('noOfEmi')->nullable();
       $table->string('emiAmount')->nullable();
+      $table->string('asc')->nullable();
       $table->timestamps();
     });
   }

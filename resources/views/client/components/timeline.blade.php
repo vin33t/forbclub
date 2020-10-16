@@ -97,12 +97,17 @@
                 </tr>
                 <tr>
                   <th scope="row">Annual Service Charges(ASC) *Amount</th>
-                  <th scope="row">N/A</th>
+                  <th scope="row">
+                    @if($client->latestPackage->asc)
+                      {{ $client->latestPackage->asc }}
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAsc" >Update</button>
+                      @else
+                    N/A
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAsc" >Add</button>
+                      @endif
+                  </th>
                 </tr>
-                <tr>
-                  <th scope="row">ASC Due</th>
-                  <th scope="row">N/A</th>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -142,6 +147,34 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="Submit" class="btn btn-primary">Update</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addAsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Annual Subscription Charges</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="{{ route('add.asc') }}" method="post">
+            @csrf
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <input type="hidden" name="client" value="{{ $client->id }}">
+                <label for="asc">Annual Subscription Charges</label>
+                <input type="number" name="asc" id="asc" class="form-control" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="Submit" class="btn btn-primary">Add</button>
           </div>
           </form>
         </div>

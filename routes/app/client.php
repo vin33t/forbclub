@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
 
   Route::post('update/mode-of-payment','Client\ClientController@updateModeOfPayment')->name('update.modeOfPayment');
+  Route::post('add/asc','Client\ClientController@addAsc')->name('add.asc');
 
   Route::get('migrate','Client\ClientController@migrate');
   Route::get('mTxn',function(){
