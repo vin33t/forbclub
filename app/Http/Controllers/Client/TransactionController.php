@@ -10,6 +10,7 @@ use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
 use App\Client\Transaction\TransactionMonth;
 use App\Client\Transaction\YesNachPayment;
+use App\DisableNach;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -221,6 +222,24 @@ class TransactionController extends Controller
 
   public function uploadTransactionFile(Request $request){
     return \redirect()->back();
+  }
+
+  public function disableNach(Request $request){
+//    return $request;
+    try {
+      DisableNach::create([
+        'client_id' => $request->client,
+        'month' => Carbon::parse($request->month)->format('m'),
+        'year' => Carbon::parse($request->month)->format('Y'),
+        'remarks' => $request->remarks,
+        'permanent' => $request->permanent ? 1 : 0,
+        'bank' => Client::find($request->client)->AxisPayments->count() ? 'AXIS' : 'YES'
+      ]);
+      return \redirect()->back();
+    }
+    catch( \Exception $e){
+      return \redirect()->back()->withErrors($e);
+    }
   }
 }
 

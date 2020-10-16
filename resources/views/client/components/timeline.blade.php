@@ -14,6 +14,14 @@
                 <th scope="row">Product Name</th>
                 <th scope="row">{{ $client->latestPackage->productName }}</th>
               </tr>
+              <tr>
+                <th scope="row">FCLP ID</th>
+                <th scope="row">{{ $client->latestPackage->fclpId }}</th>
+              </tr>
+              <tr>
+                <th scope="row">MAF No</th>
+                <th scope="row">{{ $client->latestPackage->mafNo }}</th>
+              </tr>
                 <tr>
                   <th scope="row">Product Cost</th>
                   <th scope="row">{{ $client->latestPackage->productCost }}</th>
@@ -34,12 +42,25 @@
         <div class="card-body">
          <h4>Payment Details</h4>
           <hr>
+          <div class="alert-danger">
+            Nach Disabled
+            @if($client->disableNach)
+              @if($client->disableNach->pluck('permanent')->contains(1))
+                Permanently ({{ $client->disableNach->where('permanent',1)->first()->remarks }})
+                @else
+              for
+              @foreach($client->disableNach as $dn)
+                {{ $dn->month }} {{ $dn->year }}({{ $dn->remarks }}),
+              @endforeach
+                @endif
+            @endif
+          </div>
           <div class="table-responsive">
             <table class="table">
               <tbody>
               <tr>
                 <th scope="row">Down Payment</th>
-                <th scope="row">p
+                <th scope="row">
                   @php
                     $cardPayments = $client->CardPayments->where('isDp',1)->pluck('amount')->sum();
                     $cashPayments = $client->CashPayments->where('isDp',1)->pluck('amount')->sum();

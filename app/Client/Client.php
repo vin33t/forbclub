@@ -137,4 +137,9 @@ class Client extends Model
   {
     return $this->hasMany('App\Client\Mis\AxisMis','client_id');
   }
+
+  public function DisableNach(){
+    return $this->hasMany('App\DisableNach','client_id');
+  }
+
 }

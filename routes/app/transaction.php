@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload/file', 'Client\TransactionController@uploadTransactionFile')->name('upload.transaction.file');
 
 
+    Route::post('/disable/nach', 'Client\TransactionController@disableNach')->name('disable.nach');
+
+
   // Client Route Ends //
 
 });
