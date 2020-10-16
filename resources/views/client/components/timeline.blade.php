@@ -22,23 +22,6 @@
                   <th scope="row">Number of EMI's</th>
                   <th scope="row">{{ $client->latestPackage->noOfEmi }}</th>
                 </tr>
-                <tr>
-                  <th scope="row">Total EMI Amount</th>
-                  <th scope="row">Total EMI Amount</th>
-                </tr>
-                <tr>
-                  <th scope="row">EMI Amount</th>
-                  <th scope="row">EMI Amount</th>
-                </tr>
-                <tr>
-                  <th scope="row">EMI Due Date</th>
-                </tr>
-                <tr>
-                  <th scope="row">Annual Service Charges(ASC) *Amount</th>
-                </tr>
-                <tr>
-                  <th scope="row">ASC Due</th>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -77,22 +60,24 @@
                   </th>
                 </tr>
                 <tr>
-                  <th scope="row">Number of EMI's</th>
-                </tr>
-                <tr>
                   <th scope="row">Total EMI Amount</th>
+                  <th scope="row">{{ $client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments }}</th>
                 </tr>
                 <tr>
                   <th scope="row">EMI Amount</th>
+                  <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>
                 </tr>
                 <tr>
                   <th scope="row">EMI Due Date</th>
+                  <th scope="row">5<sup>th</sup> of Every Month</th>
                 </tr>
                 <tr>
                   <th scope="row">Annual Service Charges(ASC) *Amount</th>
+                  <th scope="row">N/A</th>
                 </tr>
                 <tr>
                   <th scope="row">ASC Due</th>
+                  <th scope="row">N/A</th>
                 </tr>
               </tbody>
             </table>
