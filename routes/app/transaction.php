@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/disable/nach', 'Client\TransactionController@disableNach')->name('disable.nach');
 
 
+    Route::post('/add/pdc', 'Client\TransactionController@addPdc')->name('add.pdc');
+
+
   // Client Route Ends //
 
 });

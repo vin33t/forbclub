@@ -115,6 +115,48 @@
         </div>
       </div>
     </div>
+
+    @if($client->Pdc->count())
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+         <h4>PDC</h4>
+          <hr>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="row">Cheque Number</th>
+                <th scope="row">Amount</th>
+                <th scope="row">MICR Number</th>
+                <th scope="row">Branch Name</th>
+                <th scope="row">Date Of Execution</th>
+                <th scope="row">Remarks</th>
+              </tr>
+
+              </thead>
+              <tbody>
+              @foreach($client->Pdc as $pdc)
+              <tr>
+                <td>{{ $pdc->cheque_no }}</td>
+                <td>{{ $pdc->amount }}</td>
+                <td>{{ $pdc->micr_number }}</td>
+                <td>{{ $pdc->branch_name }}</td>
+                <td>{{ $pdc->date_of_execution }}</td>
+                <td>{{ $pdc->remarks }}</td>
+              </tr>
+              @endforeach
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    @endif
+
+
     <div class="modal fade" id="updateModeOfPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

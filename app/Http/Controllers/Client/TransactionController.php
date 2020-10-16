@@ -12,11 +12,13 @@ use App\Client\Transaction\TransactionMonth;
 use App\Client\Transaction\YesNachPayment;
 use App\DisableNach;
 use App\Http\Controllers\Controller;
+use App\PDC;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 
@@ -197,7 +199,9 @@ class TransactionController extends Controller
       $foo->put('INWARD_DATE',$client->AxisMis->sortBy('created_at')->last()->INWARD_DATE);
       $foo->put('SP_BANK',$client->AxisMis->sortBy('created_at')->last()->SP_BANK);
       $foo->put('SCHEME',$client->AxisMis->sortBy('created_at')->last()->SCHEME);
-      $collection->push($foo);
+      if(Carbon::parse($client->AxisMis->sortBy('created_at')->last()->ENDDATE)->gt(Carbon::now())){
+        $collection->push($foo);
+      }
     }
     $fileName = $request->month .' - ' .$request->year.'-AxisMis'.time().rand() .'.xlsx';
     (new FastExcel($collection))->export('excel/'.$fileName);
@@ -240,6 +244,33 @@ class TransactionController extends Controller
     catch( \Exception $e){
       return \redirect()->back()->withErrors($e);
     }
+  }
+
+
+  public function addPdc(Request $request){
+    $v = Validator::make($request->all(),[
+      'cheque_number' => 'required',
+      'date_of_execution' => 'required',
+      'amount' => 'required',
+    ]);
+
+    if ($v->fails()) {
+      notification('Opps!!','Please Fix the errors', 'warning','okay');
+      return redirect()->back()->withErrors($v)->withInput();
+    }
+    $pdc = new PDC;
+    $pdc->client_id = $request->client;
+    $pdc->cheque_no = $request->cheque_number;
+    $pdc->date_of_execution = $request->date_of_execution;
+    $pdc->amount = $request->amount;
+    $pdc->micr_number = $request->micr_number;
+    $pdc->branch_name = $request->branch_name;
+    $pdc->branch_address = $request->branch_address;
+    $pdc->remarks= $request->remarks;
+    $pdc->employee_id = Auth::user()->id;
+    $pdc->save();
+
+    return redirect()->back()->withSuccess('PDC Added');
   }
 }
 

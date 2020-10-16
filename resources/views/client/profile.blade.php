@@ -97,6 +97,7 @@
 @include('client.transaction.add.card',['client'=>$client])
 @include('client.transaction.add.cash',['client'=>$client])
 @include('client.transaction.add.cheque',['client'=>$client])
+@include('client.transaction.addPdc',['client'=>$client])
 @include('client.transaction.disableNach',['client'=>$client])
 
 
@@ -151,6 +152,10 @@
         if(key === 'Disable NACH'){
           $('#disableNach').modal();
         }
+        if(key === 'Add PDC'){
+          $('#addPdc').modal();
+
+        }
         if(key === 'View Transactions'){
           window.location.replace("{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}");
         }
@@ -161,6 +166,7 @@
         "Edit Client": { name: "Edit Client" },
         "View Transactions": { name: "View Transactions" },
         "Disable NACH": { name: "Disable NACH" },
+        "Add PDC": { name: "Add PDC" },
         "fold1": {
           "name": "Add Transaction",
           "items": {

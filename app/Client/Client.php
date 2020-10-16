@@ -142,4 +142,8 @@ class Client extends Model
     return $this->hasMany('App\DisableNach','client_id');
   }
 
+  public function Pdc(){
+    return $this->hasMany('App\PDC','client_id');
+  }
+
 }
