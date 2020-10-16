@@ -61,7 +61,7 @@
                     <a href="{{ route('view.client',['slug'=>$client->slug]) }}" class="nav-link font-small-3">Home</a>
                   </li>
                   <li class="nav-item px-sm-0">
-                    <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}" class="nav-link font-small-3">Payments</a>
+                    <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}" class="nav-link font-small-3" id="client-payment-page">Payments</a>
                   </li>
                   <li class="nav-item px-sm-0">
                     <a href="#" class="nav-link font-small-3">Holidays</a>
@@ -126,6 +126,15 @@
   <script src="{{ asset(mix('js/scripts/pages/user-profile.js')) }}"></script>
 {{--  <script src="{{ asset(mix('js/scripts/extensions/context-menu.js')) }}"></script>--}}
   <script>
+    function eventFire(el, etype){
+      if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+      } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+      }
+    }
     $.contextMenu({
       selector: '#user-profile',
       callback: function (key, options) {
@@ -137,6 +146,9 @@
         }
         if(key === 'Cheque'){
           $('#addChequeTransaction').modal();
+        }
+        if(key === 'View Transactions'){
+          window.location.replace("{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}");
         }
         // var r = "Clicked " + key
         // window.console && toastr.success(r);
@@ -169,6 +181,7 @@
   </script>
   @if(count($client->transactionSummaryChart))
   <script>
+
       var pieChart = echarts.init(document.getElementById('transaction-summary-pie-chart'));
       var pieChartoption = {
         tooltip : {

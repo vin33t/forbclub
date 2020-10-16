@@ -39,7 +39,7 @@
               <tbody>
               <tr>
                 <th scope="row">Down Payment</th>
-                <th scope="row">
+                <th scope="row">p
                   @php
                     $cardPayments = $client->CardPayments->where('isDp',1)->pluck('amount')->sum();
                     $cashPayments = $client->CashPayments->where('isDp',1)->pluck('amount')->sum();
