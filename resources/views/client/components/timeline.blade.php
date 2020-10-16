@@ -42,9 +42,9 @@
         <div class="card-body">
          <h4>Payment Details</h4>
           <hr>
+            @if($client->disableNach->count())
           <div class="alert-danger">
             Nach Disabled
-            @if($client->disableNach)
               @if($client->disableNach->pluck('permanent')->contains(1))
                 Permanently ({{ $client->disableNach->where('permanent',1)->first()->remarks }})
                 @else
@@ -53,8 +53,8 @@
                 {{ $dn->month }} {{ $dn->year }}({{ $dn->remarks }}),
               @endforeach
                 @endif
-            @endif
           </div>
+            @endif
           <div class="table-responsive">
             <table class="table">
               <tbody>
@@ -73,11 +73,14 @@
                 <tr>
                   <th scope="row">EMI Mode of Payment</th>
                   <th scope="row">
-                    @if($client->AxisPayments->count()) AXIS NACH
+                    @if($client->latestPackage->modeOfPayment != '')
+                      {{ $client->latestPackage->modeOfPayment }}
+                    @elseif($client->AxisPayments->count()) AXIS NACH
                     @elseif($client->YesPayments->count()) Yes NACH
                       @else
                       N/A
                     @endif
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateModeOfPayment" >Update</button>
                   </th>
                 </tr>
                 <tr>
@@ -107,7 +110,43 @@
         </div>
       </div>
     </div>
-
+    <div class="modal fade" id="updateModeOfPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Mode Of Payment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="{{ route('update.modeOfPayment') }}" method="post">
+            @csrf
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <input type="hidden" name="client" value="{{ $client->id }}">
+                <label for="modeOfPayment">Mode Of Payment</label>
+                <select name="modeOfPayment" id="modeOfPayment" class="form-control" required>
+                  <option value="">--Select Mode of Payment--</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Online">Online</option>
+                  <option value="Axis NACH">Axis NACH</option>
+                  <option value="Yes NACH">Yes NACH</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="No Formality">No Formality</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="Submit" class="btn btn-primary">Update</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
     {{--    @foreach($client->TimelineActivity->sortByDesc('created_at') as $activity)--}}
 {{--      <div class="col-md-12">--}}
 {{--        <div class="card">--}}

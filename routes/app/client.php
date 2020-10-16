@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
   });
 
 
+  Route::post('update/mode-of-payment','Client\ClientController@updateModeOfPayment')->name('update.modeOfPayment');
+
   Route::get('migrate','Client\ClientController@migrate');
   Route::get('mTxn',function(){
 //    foreach (\App\Client\Transaction\CardPayment::all() as $card){
@@ -89,6 +91,14 @@ Route::middleware('auth')->group(function () {
 //        $client = \App\Client\Package\SoldPackages::where('fclpId', $mis->maf)->first();
 //        $mis->client_id = $client->id;
 //        $mis->save();
+//      }
+//    }
+//
+//    foreach (\App\DisableNach::all() as $nach){
+//      if($nach->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $nach->maf)->first();
+//        $nach->client_id = $client->id;
+//        $nach->save();
 //      }
 //    }
   });
