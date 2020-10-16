@@ -20,6 +20,12 @@ class CreateEmployeesTable extends Migration
             $table->bigInteger('phone')->nullable();
             $table->string('email');
             $table->string('department');
+//            $table->string('menuColors')->default('');
+//            $table->string('themeLayout')->default(' ');
+//            $table->string('navbarColors');
+//            $table->string('navbarType');
+//            $table->string('footerType');
+//            $table->string('collapseSidebar');
             $table->timestamps();
         });
     }

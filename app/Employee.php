@@ -11,4 +11,5 @@ class Employee extends Model
     public function User(){
       return $this->hasOne('App\User');
     }
+
 }

@@ -45,6 +45,14 @@ class RouteServiceProvider extends ServiceProvider
 
       $this->mapEmployeeRoutes();
 
+      $this->mapClientRoutes();
+
+      $this->mapSearchRoutes();
+
+      $this->mapTransactionRoutes();
+
+      $this->mapBookingRoutes();
+
 
         //
     }
@@ -83,6 +91,38 @@ class RouteServiceProvider extends ServiceProvider
       ->namespace($this->namespace)
       ->prefix('employee')
       ->group(base_path('routes/app/employee.php'));
+  }
+
+  protected function mapClientRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('client')
+      ->group(base_path('routes/app/client.php'));
+  }
+
+  protected function mapSearchRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('search')
+      ->group(base_path('routes/app/search.php'));
+  }
+
+  protected function mapTransactionRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('transaction')
+      ->group(base_path('routes/app/transaction.php'));
+  }
+
+  protected function mapBookingRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('booking')
+      ->group(base_path('routes/app/booking.php'));
   }
 
     /**

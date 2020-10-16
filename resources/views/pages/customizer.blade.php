@@ -1,3 +1,4 @@
+@if(Route::getCurrentRoute()->uri == 'profile')
 {{-- BEGIN: Customizer --}}
 <div class="customizer d-none d-md-block">
     <a class="customizer-close" href="javascript:void(0)">
@@ -31,7 +32,7 @@
             <div class="mx-50">
                 <fieldset>
                 <div class="vs-radio-con vs-radio-primary">
-                    <input type="radio" name="layoutOptions" value="false" class="layout-name" data-layout="" checked>
+                    <input type="radio" name="layoutOptions" value="false" class="layout-name" data-layout="" >
                     <span class="vs-radio">
                     <span class="vs-radio--border"></span>
                     <span class="vs-radio--circle"></span>
@@ -43,7 +44,7 @@
             <div class="mx-50">
                 <fieldset>
                 <div class="vs-radio-con vs-radio-primary">
-                    <input type="radio" name="layoutOptions" value="false" class="layout-name" data-layout="dark-layout">
+                    <input type="radio" name="layoutOptions" value="false" class="layout-name" data-layout="dark-layout" checked>
                     <span class="vs-radio">
                     <span class="vs-radio--border"></span>
                     <span class="vs-radio--circle"></span>
@@ -202,19 +203,20 @@
         {{-- Footer Type Ends --}}
         <hr>
 
-        {{-- Hide Scroll To Top Starts--}}
-        <div class="hide-scroll-to-top d-flex justify-content-between py-25">
-            <div class="hide-scroll-title">
-            <h5 class="pt-25">Hide Scroll To Top</h5>
-            </div>
-            <div class="hide-scroll-top-switch">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="hide-scroll-top-switch">
-                <label class="custom-control-label" for="hide-scroll-top-switch"></label>
-            </div>
-            </div>
-        </div>
-        {{-- Hide Scroll To Top Ends--}}
+{{--        --}}{{-- Hide Scroll To Top Starts--}}
+{{--        <div class="hide-scroll-to-top d-flex justify-content-between py-25">--}}
+{{--            <div class="hide-scroll-title">--}}
+{{--            <h5 class="pt-25">Hide Scroll To Top</h5>--}}
+{{--            </div>--}}
+{{--            <div class="hide-scroll-top-switch">--}}
+{{--            <div class="custom-control custom-switch">--}}
+{{--                <input type="checkbox" class="custom-control-input" id="hide-scroll-top-switch">--}}
+{{--                <label class="custom-control-label" for="hide-scroll-top-switch"></label>--}}
+{{--            </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        --}}{{-- Hide Scroll To Top Ends--}}
     </div>
 </div>
 {{-- End: Customizer --}}
+@endif

@@ -69,57 +69,66 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 col-6">
-                <div class="text-bold-600 font-medium-2">
-                  Employee Roles
+              @if($employee->User)
+                <div class="col-sm-6 col-6">
+                  <div class="text-bold-600 font-medium-2">
+                    Employee Roles
+                  </div>
+                  <p>Use <code>Roles</code> to assign access to different parts of the app. One employee can have more
+                    than one <code>Role</code> attached. Super Admin role contains the highest level of privileges.</p>
+                  <div class="form-group">
+                    <select class="select2 form-control" multiple="multiple" name="roles[]">
+                      @foreach(\Spatie\Permission\Models\Role::all() as $role)
+                        <option value="{{ $role->name }}"
+                                @if($employee->User && $employee->User->hasRole($role->name)) selected @endif >{{ str_replace('-',' ',strtoupper($role->name)) }}</option>
+                      @endforeach
+                    </select>
+                  </div>
                 </div>
-                <p>Use <code>Roles</code> to assign access to different parts of the app. One employee can have more
-                  than one <code>Role</code> attached. Super Admin role contains the highest level of privileges.</p>
-                <div class="form-group">
-                  <select class="select2 form-control" multiple="multiple">
-                    @foreach(\Spatie\Permission\Models\Role::all() as $role)
-                      <option value="{{ $role->name }}"
-                              @if($employee->User->hasRole($role->name)) selected @endif>{{ str_replace('-',' ',strtoupper($role->name)) }}</option>
-                    @endforeach
-                  </select>
+                @if($employee->User && $employee->User->roles->count())
+                <div class="col-sm-6 col-6">
+                  Remove all the Roles and Convert them to separate permissions
+                  <br>
+                  <a href="{{ route('convert.rolesToPermissions',['userId'=>$employee->User->id]) }}">Convert</a>
                 </div>
-              </div>
-              <div class="col-12">
-                <code>Only Select if you want the user to have a specific permission that the Role assigned might not
-                  have.</code>
-                <div class="table-responsive border rounded px-1 ">
-                  <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
-                      class="feather icon-lock mr-50 "></i>Permissions</h6>
+                @endif
+                <div class="col-12">
+                  <code>Only Select if you want the user to have a specific permission that the Role assigned might not
+                    have.</code>
+                  <div class="table-responsive border rounded px-1 ">
+                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
+                        class="feather icon-lock mr-50 "></i>Permissions</h6>
 
-                  <table class="table table-borderless">
-                    <thead>
-                    <tr>
-                      <th>Module</th>
-                      <th>View</th>
-                      <th>Update</th>
-                      <th>Create</th>
-                      <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach(\App\PermissionGroup::all() as $group)
+                    <table class="table table-borderless">
+                      <thead>
                       <tr>
-                        <td>{{ $group->group_name }}</td>
-                        @foreach(explode(',',$group->group_permissions) as $permission)
-                          <td>
-                            <div class="custom-control custom-checkbox"><input type="checkbox" id="{{$permission}}-checkbox"
-                                                                               class="custom-control-input"
-                                                                               name="{{$permission}}">
-                              <label class="custom-control-label" for="{{$permission}}-checkbox"></label>
-                            </div>
-                          </td>
-                        @endforeach
+                        <th>Module</th>
+                        <th>View</th>
+                        <th>Update</th>
+                        <th>Create</th>
+                        <th>Delete</th>
                       </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                      @foreach(\App\PermissionGroup::all() as $group)
+                        <tr>
+                          <td>{{ $group->group_name }}</td>
+                          @foreach(explode(',',$group->group_permissions) as $permission)
+                            <td>
+                              <div class="custom-control custom-checkbox"><input type="checkbox" id="{{$permission}}-checkbox"
+                                                                                 class="custom-control-input"
+                                                                                 name="{{$permission}}" @if($employee->User->can($permission)) checked @endif >
+                                <label class="custom-control-label" for="{{$permission}}-checkbox"></label>
+                              </div>
+                            </td>
+                          @endforeach
+                        </tr>
+                      @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
+              @endif
               <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                 <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Update Employee</button>
                 {{--                <button type="reset" class="btn btn-outline-warning">Reset</button>--}}

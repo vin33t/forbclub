@@ -32,7 +32,7 @@
                   <div class="controls">
                     <label>Role Name</label>
                     <input type="text" class="form-control" placeholder="Role Name" value="" name="roleName" required
-                           data-validation-required-message="This username field is required">
+                           data-validation-required-message="Please Enter a Role Name">
                   </div>
                 </div>
               </div>

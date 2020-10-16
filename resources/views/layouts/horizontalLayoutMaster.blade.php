@@ -13,7 +13,7 @@
     @include('panels.horizontalMenu')
 
     <!-- BEGIN: Content-->
-    <div class="app-content content">
+    <div class="app-content content" id="app">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         @if(($configData['contentLayout']!=='default') && isset($configData['contentLayout']))

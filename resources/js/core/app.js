@@ -653,7 +653,7 @@
           $bookmarkhtmlList = "",
           $pageList = '<li class=" d-flex align-items-center">' +
             '<a href="#" class="pb-25">' +
-            '<h6 class="text-primary mb-0">Pages</h6>' +
+            '<h6 class="text-primary mb-0">Clients</h6>' +
             '</a>' +
             '</li>',
           $activeItemClass = "",
@@ -661,8 +661,10 @@
           $defaultList = "",
           a = 0;
 
+        var $link = '/search/client/'+value
         // getting json data from file for search results
-        $.getJSON("data/" + $filename + ".json", function (
+        // $.getJSON("data/" + $filename + ".json", function (
+        $.getJSON($link, function (
           data
         ) {
           for (var i = 0; i < data.listItems.length; i++) {
@@ -926,3 +928,6 @@
   Waves.init();
   Waves.attach(".btn", ["waves-light"]);
 })(window, document, jQuery);
+
+
+

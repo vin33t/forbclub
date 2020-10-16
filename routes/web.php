@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Http;
+use Laravolt\Avatar\Facade as Avatar;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,23 @@ use Illuminate\Support\Facades\Http;
 Auth::routes();
 
 Route::get('/agent', function(){
-  $resp = Http::get('http://api.ipstack.com/43.255.166.90?access_key=4326e660ef68ae733ba724dace0ff95c');
-  return $resp->json();
+  $res = [
+    'listItems' => [
+      ["name" => "Pricing", "url" => "pricing", "icon" => "fa fa-money"],
+      ["name" => "Email", "url" => "app-email", "icon" => "feather icon-mail"],
+      ["name" => "Chat", "url" => "app-chat", "icon" => "feather icon-message-square"],
+      ["name" => "Todo", "url" => "app-todo", "icon" => "feather icon-check-square"],
+    ]
+  ];
+  return $res;
 });
 // Route url
 Route::middleware('auth')->group(function () {
 
-  Route::get('/', 'DashboardController@dashboardAnalytics');
+  Route::get('/profile', 'UserController@profile')->name('profile');
+  Route::post('/profile/update/password', 'UserController@updatePassword')->name('update.profile.password');
+
+  Route::get('/', 'DashboardController@dashboardAnalytics')->name('home');
 
 // Route Dashboards
   Route::get('/dashboard-analytics', 'DashboardController@dashboardAnalytics');
