@@ -12,4 +12,10 @@ class Employee extends Model
       return $this->hasOne('App\User');
     }
 
+       public function Reimbursements(){
+      return $this->hasMany('App\Reimbursement','employee_id');
+    }
+
+
+
 }

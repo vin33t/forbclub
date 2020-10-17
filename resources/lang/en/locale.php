@@ -7,6 +7,7 @@ return [
     "Download Axis MIS" => "Download Axis MIS",
     "Upload Axis MIS" => "Upload Axis MIS",
     "Upload Transactions" => "Upload Transactions",
+    "Reimbursement" => "Reimbursement",
     "Create" => "Create",
     "Analytics" => "Analytics",
     "eCommerce" => "eCommerce",

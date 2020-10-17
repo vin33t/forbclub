@@ -65,6 +65,14 @@
       "permission": "view-import-history"
     },
     {
+      "url": "transaction/reimbursement",
+      "name": "Reimbursement",
+      "icon": "feather icon-briefcase",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
+    },
+    {
       "url": "",
       "navheader": "Settings",
       "icon": ""

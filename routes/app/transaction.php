@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/add/pdc', 'Client\TransactionController@addPdc')->name('add.pdc');
 
+    Route::get('/reimbursement', 'Client\TransactionController@reimbursementIndex')->name('reimbursement.index');
+    Route::post('/reimbursement/add-new', 'Client\TransactionController@reimbursementAdd')->name('reimbursement.add');
+    Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
+
 
   // Client Route Ends //
 

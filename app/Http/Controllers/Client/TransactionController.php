@@ -13,6 +13,7 @@ use App\Client\Transaction\YesNachPayment;
 use App\DisableNach;
 use App\Http\Controllers\Controller;
 use App\PDC;
+use App\Reimbursement;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -271,6 +272,47 @@ class TransactionController extends Controller
     $pdc->save();
 
     return redirect()->back()->withSuccess('PDC Added');
+  }
+
+
+  public function reimbursementIndex(){
+
+    return view('client.transaction.reimbursement.index');
+  }
+
+  public function reimbursementAdd(Request $request){
+//    return $request;
+    $this->validate($request, [
+      'employee' => 'required|integer',
+      'expenseDate' => 'required|date',
+      'expenseType' => 'required',
+      'amount' => 'required|integer',
+      'expenseBill' => 'required',
+      'remarks' => 'required',
+    ]);
+    $reimbursement = new Reimbursement;
+    $reimbursement->employee_id = $request->employee;
+    $reimbursement->expenseDate = $request->expenseDate;
+    $reimbursement->expenseType = $request->expenseType;
+    $reimbursement->amount = $request->amount;
+
+    $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
+//    $filePath = $request->file('expenseBill')->storeAs('uploads', $fileName, 'public');
+    $request->expenseBill->move(public_path('uploads'), $fileName);
+    $reimbursement->expenseBill = $fileName;
+
+    $reimbursement->remarks = $request->remarks;
+    $reimbursement->save();
+    return redirect()->back();
+  }
+
+  public function reimburse(Request $request){
+    $reimbursement = Reimbursement::find($request->id);
+    $reimbursement->reimbursed = 1;
+    $reimbursement->reimbursedOn = $request->reimbursementDate;
+    $reimbursement->reimbursedRemarks = $request->reimbursementRemarks;
+    $reimbursement->save();
+    return redirect()->back();
   }
 }
 
