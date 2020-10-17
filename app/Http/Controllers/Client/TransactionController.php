@@ -277,7 +277,7 @@ class TransactionController extends Controller
 
   public function reimbursementIndex(){
 
-    return view('client.transaction.reimbursement.index');
+    return view('client.transaction.Reimbursement.index');
   }
 
   public function reimbursementAdd(Request $request){
