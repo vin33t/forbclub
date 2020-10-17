@@ -34,6 +34,14 @@
         <h6 class="mb-0">Product:</h6>
         <p>{{ $package->productType }} | {{ $package->productName }} | {{ $package->productTenure }} Years | {{ inr($package->productCost) }}</p>
       </div>
+      @if($client->document)
+      <div class="mt-1">
+        <h6 class="mb-0">View Maf</h6>
+        <p>
+          <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Mad</button></a>
+        </p>
+      </div>
+      @endif
       {{--              <div class="mt-1">--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-facebook"></i></button>--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-twitter"></i></button>--}}

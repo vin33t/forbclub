@@ -146,4 +146,8 @@ class Client extends Model
     return $this->hasMany('App\PDC','client_id');
   }
 
+  public function Document(){
+    return $this->hasOne('App\Document','client_id');
+  }
+
 }

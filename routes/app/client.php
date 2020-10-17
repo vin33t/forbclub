@@ -102,6 +102,14 @@ Route::middleware('auth')->group(function () {
 //        $nach->save();
 //      }
 //    }
+//
+    foreach (\App\Document::all() as $document){
+      if($document->maf != 0) {
+        $client = \App\Client\Package\SoldPackages::where('fclpId', $document->maf)->first();
+        $document->client_id = $client->id;
+        $document->save();
+      }
+    }
   });
 
   // Client Route Ends //
