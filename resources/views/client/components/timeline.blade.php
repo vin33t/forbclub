@@ -121,13 +121,13 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h4>Follow Ups </h4>
+            <h4>Follow Ups <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFollowUp">Add New</button></h4>
           </div>
           @if($client->followUp->count())
             <div class="card-body">
               <ul>
                 @foreach($client->followUp as $followUp)
-                  <li><strong>{{$followUp->subject}} </strong><br>
+                  <li><strong>{{$followUp->subject}} {{ $followUp->follow_up_on }}</strong><br>
                         {!! $followUp->details !!}
                     {{ $followUp->type }}</li>
                 @endforeach
@@ -138,6 +138,50 @@
               No Notes Yet
             </div>
           @endif
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addFollowUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Add Follow UP</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="{{ route('add.followUp') }}" method="POST">
+            @csrf
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <input type="hidden" name="id" value="{{ $client->id }}">
+                <label for="followUpDate">Follow Up Date</label>
+                <input type="date" name="followUpDate" class="form-control" placeholder="Follow Up Date" required>
+              </div>
+              <div class="col-md-12">
+                <label for="followUpType">Follow Up Type</label>
+                <input type="text" name="followUpType" class="form-control" placeholder="Follow Up Type" required>
+              </div>
+              <div class="col-md-12">
+                <label for="followUpSubject">Follow Up Subject</label>
+                <input type="text" name="followUpSubject" class="form-control" placeholder="Follow Up Subject" required>
+              </div>
+              <div class="col-md-12">
+                <label for="followUpRemarks">Follow Up Remarks</label>
+                <textarea name="followUpRemarks" id="" cols="30" rows="10" class="form-control" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="Submit" class="btn btn-primary">Add</button>
+          </div>
+          </form>
         </div>
       </div>
     </div>

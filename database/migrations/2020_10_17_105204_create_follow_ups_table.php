@@ -15,14 +15,14 @@ class CreateFollowUpsTable extends Migration
     {
         Schema::create('follow_ups', function (Blueprint $table) {
             $table->id();
-          $table->integer('client_id');
-          $table->date('follow_up_on');
-          $table->dateTime('reminder')->nullable();
-          $table->string('type')->nullable();
-          $table->string('subject')->nullable();
-          $table->string('details')->nullable();
-          $table->string('recording')->nullable();
-          $table->integer('added_by')->nullable();
+            $table->integer('client_id');
+            $table->date('follow_up_on');
+            $table->dateTime('reminder')->nullable();
+            $table->string('type')->nullable();
+            $table->longText('subject')->nullable();
+            $table->longText('details')->nullable();
+            $table->string('recording')->nullable();
+            $table->integer('added_by')->nullable();
             $table->timestamps();
         });
     }
