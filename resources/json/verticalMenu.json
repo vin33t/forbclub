@@ -71,13 +71,6 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
-    },{
-      "url": "transaction/venue-expense",
-      "name": "Venue Expense",
-      "icon": "feather icon-file-text",
-      "i18n": "nav.app_email",
-      "role": "super-admin",
-      "permission": "view-import-history"
     },
     {
       "url": "",
