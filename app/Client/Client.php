@@ -150,4 +150,8 @@ class Client extends Model
     return $this->hasOne('App\Document','client_id');
   }
 
+  public function FollowUp(){
+    return $this->hasMany('App\FollowUp','client_id');
+  }
+
 }

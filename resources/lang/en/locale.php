@@ -8,6 +8,7 @@ return [
     "Upload Axis MIS" => "Upload Axis MIS",
     "Upload Transactions" => "Upload Transactions",
     "Reimbursement" => "Reimbursement",
+    "Venue Expense" => "Venue Expense",
     "Create" => "Create",
     "Analytics" => "Analytics",
     "eCommerce" => "eCommerce",

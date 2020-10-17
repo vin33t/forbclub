@@ -89,7 +89,9 @@
                 </tr>
                 <tr>
                   <th scope="row">EMI Amount</th>
+                  @if($client->latestPackage->noOfEmi)
                   <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>
+                  @endif
                 </tr>
                 <tr>
                   <th scope="row">EMI Due Date</th>
@@ -112,6 +114,30 @@
             </table>
           </div>
 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Follow Ups </h4>
+          </div>
+          @if($client->followUp->count())
+            <div class="card-body">
+              <ul>
+                @foreach($client->followUp as $followUp)
+                  <li><strong>{{$followUp->subject}} </strong><br>
+                        {!! $followUp->details !!}
+                    {{ $followUp->type }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @else
+            <div class="card-body">
+              No Notes Yet
+            </div>
+          @endif
         </div>
       </div>
     </div>

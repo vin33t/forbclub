@@ -103,11 +103,19 @@ Route::middleware('auth')->group(function () {
 //      }
 //    }
 //
-    foreach (\App\Document::all() as $document){
-      if($document->maf != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId', $document->maf)->first();
-        $document->client_id = $client->id;
-        $document->save();
+//    foreach (\App\Document::all() as $document){
+//      if($document->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $document->maf)->first();
+//        $document->client_id = $client->id;
+//        $document->save();
+//      }
+//    }
+
+    foreach (\App\FollowUp::all() as $followUp){
+      if($followUp->maf != 0) {
+        $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
+        $followUp->client_id = $client->id;
+        $followUp->save();
       }
     }
   });

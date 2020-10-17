@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
 
 
+    Route::post('/venue-expense', 'Client\TransactionController@venueExpense')->name('venue.expense');
+
+
   // Client Route Ends //
 
 });
