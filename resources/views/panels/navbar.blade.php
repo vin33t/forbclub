@@ -20,7 +20,22 @@
                                                                         href="#"><i class="ficon feather icon-menu"></i></a></li>
                 </ul>
 
-
+                <ul class="nav navbar-nav">
+                  <li class="nav-item d-none d-lg-block">
+                    <form action="{{ route('search.client.maf') }}" method="post">
+                      @csrf
+                    <input type="text" placeholder="MafNo" name="mafNo" class="form-control">
+                    </form>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                  <li class="nav-item d-none d-lg-block">
+                    <form action="{{ route('search.client.fclp') }}" method="post">
+                      @csrf
+                    <input type="text" placeholder="FCLP" name="fclp" class="form-control">
+                    </form>
+                  </li>
+                </ul>
               </div>
               <ul class="nav navbar-nav float-right">
                 <li class="dropdown dropdown-language nav-item">

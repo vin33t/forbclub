@@ -10,7 +10,7 @@ class SoldPackages extends Model
 
   public function Client()
   {
-    return $this->belongsTo('App\Client\Client');
+    return $this->belongsTo('App\Client\Client','clientId');
   }
 
   public function Seller()
