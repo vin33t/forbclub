@@ -38,7 +38,7 @@
       <div class="mt-1">
         <h6 class="mb-0">View Maf</h6>
         <p>
-          <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Mad</button></a>
+          <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Maf</button></a>
         </p>
       </div>
       @endif
