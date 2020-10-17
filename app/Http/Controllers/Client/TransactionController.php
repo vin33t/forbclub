@@ -14,6 +14,8 @@ use App\DisableNach;
 use App\Http\Controllers\Controller;
 use App\PDC;
 use App\Reimbursement;
+use App\Venue;
+use App\VenueExpenses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -313,6 +315,29 @@ class TransactionController extends Controller
     $reimbursement->reimbursedRemarks = $request->reimbursementRemarks;
     $reimbursement->save();
     return redirect()->back();
+  }
+
+  public function venueExpense(){
+    return view('client.transaction.venueexpense.index');
+  }
+
+  public function venueAdd(Request $request){
+    $venue = new Venue;
+    $venue->venue_name = $request->Venue_Name;
+    $venue->venue_location = $request->venueLocation;
+    $venue->venue_date = $request->venueDate;
+    $venue->save();
+    return \redirect()->back();
+}
+
+  public function venueExpenseAdd(Request $request){
+      $expense = new VenueExpenses;
+      $expense->expense_name = $request->expenseName;
+      $expense->expense_amount = $request->expenseAmount;
+      $expense->expense_details = $request->expenseDetails;
+      $expense->venue_id = $request->id;
+      $expense->save();
+      return \redirect()->back();
   }
 }
 
