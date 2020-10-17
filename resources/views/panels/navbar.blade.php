@@ -79,10 +79,7 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{ route('profile') }}"><i
                         class="feather icon-user"></i> Profile</a><a class="dropdown-item" href="{{ route('employee.logs') }}"><i
-                        class="feather icon-activity"></i> Logs</a><a class="dropdown-item" href="app-email"><i
-                        class="feather icon-mail"></i> My
-                      Inbox</a><a class="dropdown-item" href="app-todo"><i class="feather icon-check-square"></i> Task</a><a
-                      class="dropdown-item" href="app-chat"><i class="feather icon-message-square"></i> Chats</a>
+                        class="feather icon-activity"></i> Logs</a>
                     <div class="dropdown-divider"></div><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"><i
                         class="feather icon-power"></i> Logout</a>
                     <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
