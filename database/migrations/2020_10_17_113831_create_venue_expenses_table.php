@@ -22,6 +22,7 @@ class CreateVenueExpensesTable extends Migration
             $table->boolean('paid')->default(0);
             $table->date('paid_on')->nullable();
             $table->longText('payment_remarks')->nullable();
+            $table->longText('expenseBill')->nullable();
             $table->timestamps();
         });
     }

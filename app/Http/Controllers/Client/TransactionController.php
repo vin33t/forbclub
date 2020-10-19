@@ -299,7 +299,6 @@ class TransactionController extends Controller
     $reimbursement->amount = $request->amount;
 
     $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
-//    $filePath = $request->file('expenseBill')->storeAs('uploads', $fileName, 'public');
     $request->expenseBill->move(public_path('uploads'), $fileName);
     $reimbursement->expenseBill = $fileName;
 
@@ -336,6 +335,11 @@ class TransactionController extends Controller
       $expense->expense_amount = $request->expenseAmount;
       $expense->expense_details = $request->expenseDetails;
       $expense->venue_id = $request->id;
+
+    $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
+    $request->expenseBill->move(public_path('uploads/venueexpense'), $fileName);
+    $expense->expenseBill = $fileName;
+
       $expense->save();
       return \redirect()->back();
   }

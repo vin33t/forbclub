@@ -68,7 +68,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form action="{{ route('venue.add.expense') }}" method="POST">
+                          <form action="{{ route('venue.add.expense') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{ $venue->id }}">
                           <div class="modal-body">
@@ -85,6 +85,10 @@
                                   <label for="expenseDetails">Expense Details</label>
                                   <textarea name="expenseDetails" id="" cols="30" rows="10" class="form-control" required></textarea>
                                 </div>
+                                <div class="col-md-12">
+                                  <label for="expenseBill">Expense Bill (PDF Only)</label>
+                                  <input type="file" name="expenseBill" id="expenseBill" class="form-control"  accept="application/pdf" required>
+                                </div>
                               </div>
                           </div>
                           <div class="modal-footer">
@@ -95,6 +99,55 @@
                         </div>
                       </div>
                     </div>
+
+                    @if($venue->Expense->count())
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewVenueExpense{{ $venue->id }}">View Expenses</button>
+
+                    <div class="modal fade" id="viewVenueExpense{{ $venue->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Venue: {{ $venue->venue_name }} Expenses</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table zero-configuration">
+                              <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                                <th>Bill</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($venue->Expense as $expense)
+                                  <tr>
+                              <td>{{ $expense->expense_name }}</td>
+                              <td>{{ $expense->expense_amount }}</td>
+                              <td>{{ $expense->expense_details }}</td>
+                              <td><a href="{{ asset('/uploads/venueexpense/'.$expense->expenseBill) }}">Download</a></td>
+                                  </tr>
+                              </tbody>
+
+                              @endforeach
+                              <tfoot>
+                              <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                                <th>Bill</th>
+                              </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                      @endif
                   </td>
                 </tr>
               @endforeach
