@@ -315,7 +315,10 @@
             <div class="card-header">
               <h4 class="card-title">Axis NACH Payments(UMRN: {{  $client->AxisPayments->first()->umrn }} |
                 Success: {{ $client->axisPayments->where('status_description','Success')->pluck('amount')->sum()   }} |
-                Failed: {{ $client->AxisPayments->where('status_description','INITIAL REJECTION')->pluck('amount')->sum()   }})
+                Failed: {{ $client->AxisPayments->where('status_description','INITIAL REJECTION')->pluck('amount')->sum()   }} |
+               From {{ \Carbon\Carbon::parse($client->axisMis->last()->STARTDATE)->format('d-m-Y') }} To
+                {{ \Carbon\Carbon::parse($client->axisMis->last()->ENDDATE)->format('d-m-Y') }}
+                )
               </h4>
             </div>
             <div class="card-content">
