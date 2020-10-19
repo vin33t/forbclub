@@ -97,6 +97,7 @@
 @include('client.transaction.add.card',['client'=>$client])
 @include('client.transaction.add.cash',['client'=>$client])
 @include('client.transaction.add.cheque',['client'=>$client])
+@include('client.transaction.add.addTransaction',['client'=>$client])
 @include('client.transaction.addPdc',['client'=>$client])
 @include('client.transaction.disableNach',['client'=>$client])
 
@@ -121,6 +122,67 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
 @endsection
 @section('page-script')
+  <script>
+
+    $('#mode_of_payment').on('change', function(){
+      var mode = document.getElementById('mode_of_payment').value;
+      console.log('mode');
+      if(mode == "Credit Card"){
+        var data =  '   <div class="">  '  +
+          '   								<label for="card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="card_number" maxlength="4" minlength="4" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box").html(data);
+
+      }
+      if(mode == "Debit Card"){
+        var data =  '   <div class="">  '  +
+          '   								<label for="card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="card_number" maxlength="4" minlength="4" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box").html(data);
+
+      }
+      if(mode == "Cash"){
+        var data =  '   <div class="">  '  +
+          '   								<label for="cash_receipt_number">Cash Receipt No:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="cash_receipt_no" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box").html(data);
+
+      }
+
+      if(mode == "Cheque"){
+        var data =  '   <div class="">  '  +
+          '   								<label for="cheque_number">Cheque No.:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="cheque_number" class="form-control" required>  '  +
+          '   								<label for="cheque_status">Cheque Status:  <span style="color:red">*</span></label>  '  +
+          '            <select name="cheque_status" class="form-control" id="" required>\n' +
+          '                <option value="">--SELECT--</option>\n' +
+          '                <option value="0">Cleared</option>\n' +
+          '                <option value="1">Bounced</option>\n' +
+          '            </select>'+
+          '   							</div>  ' ;
+        $("#card_details_box").html(data);
+
+      }
+      if(mode == "NACH"){
+        var data =  '   <div class="">  '  +
+          '   								<label for="nach_id">NACH ID:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="nach_id" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box").html(data);
+
+      }
+      if(mode == ""){
+        var data =  '' ;
+        $("#card_details_box").html(data);
+
+      }
+    });
+
+  </script>
+
   {{-- Page js files --}}
 {{--  <script src="{{ asset(mix('js/scripts/charts/chart-echart.js')) }}"></script>--}}
   <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
@@ -156,6 +218,10 @@
           $('#addPdc').modal();
 
         }
+        if(key === 'Add Tran'){
+          $('#newTransaction').modal();
+
+        }
         if(key === 'View Transactions'){
           window.location.replace("{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}");
         }
@@ -167,6 +233,7 @@
         "View Transactions": { name: "View Transactions" },
         "Disable NACH": { name: "Disable NACH" },
         "Add PDC": { name: "Add PDC" },
+        // "Add Tran": { name: "Add Tran" },
         "fold1": {
           "name": "Add Transaction",
           "items": {

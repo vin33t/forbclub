@@ -28,6 +28,71 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class TransactionController extends Controller
 {
+  public function createCheque(Request $request, $clientId)
+  {
+    return $request;
+    $request->validate([
+      'paymentReceivedOn'=>'required|date',
+      'paymentAmount'=>'required|integer',
+      'paymentCardType'=>'required|string',
+      'paymentCardProvider'=>'required|string',
+      'paymentCardLastFourDigits'=>'required|integer',
+      'paymentCardRemarks'=>'required|string',
+    ]);
+    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
+      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
+    }
+    else {
+      DB::beginTransaction();
+      try {
+        $transaction = new CardPayment;
+        $transaction->client_id = $clientId;
+        $transaction->paymentDate = $request->paymentReceivedOn;
+        $transaction->amount = $request->paymentAmount;
+        $transaction->cardType = $request->paymentCardType;
+        $transaction->bankName = $request->paymentCardProvider;
+        $transaction->cardLastFourDigits = $request->paymentCardLastFourDigits;
+        $transaction->isDp = $request->paymentDownPayment ? 1 : 0;
+        $transaction->isAddon = $request->paymentAddOn ? 1 : 0;
+        $transaction->remarks = $request->paymentCardRemarks;
+        $transaction->save();
+        if($request->has('paymentForMonth')){
+          $co = 0;
+          foreach ($request->paymentForMonth as $month){
+            $transactionMonth = new TransactionMonth;
+////            return $request->paymentForMonth;
+//            $transactionMonth->transaction_id  =$transaction->id;
+//            $transactionMonth->paidMonth  =$month;
+//            $transactionMonth->paidYear  = $request->paymentForYear[$co];
+//            $transactionMonth->transactionType  = 'card';
+//            $transactionMonth->save();
+            $transactionMonth->create([
+              'transaction_id'=>$transaction->id,
+              'paidMonth'=>$month,
+              'paidYear'=>$request->paymentForYear[$co],
+              'transactionType'=>'card',
+            ]);
+            $co ++;
+          }
+        }
+        (new TimelineActivity)->create([
+          'user_id' => Auth::user()->id,
+          'client_id' => $clientId,
+          'title' => 'Card Payment',
+          'parent_model' => 'App\Client\Transaction\CardPayment',
+          'parent_id' => $transaction->id,
+          'body' => 'Client made a payment of ' . inr($transaction->amount) . ' using Card (' . $transaction->cardType . ') ending wth ' . ' card ending with ' . $transaction->cardLastFourDigits . ' for the month of ' . Carbon::parse($request->paymentReceivedOn)->format('F Y')
+        ]);
+        DB::commit();
+        notifyToast('success', 'Saved', 'Card Transaction Saved');
+      } catch (\Exception $e) {
+        DB::rollBack();
+      }
+    }
+    return redirect()->back();
+
+  }
+
   public function createCard(Request $request, $clientId)
   {
     $request->validate([
@@ -145,6 +210,8 @@ class TransactionController extends Controller
     }
     return redirect()->back();
   }
+
+
 
   public function importHistory(){
     return view('client.transaction.importHistory');
@@ -342,6 +409,34 @@ class TransactionController extends Controller
 
       $expense->save();
       return \redirect()->back();
+  }
+
+  public function downloadChequesView(){
+    return view('client.downloadCheque');
+  }
+
+  public function downloadCheques(Request $request){
+    if(PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->count()){
+      $fileName = '(Total Amount:    ₹'. (PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->get()->pluck('amount')->sum()) .'   )'. Carbon::parse($request->from)->format('d-m-y') . ' to ' . Carbon::parse($request->to)->format('d-m-y') .'-pdc-'.time().rand() .'.xlsx';
+      $url =  (new FastExcel(PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->get()))->export('excel/' .  $fileName , function ($pdc) {
+        return [
+          'Cheque Date' => Carbon::parse($pdc->date_of_execution)->format('d-m-y'),
+          'Cheque Number' => $pdc->cheque_no,
+          'Amount' => strtoupper($pdc->amount),
+          'MICR No.' => strtoupper($pdc->micr_number),
+          'Branch Name' => strtoupper($pdc->branch_name),
+          'Branch Address' => strtoupper($pdc->branch_address),
+          'MAF No' => strtoupper($pdc->client->maf_no) ,
+          'FTK' => strtoupper($pdc->client->application_no),
+          'Name' => strtoupper($pdc->client->name),
+        ];
+      });
+      $link = url('/excel/'.$fileName);
+      return Redirect::to($link);
+    }else{
+      notification('Oops!!','No Cheques', 'warning','okay');
+      return redirect()->back();
+    }
   }
 }
 

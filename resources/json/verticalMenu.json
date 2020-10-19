@@ -47,6 +47,13 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },{
+      "url": "transaction/download/cheques",
+      "name": "Download Cheques",
+      "icon": "feather icon-download-cloud",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },
     {
       "url": "transaction/upload/axis-mis",

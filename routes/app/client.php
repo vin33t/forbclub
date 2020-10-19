@@ -112,13 +112,21 @@ Route::middleware('auth')->group(function () {
 //      }
 //    }
 
-    foreach (\App\FollowUp::all() as $followUp){
-      if($followUp->maf != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
-        $followUp->client_id = $client->id;
-        $followUp->save();
-      }
-    }
+//    foreach (\App\FollowUp::all() as $followUp){
+//      if($followUp->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
+//        $followUp->client_id = $client->id;
+//        $followUp->save();
+//      }
+//    }
+
+//    foreach (\App\PDC::all() as $pdc){
+//      if($pdc->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $pdc->maf)->first();
+//        $pdc->client_id = $client->id;
+//        $pdc->save();
+//      }
+//    }
   });
 
   // Client Route Ends //

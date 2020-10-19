@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/downlaod/axis-mis', 'Client\TransactionController@downloadAxisMis')->name('download.axis.mis');
     Route::post('/downlaod/axis-mis-file', 'Client\TransactionController@downloadAxisMisFile')->name('download.axis.mis.file');
 
+
+    Route::get('/download/cheques', 'Client\TransactionController@downloadChequesView')->name('download.cheques.view');
+    Route::post('/download/cheques', 'Client\TransactionController@downloadCheques')->name('download.cheques');
+
     Route::get('/upload/axis-mis', 'Client\TransactionController@uploadAxisMis')->name('upload.axis.mis');
     Route::post('/upload/axis-mis-file', 'Client\TransactionController@uploadAxisMisFile')->name('upload.axis.mis.file');
 
