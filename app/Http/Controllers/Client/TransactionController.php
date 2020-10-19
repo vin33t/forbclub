@@ -426,9 +426,10 @@ class TransactionController extends Controller
           'MICR No.' => strtoupper($pdc->micr_number),
           'Branch Name' => strtoupper($pdc->branch_name),
           'Branch Address' => strtoupper($pdc->branch_address),
-          'MAF No' => strtoupper($pdc->client->maf_no) ,
-          'FTK' => strtoupper($pdc->client->application_no),
+          'MAF No' => strtoupper($pdc->client->latestPackage->mafNo) ,
+          'FTK' => strtoupper($pdc->client->latestPackage->fclpId),
           'Name' => strtoupper($pdc->client->name),
+          'Cheque Status' => strtoupper($pdc->status),
         ];
       });
       $link = url('/excel/'.$fileName);
