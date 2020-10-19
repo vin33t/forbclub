@@ -39,12 +39,13 @@ class SearchController extends Controller
     }
 
     public function fclp(Request $request){
-      $package = SoldPackages::where('fclpId', $request->mafNo);
+      $package = SoldPackages::where('fclpId', $request->fclp);
       if($package->count()){
         return redirect()->route('view.client',['slug'=>$package->first()->client->slug]);
       } else{
         notifyToast('OPPS','Invalid FCLP',  'Try Again');
         return redirect()->back();
+
       }
     }
 }
