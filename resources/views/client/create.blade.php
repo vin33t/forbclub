@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-md-8">
                           <div class="position-relative has-icon-left">
-                            <input type="email" id="email-icon" class="form-control" name="productMafNo" placeholder="Maf No" required>
+                            <input type="text" id="email-icon" class="form-control" name="productMafNo" placeholder="Maf No" required>
                             <div class="form-control-position">
                               <i class="feather icon-hash"></i>
                             </div>
