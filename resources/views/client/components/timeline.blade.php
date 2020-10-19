@@ -62,12 +62,12 @@
                 <th scope="row">Down Payment</th>
                 <th scope="row">
                   @php
-                    $cardPayments = $client->CardPayments->where('isDp',1)->pluck('amount')->sum();
-                    $cashPayments = $client->CashPayments->where('isDp',1)->pluck('amount')->sum();
-                    $chequePayments = $client->ChequePayments->where('isDp',1)->pluck('amount')->sum();
-                    $otherPayments = $client->OtherPayments->where('isDp',1)->pluck('amount')->sum();
+                    $cardPayments = $client->CardPayments->pluck('amount')->sum();
+                    $cashPayments = $client->CashPayments->pluck('amount')->sum();
+                    $chequePayments = $client->ChequePayments->pluck('amount')->sum();
+                    $otherPayments = $client->OtherPayments->pluck('amount')->sum();
                   @endphp
-                  {{ $cardPayments + $cashPayments + $chequePayments + $otherPayments }}
+                  {{ $client->downPayment }}
                 </th>
               </tr>
                 <tr>
@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                   <th scope="row">Total EMI Amount</th>
-                  <th scope="row">{{ $client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments }}</th>
+                  <th scope="row">{{ $client->latestPackage->productCost - ($cardPayments + $cashPayments + $chequePayments + $otherPayments) }}</th>
                 </tr>
                 <tr>
                   <th scope="row">EMI Amount</th>

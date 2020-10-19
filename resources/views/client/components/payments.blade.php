@@ -1,45 +1,62 @@
 <div class="col-lg-12 col-12">
+  @php
+    $totalTransactions = collect();
+      if($client->cashPayments->count()){
+          foreach($client->CashPayments as $ca){
+            $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
+          }
+      }
+      if($client->cardPayments->count()){
+          foreach($client->CardPayments as $cad){
+            $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
+          }
+      }
+      if($client->chequePayments->count()){
+          foreach($client->chequePayments as $che){
+            $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
+          }
+      }
+      if($client->otherPayments->count()){
+          foreach($client->otherPayments as $oth){
+            $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
+          }
+      }
+
+      if($client->AxisPayments->count()){
+          foreach($client->AxisPayments as $axp){
+            if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
+              $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+            }
+          }
+      }
+
+      if($client->YesPayments->count()){
+          foreach($client->YesPayments as $yep){
+            if($yep->STATUS == 'ACCEPTED'){
+              $totalTransactions->push(['date'=>$yep->VALUE_DATE,'amount'=>$yep->AMOUNT,'remarks'=>$yep->REASON_CODE,'mode'=>'YES NACH','dp'=>'']);
+            }
+          }
+      }
+  @endphp
   <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Summary</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body card-dashboard">
+            FCLP Cost: {{ $client->latestPackage->productCost }} <br>
+            Downpayment: {{ $client->downPayment }} <br>
+            Total Payment Done(Including DP): {{ $totalTransactions->pluck('amount')->sum() }} <br>
+            Pending Payment: {{ $client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum()  }}
+          </div>
+        </div>
+      </div>
 
-      @php
-      $totalTransactions = collect();
-        if($client->cashPayments->count()){
-            foreach($client->CashPayments as $ca){
-              $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
-            }
-        }
-        if($client->cardPayments->count()){
-            foreach($client->CardPayments as $cad){
-              $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
-            }
-        }
-        if($client->chequePayments->count()){
-            foreach($client->chequePayments as $che){
-              $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
-            }
-        }
-        if($client->otherPayments->count()){
-            foreach($client->otherPayments as $oth){
-              $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
-            }
-        }
+    </div>
 
-        if($client->AxisPayments->count()){
-            foreach($client->AxisPayments as $axp){
-              if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
-                $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
-              }
-            }
-        }
 
-        if($client->YesPayments->count()){
-            foreach($client->YesPayments as $yep){
-              if($yep->STATUS == 'ACCEPTED'){
-                $totalTransactions->push(['date'=>$yep->VALUE_DATE,'amount'=>$yep->AMOUNT,'remarks'=>$yep->REASON_CODE,'mode'=>'YES NACH','dp'=>'']);
-              }
-            }
-        }
-      @endphp
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">

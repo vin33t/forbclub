@@ -52,6 +52,7 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="chart" aria-labelledby="chart-tab" role="tabpanel">
+            Down Payment: {{ $client->downPayment }}
             @if(count($client->transactionSummaryChart))
             <div id="transaction-summary-pie-chart" class="height-400"></div>
             @else
@@ -60,7 +61,9 @@
           </div>
           <div class="tab-pane" id="summary" aria-labelledby="summary-tab" role="tabpanel">
             <div class="card-body">
-              @if(count($client->transactionSummaryChart))
+              Down Payment: {{ $client->downPayment }}
+
+            @if(count($client->transactionSummaryChart))
                 @foreach($client->transactionSummary as $transaction)
                   <h6>
                     {!! $transaction !!}

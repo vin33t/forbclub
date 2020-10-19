@@ -18,6 +18,16 @@ class Client extends Model
     return $this->Packages->first();
   }
 
+  public function getDownPaymentAttribute()
+  {
+    $cardPayments = $this->CardPayments->where('isDp',1)->pluck('amount')->sum();
+    $cashPayments = $this->CashPayments->where('isDp',1)->pluck('amount')->sum();
+    $chequePayments = $this->ChequePayments->where('isDp',1)->pluck('amount')->sum();
+    $otherPayments = $this->OtherPayments->where('isDp',1)->pluck('amount')->sum();
+    $payments = $cardPayments + $cashPayments + $chequePayments + $otherPayments;
+    return $payments;
+  }
+
   public function getTransactionSummaryAttribute()
   {
     $cardPayments = $this->CardPayments;
