@@ -28,7 +28,11 @@
                 </tr>
                 <tr>
                   <th scope="row">Number of EMI's</th>
-                  <th scope="row">{{ $client->latestPackage->noOfEmi }}</th>
+                  <th scope="row">{{ $client->emiRegularPlan }}</th>
+                </tr>
+              <tr>
+                  <th scope="row">Fully Paid Holiday</th>
+                  <th scope="row">@if($client->latestPackage->productName == 'Classic FCV' or $client->latestPackage->productName == 'India FCV') N/A @else 1{5N/6D 02 Adults} @endif</th>
                 </tr>
               </tbody>
             </table>
@@ -91,6 +95,8 @@
                   <th scope="row">EMI Amount</th>
                   @if($client->latestPackage->noOfEmi)
                   <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>
+                  @else
+                    <th scope="row">{{ $client->latestPackage->emiAmount }}</th>
                   @endif
                 </tr>
                 <tr>
