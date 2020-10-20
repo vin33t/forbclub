@@ -139,9 +139,50 @@
             <div class="card-body">
               <ul>
                 @foreach($client->followUp as $followUp)
-                  <li><strong>{{$followUp->subject}} {{ $followUp->follow_up_on }}</strong><br>
-                        {!! $followUp->details !!}
-                    {{ $followUp->type }}</li>
+                  <li><strong>{{$followUp->subject}} | Added On: {{ $followUp->follow_up_on }} |</strong> <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editFollowUp{{ $followUp->id }}">Edit</button><br>
+                        <p>{!! $followUp->details !!}</p>
+                    <strong>Added By: {{ $followUp->type }}</strong> </li>
+                  <div class="modal fade" id="editFollowUp{{ $followUp->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Edit Follow Up {{ $followUp->subject }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form action="{{ route('update.followUp',['id'=>$followUp->id]) }}" method="POST">
+                          @csrf
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <input type="hidden" name="id" value="{{ $client->id }}">
+                                <label for="followUpDate">Follow Up Date</label>
+                                <input type="date" name="followUpDate" class="form-control" placeholder="Follow Up Date" value="{{ $followUp->follow_up_on }}" required>
+                              </div>
+                              <div class="col-md-12">
+                                {{--                <label for="followUpType">Added By</label>--}}
+                                <input type="hidden" name="followUpType" class="form-control" placeholder="Follow Up Type" required value="{{ Auth::user()->name }}">
+                              </div>
+                              <div class="col-md-12">
+                                <label for="followUpSubject">Follow Up Subject</label>
+                                <input type="text" name="followUpSubject" class="form-control" placeholder="Follow Up Subject" required value={{ $followUp->subject }}>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="followUpRemarks">Follow Up Remarks</label>
+                                <textarea name="followUpRemarks" id="" cols="30" rows="10" class="form-control" required >{!! $followUp->details !!}</textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="Submit" class="btn btn-primary">Update</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
                 @endforeach
               </ul>
             </div>
@@ -173,11 +214,11 @@
               <div class="col-md-12">
                 <input type="hidden" name="id" value="{{ $client->id }}">
                 <label for="followUpDate">Follow Up Date</label>
-                <input type="date" name="followUpDate" class="form-control" placeholder="Follow Up Date" required>
+                <input type="date" name="followUpDate" class="form-control" placeholder="Follow Up Date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
               </div>
               <div class="col-md-12">
-                <label for="followUpType">Follow Up Type</label>
-                <input type="text" name="followUpType" class="form-control" placeholder="Follow Up Type" required>
+{{--                <label for="followUpType">Added By</label>--}}
+                <input type="hidden" name="followUpType" class="form-control" placeholder="Follow Up Type" required value="{{ Auth::user()->name }}">
               </div>
               <div class="col-md-12">
                 <label for="followUpSubject">Follow Up Subject</label>
