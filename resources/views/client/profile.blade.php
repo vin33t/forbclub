@@ -39,7 +39,7 @@
               <img src="{{ avatar($client->name) }}"
                    class="rounded-circle img-border box-shadow-1" alt="Card image">
               <div class="float-right">
-                <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1">
+                <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" data-toggle="modal" data-target="#editBasicClientDetails">
                   <i class="feather icon-edit-2"></i>
                 </button>
                 <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary">
@@ -100,6 +100,8 @@
 @include('client.transaction.add.addTransaction',['client'=>$client])
 @include('client.transaction.addPdc',['client'=>$client])
 @include('client.transaction.disableNach',['client'=>$client])
+
+@include('client.components.editBasic',['client'=>$client])
 
 
 @endsection
