@@ -300,6 +300,18 @@
                         <label for="product-cost">Product Cost</label>
                       </div>
                     </div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-label-group">
+                        <input type="number" id="product-tenure" class="form-control" placeholder="Number Of EMI" name="noOfEmi" required>
+                        <label for="product-tenure">Number Of EMI</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-label-group">
+                        <input type="number" id="product-cost" class="form-control" name="emiAmount" placeholder="EMI Amount" required>
+                        <label for="product-cost">EMI Amount</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>
