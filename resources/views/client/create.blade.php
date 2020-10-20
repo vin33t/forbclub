@@ -105,6 +105,16 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <div class="col-md-4">
+                          <span>Address</span>
+                        </div>
+                        <div class="col-md-8">
+                          <input type="text" id="birthDate" class="form-control" name="address" placeholder="Address">
+                        </div>
+                      </div>
+                    </div>
                   </div>
             </div>
           </div>
@@ -182,6 +192,21 @@
                     <div class="col-12">
                       <div class="form-group row">
                         <div class="col-md-4">
+                          <span>Sale Manager</span>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="position-relative has-icon-left">
+                            <input type="text" id="pass-icon" class="form-control" name="productSaleManager" placeholder="Sale Manager" required>
+                            <div class="form-control-position">
+                              <i class="feather icon-user"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <div class="col-md-4">
                           <span>Branch</span>
                         </div>
                         <div class="col-md-8">
@@ -204,6 +229,41 @@
   </section>
   <section id="multiple-column-form">
     <div class="row match-height">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Co Applicant Details</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+                <div class="form-body">
+                  <div class="row">
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="product-type">Date Of Birth</label>
+                        <input type="date" id="product-name" class="form-control" name="coDob" >
+
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="product-name">Relationship With Client</label>
+                        <input type="text" id="product-name" class="form-control" placeholder="Relationship With Client" name="relationShipWithClient" required>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-label-group">
+                        <input type="text" id="product-tenure" class="form-control" placeholder="Co Applicant Name" name="coApplicantName" required>
+                        <label for="product-tenure">Co Applicant Name</label>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-12">
         <div class="card">
           <div class="card-header">

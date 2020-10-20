@@ -20,6 +20,7 @@ class CreateSoldPackagesTable extends Migration
       $table->string('fclpId');
       $table->string('branch')->nullable();
       $table->string('saleBy')->nullable();
+      $table->string('saleManager')->nullable();
       $table->string('enrollmentDate')->nullable();
       $table->string('productType')->nullable();
       $table->string('productTenure')->nullable();

@@ -34,6 +34,12 @@
                   <th scope="row">Fully Paid Holiday</th>
                   <th scope="row">@if($client->latestPackage->productName == 'Classic FCV' or $client->latestPackage->productName == 'India FCV') N/A @else 1{5N/6D 02 Adults} @endif</th>
                 </tr>
+              <tr>
+                  <th scope="row">Stay only Holiday</th>
+                  <th scope="row">
+                    @if($client->latestPackage->productName == 'Classic FCV' or $client->latestPackage->productName == 'India FCV' ) {{ $client->latestPackage->productTenure }} Years @else {{$client->latestPackage->productTenure - 1}} Years @endif
+                  </th>
+                </tr>
               </tbody>
             </table>
           </div>

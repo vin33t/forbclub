@@ -23,6 +23,9 @@ class CreateClientsTable extends Migration
       $table->date('birthDate')->nullable();
       $table->string('address')->nullable();
       $table->string('photo')->nullable();
+      $table->string('coApplicantName')->nullable();
+      $table->string('relationShipWithClient')->nullable();
+      $table->date('coDob')->nullable();
       $table->longText('slug');
       $table->timestamps();
     });

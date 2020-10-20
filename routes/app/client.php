@@ -119,12 +119,14 @@ Route::middleware('auth')->group(function () {
 //        $followUp->save();
 //      }
 //    }
-
+//
 //    foreach (\App\PDC::all() as $pdc){
 //      if($pdc->maf != 0) {
-//        $client = \App\Client\Package\SoldPackages::where('fclpId', $pdc->maf)->first();
-//        $pdc->client_id = $client->id;
+//        $client = \App\Client\Package\SoldPackages::where('mafNo', $pdc->ftk)->first();
+//        if($client){
+//        $pdc->client_id = $client->client->id;
 //        $pdc->save();
+//        }
 //      }
 //    }
   });
