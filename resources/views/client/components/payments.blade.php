@@ -228,7 +228,7 @@
                   <td>{{ $cashPayment->amount }}</td>
                   <td>{{ $cashPayment->receiptNumber }}</td>
                   <td>{{ $cashPayment->remarks }}</td>
-                  <td>{{ $cashPayment->idDp }}</td>
+                  <td>{{ $cashPayment->isDp ? 'Downpayment' ? 'EMI'}}</td>
                   <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCashPayment{{$cashPayment->id}}">Edit</button>
                     <div class="modal fade" id="editCashPayment{{$cashPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
