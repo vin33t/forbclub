@@ -94,21 +94,21 @@ Route::middleware('auth')->group(function () {
 //      }
 //    }
 //
-    foreach (\App\Client\Mis\AxisMis::all() as $mis){
-      if($mis->maf != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId', $mis->maf)->first();
-        $mis->client_id = $client->clientId;
-        $mis->save();
-      }
-    }
-//
-    foreach (\App\DisableNach::all() as $nach){
-      if($nach->maf != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId', $nach->maf)->first();
-        $nach->client_id = $client->clientId;
-        $nach->save();
-      }
-    }
+//    foreach (\App\Client\Mis\AxisMis::all() as $mis){
+//      if($mis->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $mis->maf)->first();
+//        $mis->client_id = $client->clientId;
+//        $mis->save();
+//      }
+//    }
+////
+//    foreach (\App\DisableNach::all() as $nach){
+//      if($nach->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $nach->maf)->first();
+//        $nach->client_id = $client->clientId;
+//        $nach->save();
+//      }
+//    }
 //
 //    foreach (\App\Document::all() as $document){
 //      if($document->maf != 0) {
@@ -122,7 +122,8 @@ Route::middleware('auth')->group(function () {
       if($followUp->maf != 0) {
         $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
         if($client){
-          $followUp->client_id = $client->clientId;
+          $remove = ['<p>','</p>','<div>','</div>','<b>','</b>','<a>','</a>'];
+          $followUp->details = str_replace($remove,'',$followUp->details);
           $followUp->save();
         }
       }
@@ -137,6 +138,9 @@ Route::middleware('auth')->group(function () {
 //        }
 //      }
 //    }
+
+
+
   });
 
   // Client Route Ends //
