@@ -119,6 +119,7 @@
                   <th>Payment Date</th>
                   <th>Amount</th>
                   <th>Card Type</th>
+                  <th>Last Four Digits</th>
                   <th>Remarks</th>
                   <th>DP</th>
                   <th>Action</th>
@@ -130,6 +131,7 @@
                   <td>{{ $cardPayment->paymentDate }}</td>
                   <td>{{ $cardPayment->amount }}</td>
                   <td>{{ $cardPayment->cardType }}</td>
+                  <td>{{ $cardPayment->cardLastFourDigits }}</td>
                   <td>{{ $cardPayment->remarks }}</td>
                   <td>{{ $cardPayment->isDp == 1 ? 'Downpayment' : 'EMI' }}</td>
                   <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCardPayment{{$cardPayment->id}}">Edit</button>
@@ -183,6 +185,7 @@
                   <th>Payment Date</th>
                   <th>Amount</th>
                   <th>Card Type</th>
+                  <th>Last Four Digits</th>
                   <th>Remarks</th>
                   <th>DP</th>
                   <th>Action</th>
