@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
   Route::post('add/asc','Client\ClientController@addAsc')->name('add.asc');
   Route::post('add/followUp','Client\ClientController@addFollowUp')->name('add.followUp');
+  Route::post('delete/followUp/{id}','Client\ClientController@deleteFollowUp')->name('delete.followUp');
   Route::post('update/followUp/{id}','Client\ClientController@updateFollowUp')->name('update.followUp');
 
   Route::get('migrate','Client\ClientController@migrate');
@@ -52,13 +53,13 @@ Route::middleware('auth')->group(function () {
 //      }
 //    }
 //
-//    foreach (\App\Client\Transaction\CashPayment::all() as $cash){
-//      if($cash->ftk != 0) {
-//        $client = \App\Client\Package\SoldPackages::where('fclpId',$cash->maf)->first();
-//        $cash->client_id = $client->id;
-//        $cash->save();
-//      }
-//    }
+    foreach (\App\Client\Transaction\CashPayment::all() as $cash){
+      if($cash->ftk != 0) {
+        $client = \App\Client\Package\SoldPackages::where('fclpId',$cash->maf)->first();
+        $cash->client_id = $client->client->id;
+        $cash->save();
+      }
+    }
 //
 //    foreach (\App\Client\Transaction\ChequePayment::all() as $cheque){
 //      if($cheque->maf != 0) {
@@ -117,17 +118,17 @@ Route::middleware('auth')->group(function () {
 //        $document->save();
 //      }
 //    }
-
-    foreach (\App\FollowUp::all() as $followUp){
-      if($followUp->maf != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
-        if($client){
-          $remove = ['<p>','</p>','<div>','</div>','<b>','</b>','<a>','</a>'];
-          $followUp->details = str_replace($remove,'',$followUp->details);
-          $followUp->save();
-        }
-      }
-    }
+//
+//    foreach (\App\FollowUp::all() as $followUp){
+//      if($followUp->maf != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId', $followUp->maf)->first();
+//        if($client){
+//          $remove = ['<p>','</p>','<div>','</div>','<b>','</b>','<a>','</a>'];
+//          $followUp->details = str_replace($remove,'',$followUp->details);
+//          $followUp->save();
+//        }
+//      }
+//    }
 //
 //    foreach (\App\PDC::all() as $pdc){
 //      if($pdc->maf != 0) {

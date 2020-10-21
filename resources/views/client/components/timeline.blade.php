@@ -139,7 +139,14 @@
             <div class="card-body">
               <ul>
                 @foreach($client->followUp as $followUp)
-                  <li><strong>{{$followUp->subject}} | Added On: {{ $followUp->follow_up_on }} |</strong> <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editFollowUp{{ $followUp->id }}">Edit</button><br>
+                  <li><strong>{{$followUp->subject}} | Added On: {{ $followUp->follow_up_on }} |</strong>
+                    @if(Auth::user()->name == $followUp->type)
+                      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editFollowUp{{ $followUp->id }}">Edit</button>
+                      <form action="{{ route('delete.followUp',['id'=>$followUp->id]) }}" method="POST">
+                        @csrf
+                      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                      </form>
+                    @endif
                         <p>{!! $followUp->details !!}</p>
                     <strong>Added By: {{ $followUp->type }}</strong> </li>
                   <div class="modal fade" id="editFollowUp{{ $followUp->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -306,6 +313,7 @@
                   <option value="Cheque">Cheque</option>
                   <option value="No Formality">No Formality</option>
                 </select>
+              </div>
               </div>
             </div>
           </div>
