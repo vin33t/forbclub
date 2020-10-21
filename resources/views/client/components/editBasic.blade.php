@@ -35,6 +35,11 @@
             <label for="phone">Alternate Phone</label>
             <input type="number" name="altPhone" value="{{ $client->altPhone }}" class="form-control">
           </div>
+
+          <div class="col-md-12">
+            <label for="phone">Product Tenure</label>
+            <input type="number" name="productTenure" value="{{ $client->latestPackage->productTenure }}" class="form-control">
+          </div>
         </div>
       </div>
       <div class="modal-footer">
