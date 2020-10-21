@@ -439,5 +439,15 @@ class TransactionController extends Controller
       return redirect()->back();
     }
   }
+
+  public function editCard(Request $request, $transactionId){
+    $payment = CardPayment::find($transactionId);
+    $payment->paymentDate = $request->paymentDate;
+    $payment->amount = $request->paymentAmount;
+    $payment->cardType = $request->paymentCardType;
+    $payment->remarks = $request->paymentRemarks;
+    $payment->save();
+    return redirect()->back();
+  }
 }
 

@@ -11,6 +11,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
   });
 
+
+  Route::prefix('edit')->middleware(['role_or_permission:super-admin|edit-transaction'])->group(function () {
+    Route::post('/card/{transactionId}', 'Client\TransactionController@editCard')->name('edit.transaction.card');
+//    Route::post('/cash/{clientId}', 'Client\TransactionController@createCash')->name('create.transaction.cash');
+//    Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
+  });
+
     Route::get('/chart/profile/{clientId}', 'Client\TransactionController@displayTransactionPieChart')->name('display.transaction.pie.chart');
 
 

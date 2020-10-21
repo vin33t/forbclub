@@ -82,7 +82,7 @@
                         <td>{{ $transaciton['amount'] }}</td>
                         <td>{{ $transaciton['mode'] }}</td>
                         <td>{{ $transaciton['remarks'] }}</td>
-                        <td>{{ $transaciton['dp'] }}</td>
+                        <td>{{ $transaciton['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
                       </tr>
                     @endforeach
                   </tbody>
@@ -121,6 +121,7 @@
                   <th>Card Type</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -130,7 +131,49 @@
                   <td>{{ $cardPayment->amount }}</td>
                   <td>{{ $cardPayment->cardType }}</td>
                   <td>{{ $cardPayment->remarks }}</td>
-                  <td>{{ $cardPayment->idDp }}</td>
+                  <td>{{ $cardPayment->isDp == 1 ? 'Downpayment' : 'EMI' }}</td>
+                  <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCardPayment{{$cardPayment->id}}">Edit</button>
+                    <div class="modal fade" id="editCardPayment{{$cardPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Card Transaction</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="{{ route('edit.transaction.card',['transactionId'=>$cardPayment->id]) }}" method="POST">
+                            @csrf
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <label for="paymentDate">Payment Date</label>
+                                <input type="date" class="form-control" name="paymentDate" value="{{ $cardPayment->paymentDate }}" required>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="paymentAmount">Amount</label>
+                                <input type="number" class="form-control" name="paymentAmount" value="{{ $cardPayment->amount }}" required>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="paymentCardType">Card Type</label>
+                                <input type="text" class="form-control" name="paymentCardType" value="{{ $cardPayment->cardType }}" required>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="paymentRemarks">Remarks</label>
+                                <input type="text" class="form-control" name="paymentRemarks" value="{{ $cardPayment->remarks }}" required>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                  </td>
                 </tr>
                  @endforeach
                 </tbody>
@@ -142,6 +185,7 @@
                   <th>Card Type</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  <th>Action</th>
                 </tr>
                 </tfoot>
               </table>
