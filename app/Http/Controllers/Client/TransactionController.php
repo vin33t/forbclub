@@ -8,6 +8,7 @@ use App\Client\TimelineActivity;
 use App\Client\Transaction\AxisNachPayment;
 use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
+use App\Client\Transaction\ChequePayment;
 use App\Client\Transaction\TransactionMonth;
 use App\Client\Transaction\YesNachPayment;
 use App\DisableNach;
@@ -442,11 +443,29 @@ class TransactionController extends Controller
 
   public function editCard(Request $request, $transactionId){
     $payment = CardPayment::find($transactionId);
+    if($payment){
+
     $payment->paymentDate = $request->paymentDate;
     $payment->amount = $request->paymentAmount;
     $payment->cardType = $request->paymentCardType;
     $payment->remarks = $request->paymentRemarks;
     $payment->save();
+    }
+    return redirect()->back();
+  }
+
+
+  public function editCheque(Request $request, $transactionId){
+    $payment = ChequePayment::find($transactionId);
+    if($payment){
+    $payment->paymentDate = $request->paymentDate;
+    $payment->amount = $request->paymentAmount;
+    $payment->chequeNumber = $request->paymentChequeNumber;
+    $payment->chequeIssuer = $request->paymentChequeIssuer;
+    $payment->chequeClearingBank = $request->paymentChequeClearingBank;
+    $payment->remarks = $request->paymentRemarks;
+    $payment->save();
+    }
     return redirect()->back();
   }
 }

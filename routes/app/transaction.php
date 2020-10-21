@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
 
   Route::prefix('edit')->middleware(['role_or_permission:super-admin|edit-transaction'])->group(function () {
     Route::post('/card/{transactionId}', 'Client\TransactionController@editCard')->name('edit.transaction.card');
+    Route::post('/cheque/{transactionId}', 'Client\TransactionController@editCheque')->name('edit.transaction.cheque');
 //    Route::post('/cash/{clientId}', 'Client\TransactionController@createCash')->name('create.transaction.cash');
 //    Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
   });
