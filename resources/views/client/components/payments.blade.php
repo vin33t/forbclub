@@ -215,6 +215,7 @@
                   <th>Receipt Number</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -225,6 +226,49 @@
                   <td>{{ $cashPayment->receiptNumber }}</td>
                   <td>{{ $cashPayment->remarks }}</td>
                   <td>{{ $cashPayment->idDp }}</td>
+                  <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCashPayment{{$cashPayment->id}}">Edit</button>
+                    <div class="modal fade" id="editCashPayment{{$cashPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Cash Transaction</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="{{ route('edit.transaction.cash',['transactionId'=>$cashPayment->id]) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label for="paymentDate">Payment Date</label>
+                                  <input type="date" class="form-control" name="paymentDate" value="{{ $cashPayment->paymentDate }}" required>
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="paymentAmount">Amount</label>
+                                  <input type="number" class="form-control" name="paymentAmount" value="{{ $cashPayment->amount }}" required>
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="paymentReceiptNumber">Receipt Number</label>
+                                  <input type="text" class="form-control" name="paymentReceiptNumber" value="{{ $cashPayment->receiptNumber }}" required>
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="paymentRemarks">Remarks</label>
+                                  <input type="text" class="form-control" name="paymentRemarks" value="{{ $cashPayment->remarks }}" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                  </td>
+
                 </tr>
                  @endforeach
                 </tbody>
@@ -236,6 +280,7 @@
                   <th>Receipt Number</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  <th>Action</th>
                 </tr>
                 </tfoot>
               </table>

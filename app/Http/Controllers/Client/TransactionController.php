@@ -468,5 +468,17 @@ class TransactionController extends Controller
     }
     return redirect()->back();
   }
+
+  public function editCash(Request $request, $transactionId){
+    $payment = CashPayment::find($transactionId);
+    if($payment){
+    $payment->paymentDate = $request->paymentDate;
+    $payment->amount = $request->paymentAmount;
+    $payment->receiptNumber = $request->paymentReceiptNumber;
+    $payment->remarks = $request->paymentRemarks;
+    $payment->save();
+    }
+    return redirect()->back();
+  }
 }
 
