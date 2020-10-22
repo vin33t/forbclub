@@ -30,6 +30,18 @@
                 <input type="text" placeholder="Receipt Number" class="form-control" name="paymentChequeNumber" required>
               </div>
             </div>
+            <div class="col-md-6 col-sm-12">
+              <label>Cheque Issuer</label>
+              <div class="form-group">
+                <input type="text" placeholder="Cheque Issuer" class="form-control" name="paymentChequeIssuer" required>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <label>Cheque Clearing Bank</label>
+              <div class="form-group">
+                <input type="text" placeholder="Cheque Clearing Bank" class="form-control" name="paymentChequeClearingBank" required>
+              </div>
+            </div>
 
             <div class="col-md-3 col-sm-6">
               <fieldset>

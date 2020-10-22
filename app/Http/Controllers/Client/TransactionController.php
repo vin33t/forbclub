@@ -31,13 +31,14 @@ class TransactionController extends Controller
 {
   public function createCheque(Request $request, $clientId)
   {
+//    return $request;
     $request->validate([
-      'paymentReceivedOn'=>'required|date',
+      'chequeClearedOn'=>'required|date',
       'paymentAmount'=>'required|integer',
-      'paymentCardType'=>'required|string',
-      'paymentCardProvider'=>'required|string',
-      'paymentCardLastFourDigits'=>'required|integer',
-      'paymentCardRemarks'=>'required|string',
+      'paymentChequeNumber'=>'required|string',
+      'paymentChequeRemarks'=>'required|string',
+      'paymentChequeIssuer'=>'required|string',
+      'paymentChequeClearingBank'=>'required|string',
     ]);
     if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
       notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
@@ -45,16 +46,16 @@ class TransactionController extends Controller
     else {
       DB::beginTransaction();
       try {
-        $transaction = new CardPayment;
+        $transaction = new ChequePayment();
         $transaction->client_id = $clientId;
-        $transaction->paymentDate = $request->paymentReceivedOn;
+        $transaction->paymentDate = $request->chequeClearedOn;
         $transaction->amount = $request->paymentAmount;
-        $transaction->cardType = $request->paymentCardType;
-        $transaction->bankName = $request->paymentCardProvider;
-        $transaction->cardLastFourDigits = $request->paymentCardLastFourDigits;
+        $transaction->chequeNumber = $request->paymentChequeNumber;
         $transaction->isDp = $request->paymentDownPayment ? 1 : 0;
         $transaction->isAddon = $request->paymentAddOn ? 1 : 0;
-        $transaction->remarks = $request->paymentCardRemarks;
+        $transaction->remarks = $request->paymentChequeRemarks;
+        $transaction->chequeIssuer = $request->paymentChequeIssuer;
+        $transaction->chequeClearingBank = $request->paymentChequeClearingBank;
         $transaction->save();
         if($request->has('paymentForMonth')){
           $co = 0;
@@ -70,7 +71,7 @@ class TransactionController extends Controller
               'transaction_id'=>$transaction->id,
               'paidMonth'=>$month,
               'paidYear'=>$request->paymentForYear[$co],
-              'transactionType'=>'card',
+              'transactionType'=>'cheque',
             ]);
             $co ++;
           }
