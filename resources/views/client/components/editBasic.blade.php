@@ -41,6 +41,10 @@
             <input type="number" name="productTenure" value="{{ $client->latestPackage->productTenure }}" class="form-control">
           </div>
         </div>
+        <div class="col-md-12">
+            <label for="phone">Product Cost</label>
+            <input type="number" name="productCost" value="{{ $client->latestPackage->productCost }}" class="form-control">
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
