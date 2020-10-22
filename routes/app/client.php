@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
   Route::post('add/followUp','Client\ClientController@addFollowUp')->name('add.followUp');
   Route::post('delete/followUp/{id}','Client\ClientController@deleteFollowUp')->name('delete.followUp');
   Route::post('update/followUp/{id}','Client\ClientController@updateFollowUp')->name('update.followUp');
+  Route::post('upload/maf','Client\ClientController@uploadMaf')->name('upload.maf');
 
   Route::get('migrate','Client\ClientController@migrate');
   Route::get('mTxn',function(){

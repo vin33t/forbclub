@@ -38,14 +38,39 @@
         <h6 class="mb-0">Product:</h6>
         <p>{{ $package->productType }} | {{ $package->productName }} | {{ $package->productTenure }} Years | {{ inr($package->productCost) }}</p>
       </div>
-      @if($client->document)
+
       <div class="mt-1">
-        <h6 class="mb-0">View Maf</h6>
+        <h6 class="mb-0">MAF</h6>
         <p>
+          @if($client->document)
           <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Maf</button></a>
+          @else
+            <button data-toggle="modal" data-target="#uploadMaf" class="btn btn-warning">Upload MAF Now</button>
+        <div class="modal fade" id="uploadMaf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <form action="" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Upload MAF</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="file" class="form-control" name="maf" id="maf" required  accept="application/pdf"/>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+          @endif
         </p>
       </div>
-      @endif
       {{--              <div class="mt-1">--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-facebook"></i></button>--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-twitter"></i></button>--}}
