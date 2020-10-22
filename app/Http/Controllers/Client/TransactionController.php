@@ -31,7 +31,6 @@ class TransactionController extends Controller
 {
   public function createCheque(Request $request, $clientId)
   {
-    return $request;
     $request->validate([
       'paymentReceivedOn'=>'required|date',
       'paymentAmount'=>'required|integer',
