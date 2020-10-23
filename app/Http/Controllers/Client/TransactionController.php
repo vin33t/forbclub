@@ -91,7 +91,6 @@ class TransactionController extends Controller
       }
     }
     return redirect()->back();
-
   }
 
   public function createCard(Request $request, $clientId)

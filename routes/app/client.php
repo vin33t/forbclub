@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
 
   Route::post('update/mode-of-payment','Client\ClientController@updateModeOfPayment')->name('update.modeOfPayment');
+  Route::post('update/status/{id}','Client\ClientController@updateStatus')->name('update.status');
 
 
   Route::post('update/client-basic-details/{clientId}','Client\ClientController@updateBasicDetails')->name('update.basicDetails');

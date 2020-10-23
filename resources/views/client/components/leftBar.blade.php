@@ -38,6 +38,39 @@
         <h6 class="mb-0">Product:</h6>
         <p>{{ $package->productType }} | {{ $package->productName }} | {{ $package->productTenure }} Years | {{ inr($package->productCost) }}</p>
       </div>
+      <div class="mt-1">
+        <h6 class="mb-0">Status:</h6>
+        <p>{{ $package->status }} <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#updateStatus" >Update</button></p>
+        <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <form action="{{ route('update.status',['id'=>$package->id]) }}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Status</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <label for="">Status</label>
+                  <select name="status" id="" class="form-control" required>
+                    <option value="">--SELECT--</option>
+                    <option value="Active">Active</option>
+                    <option value="Breather">Breather</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
 
       <div class="mt-1">
         <h6 class="mb-0">MAF</h6>
