@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/', 'Client\ClientController@storeClient')->name('create.client');
   });
 
+    Route::get('/reports', 'Client\ClientController@reports')->name('client.reports');
 
   Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client')->middleware(['role_or_permission:super-admin|view-client']);
 
