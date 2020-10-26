@@ -1,10 +1,24 @@
 <div class="col-lg-3 col-12">
   <div class="card">
     <div class="card-header">
-      <h4>Bookings</h4>
+      <h4>Bookings <a href="{{ route('create.client.booking',['slug'=>$client->slug]) }}"><button class="btn btn-primary">+</button></a></h4>
     </div>
     <div class="card-body">
-      No Bookings Yet
+      @foreach($client->Bookings as $booking)
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="avatar mr-50">
+          <img src="{{ avatar($booking->holidayType) }}" alt="avtar img holder" height="35"
+               width="35">
+        </div>
+        <div class="user-page-info">
+          <h6 class="mb-0">{{ $booking->holidayType }}</h6>
+        </div>
+        <button type="button" class="btn btn-primary btn-icon ml-auto"  data-toggle="modal" data-target="#pacakgeBenefit{{$booking->id}}"><i class="feather icon-eye"></i>
+        </button>
+
+      </div>
+        @endforeach
+
     </div>
   </div>
   <div class="card">

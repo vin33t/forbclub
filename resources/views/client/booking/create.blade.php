@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <form action="" method="post">
+        <form action="{{ route('store.client.booking',['slug'=>$client->slug]) }}" method="post">
           @csrf
           <div class="card-body">
             <div class="row">
@@ -60,9 +60,9 @@
                 <label for="holiday_type">Holiday Type</label>
                 <select name="holiday_type" required id="" class="form-control">
                   <option value="">--SELECT--</option>
-                  @foreach($client->Packages->first()->Benefits->unique('benefitName') as $benefit)
-                  <option value="{{ $benefit->benefitName }}">{{ $benefit->benefitName }}</option>
-                  @endforeach
+                  <option value="Fully Paid Holiday">Fully Paid Holiday</option>
+                  <option value="Stay Only Holiday">Stay Only Holiday</option>
+                  <option value="Adjustment">Adjustment</option>
                 </select>
               </div>
             </div>

@@ -164,4 +164,8 @@ class Client extends Model
     return $this->hasMany('App\FollowUp','client_id');
   }
 
+  public function Bookings(){
+    return $this->hasMany('App\Client\Booking\Bookings','clientId');
+  }
+
 }
