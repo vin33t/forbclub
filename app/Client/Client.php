@@ -2,6 +2,8 @@
 
 namespace App\Client;
 
+use App\Client\Transaction\AxisNachPayment;
+use App\Client\Transaction\YesNachPayment;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
@@ -26,6 +28,49 @@ class Client extends Model
     $otherPayments = $this->OtherPayments->where('isDp',1)->pluck('amount')->sum();
     $payments = $cardPayments + $cashPayments + $chequePayments + $otherPayments;
     return $payments;
+  }
+
+  public function getPaidAmountAttribute()
+  {
+    $totalTransactions = collect();
+    if($this->cashPayments->count()){
+      foreach($this->CashPayments as $ca){
+        $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
+      }
+    }
+    if($this->cardPayments->count()){
+      foreach($this->CardPayments as $cad){
+        $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
+      }
+    }
+    if($this->chequePayments->count()){
+      foreach($this->chequePayments as $che){
+        $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
+      }
+    }
+    if($this->otherPayments->count()){
+      foreach($this->otherPayments as $oth){
+        $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
+      }
+    }
+
+    if($this->AxisPayments->count()){
+      foreach($this->AxisPayments as $axp){
+        if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
+          $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+        }
+      }
+    }
+
+    if($this->YesPayments->count()){
+      foreach($this->YesPayments as $yep){
+        if($yep->STATUS == 'ACCEPTED'){
+          $totalTransactions->push(['date'=>$yep->VALUE_DATE,'amount'=>$yep->AMOUNT,'remarks'=>$yep->REASON_CODE,'mode'=>'YES NACH','dp'=>'']);
+        }
+      }
+    }
+
+    return $totalTransactions->pluck('amount')->sum();
   }
 
   public function getTransactionSummaryAttribute()

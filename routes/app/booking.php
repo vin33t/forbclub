@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/{slug}', 'Client\BookingController@createBooking')->name('create.client.booking');
     Route::post('/{slug}', 'Client\BookingController@storeBooking')->name('store.client.booking');
   });
+    Route::get('/', 'Client\BookingController@index')->name('booking');
 
 
   // Booking Route Ends //

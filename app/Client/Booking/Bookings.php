@@ -11,4 +11,12 @@ class Bookings extends Model
     public function BookingInfo(){
       return $this->hasMany('App\Client\Booking\BookingInfo','bookings_id');
     }
+
+    public function Client(){
+      return $this->belongsTo('App\Client\Client','clientId');
+    }
+
+    public function Employee(){
+      return $this->belongsTo('App\User','addedBy');
+    }
 }

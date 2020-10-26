@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+
+  public function index(){
+    return view('client.booking.index');
+  }
+
     public function createBooking($slug)
     {
       $client = Client::where('slug',$slug)->first();
