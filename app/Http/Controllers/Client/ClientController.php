@@ -15429,6 +15429,8 @@ class ClientController extends Controller
       $package->productTenure = $request->productTenure;
       $package->productCost = $request->productCost;
       $package->emiAmount = $request->emiAmount;
+      $package->saleBy = $request->saleBy;
+      $package->saleManager = $request->saleManager;
       $package->save();
       $client->save();
     }

@@ -121,7 +121,7 @@
     </div>
   </div>
 
-  @if($package->saleBy)
+
   <div class="card">
     <div class="card-header">
       <h4 class="card-title">Sale By</h4>
@@ -138,7 +138,25 @@
       </div>
     </div>
   </div>
-  @endif
+
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Sale Manager</h4>
+    </div>
+    <div class="card-body suggested-block">
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="avatar mr-50">
+          <img src="{{ avatar($package->saleManager) }}" alt="avtar img holder" height="35"
+               width="35">
+        </div>
+        <div class="user-page-info">
+          <p>{{ $package->saleManager }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 </div>
