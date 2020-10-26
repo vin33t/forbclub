@@ -99,7 +99,13 @@
                 </tr>
                 <tr>
                   <th scope="row">EMI Amount</th>
-                  @if($client->latestPackage->noOfEmi)
+{{--                  @if($client->latestPackage->noOfEmi)--}}
+{{--                  <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>--}}
+{{--                  @else--}}
+{{--                    <th scope="row">{{ $client->latestPackage->emiAmount }}</th>--}}
+{{--                  @endif  --}}
+
+                  @if($client->latestPackage->emiAmount == 0)
                   <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>
                   @else
                     <th scope="row">{{ $client->latestPackage->emiAmount }}</th>
@@ -403,4 +409,3 @@
 {{--    @endforeach--}}
 
   </div>
-</div>

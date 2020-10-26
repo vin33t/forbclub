@@ -23,8 +23,35 @@
           <h6 class="mb-0">{{ $benefit->benefitName }}</h6>
           <span class="font-small-2">{{ $client->Packages->first()->Benefits->where('benefitName',$benefit->benefitName)->where('benefitAvailedOn',null)->count() }} Available</span>
         </div>
-        <button type="button" class="btn btn-primary btn-icon ml-auto"><i class="feather icon-send"></i>
+        <button type="button" class="btn btn-primary btn-icon ml-auto"  data-toggle="modal" data-target="#pacakgeBenefit{{$benefit->id}}"><i class="feather icon-eye"></i>
         </button>
+        <div class="modal fade" id="pacakgeBenefit{{$benefit->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{ $benefit->benefitName }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                @php
+                $bnfts = $client->Packages->first()->Benefits->where('benefitName',$benefit->benefitName);
+                @endphp
+                <ul>
+                @foreach($bnfts as $bnft)
+                  <li>{{ $bnft->benefitName }} - {{ $bnft->benefitDescription }}</li>
+                @endforeach
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+{{--                <button type="button" class="btn btn-primary">Save changes</button>--}}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
       @empty
         No Package Benefits Available
