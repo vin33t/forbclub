@@ -268,6 +268,7 @@
                 <th scope="row">MICR Number</th>
                 <th scope="row">Branch Name</th>
                 <th scope="row">Date Of Execution</th>
+                <th scope="row">Status</th>
                 <th scope="row">Remarks</th>
               </tr>
 
@@ -280,8 +281,48 @@
                 <td>{{ $pdc->micr_number }}</td>
                 <td>{{ $pdc->branch_name }}</td>
                 <td>{{ $pdc->date_of_execution }}</td>
+                <td>
+                  @if($pdc->status == 'unused')
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updatePDC{{$pdc->id}}">{{ $pdc->status }}</button>
+                  @else
+                    {{ $pdc->status }}
+                  @endif
+                </td>
                 <td>{{ $pdc->remarks }}</td>
+
               </tr>
+              <div class="modal fade" id="updatePDC{{$pdc->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Update PDC Status</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="{{ route('update.pdc.status',['id'=>$pdc->id]) }}" method="POST">
+                      @csrf
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="">Status</label>
+                          <select name="status" class="form-control">
+                            <option value="">--SELECT--</option>
+                            <option value="unused">Unused</option>
+                            <option value="CLEARED">Cleared</option>
+                            <option value="BOUNCED">Bounced</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
               @endforeach
               </tbody>
             </table>

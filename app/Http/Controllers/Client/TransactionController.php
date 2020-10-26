@@ -337,12 +337,36 @@ class TransactionController extends Controller
     $pdc->branch_name = $request->branch_name;
     $pdc->branch_address = $request->branch_address;
     $pdc->remarks= $request->remarks;
+    $pdc->status= 'unused';
     $pdc->employee_id = Auth::user()->id;
     $pdc->save();
 
     return redirect()->back()->withSuccess('PDC Added');
   }
 
+  public function updatePdcStatus(Request $request,$id){
+    $pdc = PDC::find($id);
+    if($pdc){
+      if($request->status == 'CLEARED'){
+        $transaction = new ChequePayment();
+        $transaction->client_id = $pdc->client_id;
+        $transaction->paymentDate = $pdc->date_of_execution;
+        $transaction->amount = $pdc->amount;
+        $transaction->chequeNumber = $pdc->cheque_no;
+        $transaction->isDp = 0;
+        $transaction->isAddon = 0;
+        $transaction->remarks = $pdc->remarks;
+        $transaction->chequeIssuer = $pdc->branch_name;
+        $transaction->chequeClearingBank = '';
+        $transaction->save();
+        $pdc->transaction_id = $transaction->id;
+      }
+      $pdc->status = $request->status;
+      $pdc->save();
+
+      return \redirect()->back();
+    }
+  }
 
   public function reimbursementIndex(){
 
@@ -479,5 +503,7 @@ class TransactionController extends Controller
     }
     return redirect()->back();
   }
+
+
 }
 
