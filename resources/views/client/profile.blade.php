@@ -75,8 +75,13 @@
     </div>
     <section id="profile-info">
       <div class="row">
-
-
+        @if($client->latestPackage->status == 'Cancelled')
+        <div class="col-md-12">
+          <div class="alert alert-danger">
+            Client Cancelled ({{ $client->latestPackage->remarks == ''? 'CANCELLED DUE TO NON PAYMENT' : $client->latestPackage->remarks }})
+          </div>
+        </div>
+        @endif
 
         @if(request()->show == 'payments')
         @include('client.components.payments',['client'=>$client])

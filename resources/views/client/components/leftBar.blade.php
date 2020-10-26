@@ -53,13 +53,22 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <label for="">Status</label>
-                  <select name="status" id="" class="form-control" required>
-                    <option value="">--SELECT--</option>
-                    <option value="Active">Active</option>
-                    <option value="Breather">Breather</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Status</label>
+                      <select name="status" id="" class="form-control" required>
+                        <option value="">--SELECT--</option>
+                        <option value="Active">Active</option>
+                        <option value="Breather">Breather</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="">Remarks</label>
+                      <textarea name="remarks" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
