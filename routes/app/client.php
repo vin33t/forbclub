@@ -55,13 +55,13 @@ Route::middleware('auth')->group(function () {
 //      }
 //    }
 //
-    foreach (\App\Client\Transaction\CashPayment::all() as $cash){
-      if($cash->ftk != 0) {
-        $client = \App\Client\Package\SoldPackages::where('fclpId',$cash->maf)->first();
-        $cash->client_id = $client->client->id;
-        $cash->save();
-      }
-    }
+//    foreach (\App\Client\Transaction\CashPayment::all() as $cash){
+//      if($cash->ftk != 0) {
+//        $client = \App\Client\Package\SoldPackages::where('fclpId',$cash->maf)->first();
+//        $cash->client_id = $client->client->id;
+//        $cash->save();
+//      }
+//    }
 //
 //    foreach (\App\Client\Transaction\ChequePayment::all() as $cheque){
 //      if($cheque->maf != 0) {

@@ -106,7 +106,9 @@
 {{--                  @endif  --}}
 
                   @if($client->latestPackage->emiAmount == 0)
+                    @if($client->latestPackage->noOfEmi)
                   <th scope="row">{{ round(($client->latestPackage->productCost - $cardPayments + $cashPayments + $chequePayments + $otherPayments) / $client->latestPackage->noOfEmi )}}</th>
+                      @endif
                   @else
                     <th scope="row">{{ $client->latestPackage->emiAmount }}</th>
                   @endif
