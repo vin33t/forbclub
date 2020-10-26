@@ -54,6 +54,6 @@ class BookingController extends Controller
       } catch(\Exception $e){
         DB::rollBack();
       }
-      return redirect()->back();
+      return redirect()->route('view.client',['slug'=>$client->slug]);
     }
 }
