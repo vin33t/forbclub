@@ -74,48 +74,32 @@
             <strong>Booking Remarks: {{ $booking->remarks }}</strong>
             <hr>
 
-{{--                <form action=""  method="post">--}}
-{{--                  @csrf--}}
-{{--                  <div class="row">--}}
-{{--                    <input type="hidden" name="booking_id" value="">--}}
-{{--                    <div class="col-md-12">--}}
-{{--                      <select name="approved_rejected" id="booking_status" required class="form-control">--}}
-{{--                        <option value="">--Select Status--</option>--}}
-{{--                        <option value="1">Approve</option>--}}
-{{--                        <option value="2">Reject</option>--}}
-{{--                      </select>--}}
-{{--                      <br>--}}
-{{--                      <div class="dhyaanRakho">--}}
-{{--                        <textarea placeholder="Enter Remarks..." name="approved_rejected_remarks" class="form-control" onkeyup="wordCountCheckKaro(this);" required></textarea>--}}
-{{--                        <br>--}}
-{{--                        <div class="text-center">--}}
-{{--                          <input type="submit" class="btn btn-primary submit" value="Save">--}}
-{{--                        </div>--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
-{{--                </form>--}}
 
-{{--              <form action="" method="post">--}}
-{{--                <div class="row">--}}
-{{--                  <input type="hidden" name="booking_id" value="">--}}
-{{--                  <div class="col-md-12">--}}
-{{--                    <select name="approved_rejected" id="booking_status" required class="form-control">--}}
-{{--                      <option value="">--Select Status--</option>--}}
-{{--                      <option value="1">Approve</option>--}}
-{{--                      <option value="2">Deny</option>--}}
-{{--                    </select>--}}
-{{--                    <br>--}}
-{{--                    <div class="dhyaanRakho">--}}
-{{--                      <textarea placeholder="Enter Remarks..." name="approved_rejected_remarks" class="form-control" onkeyup="wordCountCheckKaro(this);" required></textarea>--}}
-{{--                      <br>--}}
-{{--                      <div class="text-center">--}}
-{{--                        <input type="submit" class="btn btn-primary submit" value="Save">--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
-{{--              </form>--}}
+
+                <form action=""  method="post">
+                  @csrf
+                  <div class="row">
+                    <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                    <div class="col-md-12">
+                      <select name="approved_rejected" id="booking_status" required class="form-control">
+                        <option value="">--Select Status--</option>
+                        <option value="1">Approve</option>
+                        <option value="2">Reject</option>
+                      </select>
+                      <br>
+                      <div >
+                        <textarea placeholder="Enter Remarks..." name="approved_rejected_remarks" class="form-control" required></textarea>
+                        <br>
+                        <div class="text-center">
+                          <input type="submit" class="btn btn-primary submit" value="Save">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+
+
           </div>
         </div>
       </div>

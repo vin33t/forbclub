@@ -9,6 +9,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/card/{clientId}', 'Client\TransactionController@createCard')->name('create.transaction.card');
     Route::post('/cash/{clientId}', 'Client\TransactionController@createCash')->name('create.transaction.cash');
     Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
+    Route::post('/other/{clientId}', 'Client\TransactionController@createOther')->name('create.transaction.other');
   });
 
 

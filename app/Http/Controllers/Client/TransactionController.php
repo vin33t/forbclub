@@ -9,6 +9,7 @@ use App\Client\Transaction\AxisNachPayment;
 use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
 use App\Client\Transaction\ChequePayment;
+use App\Client\Transaction\OtherPayment;
 use App\Client\Transaction\TransactionMonth;
 use App\Client\Transaction\YesNachPayment;
 use App\DisableNach;
@@ -502,6 +503,60 @@ class TransactionController extends Controller
     $payment->save();
     }
     return redirect()->back();
+  }
+
+//  public function createOther(Request $request,$clientId){
+//    return $request;
+//  }
+
+  public function createOther(Request $request, $clientId)
+  {
+    $request->validate([
+      'paymentReceivedOn'=>'required|date',
+      'paymentAmount'=>'required|integer',
+      'modeOfPayment'=>'required|string',
+      'paymentCardRemarks'=>'required|string',
+    ]);
+    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
+      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
+    }
+    else {
+      DB::beginTransaction();
+      try {
+        $transaction = new OtherPayment();
+        $transaction->client_id = $clientId;
+        $transaction->paymentDate = $request->paymentReceivedOn;
+        $transaction->amount = $request->paymentAmount;
+        $transaction->modeOfPayment = $request->modeOfPayment;
+        $transaction->remarks = $request->paymentCardRemarks;
+        $transaction->save();
+        if($request->has('paymentForMonth')){
+          $co = 0;
+          foreach ($request->paymentForMonth as $month){
+            $transactionMonth = new TransactionMonth;
+////            return $request->paymentForMonth;
+//            $transactionMonth->transaction_id  =$transaction->id;
+//            $transactionMonth->paidMonth  =$month;
+//            $transactionMonth->paidYear  = $request->paymentForYear[$co];
+//            $transactionMonth->transactionType  = 'card';
+//            $transactionMonth->save();
+            $transactionMonth->create([
+              'transaction_id'=>$transaction->id,
+              'paidMonth'=>$month,
+              'paidYear'=>$request->paymentForYear[$co],
+              'transactionType'=>'card',
+            ]);
+            $co ++;
+          }
+        }
+        DB::commit();
+        notifyToast('success', 'Saved', 'Card Transaction Saved');
+      } catch (\Exception $e) {
+        DB::rollBack();
+      }
+    }
+    return redirect()->back();
+
   }
 
 

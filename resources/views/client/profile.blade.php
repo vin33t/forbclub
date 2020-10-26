@@ -104,6 +104,7 @@
 @include('client.transaction.add.cheque',['client'=>$client])
 @include('client.transaction.add.addTransaction',['client'=>$client])
 @include('client.transaction.addPdc',['client'=>$client])
+@include('client.transaction.add.otherTransaction',['client'=>$client])
 @include('client.transaction.disableNach',['client'=>$client])
 
 @include('client.components.editBasic',['client'=>$client])
@@ -217,6 +218,9 @@
         }
         if(key === 'Cheque'){
           $('#addChequeTransaction').modal();
+        }
+        if(key === 'Other Payments'){
+          $('#addOtherTransaction').modal();
         }
         if(key === 'Disable NACH'){
           $('#disableNach').modal();
