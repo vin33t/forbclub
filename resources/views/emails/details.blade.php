@@ -99,7 +99,7 @@
           <h4><span>Number of EMI's</span> {{$client->latestPackage->noOfEmi}}</h4>
           <!--                <h4><span>EMI Amount</span> INR 3,000/-</h4>-->
           <h4><span>EMI Due Date</span> 5th of every month till {{ Carbon\Carbon::parse($client->latestPackage->enrollmentDate)->addMonths($client->latestPackage->noOfEmi)->format('F Y\\') }}</h4>
-          <h4><span>Annual Service Charges (ASC)* Amount</span>  @if($client->latestPackge->asc != NULL) {{ $client->latestPackage->asc }} @else NA @endif</h4>
+          <h4><span>Annual Service Charges (ASC)* Amount</span>  @if($client->latestPackage->asc != NULL) {{ $client->latestPackage->asc }} @else NA @endif</h4>
 {{--          <h4><span>ASC Due</span>  NA</h4>--}}
           <p class="font-weight-bold mt-3">*Annual Service Charges may be revised from time by Forb and the Member undertakes to pay the ASC every year within the time stipulated. Tax charges indicated is as per the rates applicable as on date. This is subject to changes as per Govt. Notification. </p><br><hr>
 

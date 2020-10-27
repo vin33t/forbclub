@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Comparator\Book;
 
 class BookingController extends Controller
 {
@@ -60,5 +61,10 @@ class BookingController extends Controller
         DB::rollBack();
       }
       return redirect()->route('view.client',['slug'=>$client->slug]);
+    }
+
+    public function updateStatus($bookingId){
+      $booking =  Bookings::find($bookingId);
+      return $booking;
     }
 }
