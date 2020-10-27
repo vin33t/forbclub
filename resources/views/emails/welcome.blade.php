@@ -42,7 +42,7 @@
         Please do take some time out to familiarize yourself with all the documentation and details we are providing attached with this mail. For any correction of personal details or require any other clarifications, you may email us at <b>feedback@forbclub.com</b>. We can hardly wait to assist you plan your first holiday with Forb. Do mail us at <b>booking@forbclub.com</b> for booking your holidays or to check availability at your destination. For further information or any kind of travel assistance, please write to us at <b>support@forbclub.com</b>.
         <br><br>
 
-        We have a dedicated New Member Helpline 1800 137 0122 or you may call us at +91 172 5252 001* (9.00am to 6.00pm; for HP, Haryana, J&K and Punjab only) to answer all your queries pertaining to your new Leisureship.
+        We have a dedicated New Member Helpline 1800-5720-530 or you may reach Member Relationship Department at +91 8264097782 and Accounts Department at +91 8264096782(9.00am to 6.00pm; for HP, Haryana, J&K and Punjab only) to answer all your queries pertaining to your new Leisureship.
         <br><br>
 
         We look forward to having you and your family vacation with us soon.
