@@ -108,7 +108,7 @@
             <span>
                                 @forelse($client->latestPackage->Benefits as $benefit)
                 {{ $benefit->benefitName }} @if($benefit->benefitDescription ) @endif
-                @if($details->benefits->count() > 1) + @endif
+                @if($client->latestPackage->Benefits->count() > 1) + @endif
               @empty
                 {{ 'No Enrolment Benefits' }}
               @endforelse
