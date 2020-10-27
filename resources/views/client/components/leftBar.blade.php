@@ -157,6 +157,41 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">EKIT <a href="{{ route('client.sendekit',['slug'=>$client->slug]) }}"><button class="btn btn-sm btn-primary">Send</button></a></h4>
+    </div>
+    <div class="card-body suggested-block">
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="avatar mr-50">
+          <img src="{{ avatar('Certificate') }}" alt="avtar img holder" height="35"
+               width="35">
+        </div>
+        <div class="user-page-info">
+          <p><a href="{{ route('client.certificate',['slug'=>$client->slug]) }}" target="_blank">Certificate</a></p>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="avatar mr-50">
+          <img src="{{ avatar('Welcome Letter') }}" alt="avtar img holder" height="35"
+               width="35">
+        </div>
+        <div class="user-page-info">
+          <p><a href="{{ route('client.welcomeletter',['slug'=>$client->slug]) }}" target="_blank">Welcome Letter</a></p>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="avatar mr-50">
+          <img src="{{ avatar('E MAF') }}" alt="avtar img holder" height="35"
+               width="35">
+        </div>
+        <div class="user-page-info">
+          <p><a href="{{ route('client.emaf',['slug'=>$client->slug]) }}" target="_blank">EMAF</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 </div>

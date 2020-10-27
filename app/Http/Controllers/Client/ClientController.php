@@ -7,6 +7,7 @@ use App\Client\Package\SoldPackageBenefits;
 use App\Client\TimelineActivity;
 use App\Http\Controllers\Controller;
 use App\Client\Package\SoldPackages;
+use App\Jobs\SendEkitJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15472,4 +15473,42 @@ class ClientController extends Controller
     public function reports(){
     return 'asdjhvasdj abs djhvhkasdkh';
     }
+
+    public function eMaf($slug){
+        $client =  Client::where('slug',$slug)->get()->first();
+        if($client){
+          return view('emails.details')->with('client',$client);
+        }
+        return redirect()->back();
+    }
+
+    public function welcomeLetter($slug){
+      $client =  Client::where('slug',$slug)->get()->first();
+      if($client){
+        return view('emails.welcome')->with('client',$client);
+      }
+      return redirect()->back();
+    }
+
+    public function certificate($slug){
+      $client =  Client::where('slug',$slug)->get()->first();
+      if($client){
+        return view('emails.certificate')->with('client',$client);
+      }
+      return redirect()->back();
+    }
+
+    public function sendEkit($slug){
+      $details = Client::where('slug',$slug)->get()->first();
+      $contactEmail = $details->email;
+      $contactName = $details->name;
+
+      $details['email'] = $contactEmail;
+      $details['id'] = $details->id;
+
+      dispatch(new SendEkitJob($details,Carbon::now()->toDateString(),Auth::id()));
+      $message = 'Sent to ' . $contactName;
+      return redirect()->back();
+    }
+
 }

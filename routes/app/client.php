@@ -19,6 +19,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/reports', 'Client\ClientController@reports')->name('client.reports');
 
+
+    Route::get('/e-maf/{slug}', 'Client\ClientController@eMaf')->name('client.emaf');
+    Route::get('/certificate/{slug}', 'Client\ClientController@certificate')->name('client.certificate');
+    Route::get('/welcome-letter/{slug}', 'Client\ClientController@welcomeLetter')->name('client.welcomeletter');
+    Route::get('/send-ekit/{slug}', 'Client\ClientController@sendEkit')->name('client.sendekit');
+
   Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client')->middleware(['role_or_permission:super-admin|view-client']);
 
   Route::prefix('comment')->middleware(['role_or_permission:super-admin|view-client'])->group(function () {
