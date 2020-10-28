@@ -57,11 +57,11 @@
           </div>
         <div class="col-md-12">
           <label for="phone">Sale By</label>
-          <input type="number" name="saleBy" value="{{ $client->latestPackage->saleBy }}" class="form-control">
+          <input type="text" name="saleBy" value="{{ $client->latestPackage->saleBy }}" class="form-control">
         </div>
         <div class="col-md-12">
           <label for="phone">Sale Manager</label>
-          <input type="number" name="saleManager" value="{{ $client->latestPackage->saleManager }}" class="form-control">
+          <input type="text" name="saleManager" value="{{ $client->latestPackage->saleManager }}" class="form-control">
         </div>
       </div>
       <div class="modal-footer">

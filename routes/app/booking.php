@@ -17,10 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/offer/{bookingId}', 'Client\BookingController@bookingOffer')->name('booking.offer');
     Route::post('/offer/{bookingId}/store', 'Client\BookingController@storeBookingOffer')->name('store.booking.offer');
   });
+
     Route::get('/', 'Client\BookingController@index')->name('booking');
     Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
 
     Route::post('/status/update/{bookingId}', 'Client\BookingController@updateStatus')->name('update.booking.status');
+
+
+    Route::post('/approve/offer/{offerId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
   // Booking Route Ends //
 
 });

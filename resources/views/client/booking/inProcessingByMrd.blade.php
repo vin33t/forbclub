@@ -114,7 +114,7 @@
                   @else
                     <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-success">View Offer</button></a>
                     <hr>
-                    <form action="{{ route('update.booking.status',['bookingId'=>$booking->id]) }}"  method="post">
+                    <form action=""  method="post">
                       @csrf
                       <div class="row">
                         <input type="hidden" name="booking_id" value="{{ $booking->id }}">
