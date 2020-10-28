@@ -6,6 +6,7 @@ use App\Client\Booking\BookingInfo;
 use App\Client\Booking\Bookings;
 use App\Client\Client;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,8 +64,13 @@ class BookingController extends Controller
       return redirect()->route('view.client',['slug'=>$client->slug]);
     }
 
-    public function updateStatus($bookingId){
+    public function updateStatus(Request $request,$bookingId){
       $booking =  Bookings::find($bookingId);
-      return $booking;
+      $booking->status = $request->status;
+      $booking->statusRemarks = $request->remarks;
+      $booking->statusUpdatedBy = Auth::user()->id;
+      $booking->statusUpdatedOn = Carbon::now();
+      $booking->save();
+      return redirect()->back();
     }
 }

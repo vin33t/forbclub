@@ -34,6 +34,7 @@ class CreateBookingsTable extends Migration
             $table->longText('remarks');
             $table->string('status')->nullable();
             $table->longText('statusRemarks')->nullable();
+            $table->integer('statusUpdatedBy')->nullable();
             $table->string('addedBy')->nullable();
             $table->timestamps();
         });

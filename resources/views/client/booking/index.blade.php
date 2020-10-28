@@ -75,29 +75,41 @@
             <hr>
 
 
-
-                <form action=""  method="post">
+              @if($booking->status == NULL)
+                <form action="{{ route('update.booking.status',['bookingId'=>$booking->id]) }}"  method="post">
                   @csrf
                   <div class="row">
                     <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                     <div class="col-md-12">
-                      <select name="approved_rejected" id="booking_status" required class="form-control">
+                      <select name="status" id="booking_status" required class="form-control">
                         <option value="">--Select Status--</option>
-                        <option value="1">Approve</option>
-                        <option value="2">Reject</option>
+                        <option value="approved">Approve</option>
+                        <option value="rejected">Reject</option>
                       </select>
                       <br>
                       <div >
-                        <textarea placeholder="Enter Remarks..." name="approved_rejected_remarks" class="form-control" required></textarea>
+                        <textarea placeholder="Enter Remarks..." name="remarks" class="form-control" required></textarea>
                         <br>
                         <div class="text-center">
-                          <input type="submit" class="btn btn-primary submit" value="Save">
+                          <button class="btn btn-primary" type="submit">Update</button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </form>
+              @else
+              <hr>
+              @if($booking->status == 'approved')
+                  <strong>Approved By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
+                  <strong>Approved On: {{ Carbon\Carbon::parse($booking->statusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
+                  <strong>Remarks: {{ $booking->statusRemarks }}</strong>
 
+              @elseif($booking->status == 'rejected')
+                <strong>Rejected By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
+                <strong>Rejected On: {{ Carbon\Carbon::parse($booking->statusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
+                <strong>Remarks: {{ $booking->statusRemarks }}</strong>
+                @endif
+              @endif
 
 
           </div>
