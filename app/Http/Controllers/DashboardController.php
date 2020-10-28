@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     // Dashboard - Analytics
     public function dashboardAnalytics(){
+
+      if(Auth::user()->client){
+          $client = Auth::user()->client;
+        $breadcrumbs = [
+          ['link' => "/dashboard-analytics", 'name' => "Home"], ['name' => "Client"], ['name' => $client->name]
+        ];
+        return view('/client/profile', [
+          'breadcrumbs' => $breadcrumbs
+        ], compact('client'));
+      } else {
+
         $pageConfigs = [
             'pageHeader' => false
         ];
@@ -15,7 +27,12 @@ class DashboardController extends Controller
         return view('/pages/dashboard-analytics', [
             'pageConfigs' => $pageConfigs
         ]);
+
+      }
+
     }
+
+
 
     // Dashboard - Ecommerce
     public function dashboardEcommerce(){

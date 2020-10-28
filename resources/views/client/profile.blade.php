@@ -26,6 +26,9 @@
       </ul>
     </div>
   @endif
+  @php
+      $user  = \Illuminate\Support\Facades\Auth::user();
+  @endphp
   <div id="user-profile">
     <div class="row">
       <div class="col-12">
@@ -38,6 +41,8 @@
             <div class="profile-img-container d-flex align-items-center justify-content-between">
               <img src="{{ avatar($client->name) }}"
                    class="rounded-circle img-border box-shadow-1" alt="Card image">
+
+              @if($user->employee)
               <div class="float-right">
                 <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" data-toggle="modal" data-target="#editBasicClientDetails">
                   <i class="feather icon-edit-2"></i>
@@ -46,6 +51,8 @@
                   <i class="feather icon-settings"></i>
                 </button>
               </div>
+              @endif
+
             </div>
           </div>
           <div class="d-flex justify-content-end align-items-center profile-header-nav">
@@ -63,9 +70,12 @@
                   <li class="nav-item px-sm-0">
                     <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}" class="nav-link font-small-3" id="client-payment-page">Payments</a>
                   </li>
-                  <li class="nav-item px-sm-0">
-                    <a href="#" class="nav-link font-small-3">Holidays</a>
-                  </li>
+{{--                  --}}
+{{--                  <li class="nav-item px-sm-0">--}}
+{{--                    <a href="#" class="nav-link font-small-3">Holidays</a>--}}
+{{--                  </li>--}}
+
+
                 </ul>
               </div>
             </nav>
@@ -99,6 +109,9 @@
     </section>
   </div>
 
+
+  @if($user->employee)
+
 @include('client.transaction.add.card',['client'=>$client])
 @include('client.transaction.add.cash',['client'=>$client])
 @include('client.transaction.add.cheque',['client'=>$client])
@@ -109,7 +122,7 @@
 
 @include('client.components.editBasic',['client'=>$client])
 
-
+@endif
 @endsection
 
 
@@ -129,6 +142,7 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.bootstrap.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
 @endsection
+
 @section('page-script')
   <script>
 
@@ -197,7 +211,10 @@
 
   <script src="{{ asset(mix('js/scripts/pages/user-profile.js')) }}"></script>
 {{--  <script src="{{ asset(mix('js/scripts/extensions/context-menu.js')) }}"></script>--}}
-  <script>
+
+  @if($user->employee)
+
+    <script>
     function eventFire(el, etype){
       if (el.fireEvent) {
         el.fireEvent('on' + etype);
@@ -268,6 +285,8 @@
       return true;
     }
   </script>
+  @endif
+
   @if(count($client->transactionSummaryChart))
   <script>
 

@@ -14,12 +14,14 @@
         <div class="navbar-wrapper">
           <div class="navbar-container content">
             <div class="navbar-collapse" id="navbar-mobile">
+
               <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav">
                   <li class="nav-item mobile-menu d-xl-none mr-auto"><a
                       class="nav-link nav-menu-main menu-toggle hidden-xs"
                       href="#"><i class="ficon feather icon-menu"></i></a></li>
                 </ul>
+                @if(\Illuminate\Support\Facades\Auth::user()->employee)
 
                 <ul class="nav navbar-nav">
                   <li class="nav-item d-none d-lg-block">
@@ -37,7 +39,10 @@
                     </form>
                   </li>
                 </ul>
+                  @endif
               </div>
+
+
               <ul class="nav navbar-nav float-right">
                 <li class="dropdown dropdown-language nav-item">
                   <a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown"
@@ -62,8 +67,11 @@
                 </li>
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
                       class="ficon feather icon-maximize"></i></a></li>
+                @if(\Illuminate\Support\Facades\Auth::user()->employee)
+
                 <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i
                       class="ficon feather icon-search"></i></a>
+
                   <div class="search-input" id="navSearchClientDiv">
                     <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
                     <input class="input" type="text" placeholder="Search Client...." id="navSearchClientInput"
@@ -73,6 +81,8 @@
                     <ul class="search-list search-list-main"></ul>
                   </div>
                 </li>
+
+                @endif
                 <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                                                                href="#"
                                                                data-toggle="dropdown">

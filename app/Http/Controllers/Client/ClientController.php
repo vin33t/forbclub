@@ -24,7 +24,11 @@ class ClientController extends Controller
 
   public function viewClient($slug)
   {
+    if(Auth::user()->client){
+      $client = Auth::user()->client;
+    } else{
     $client = Client::where('slug', $slug)->first();
+    }
     if ($client) {
 
       $breadcrumbs = [

@@ -122,7 +122,9 @@
                   <th>Last Four Digits</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  @if($user->employee)
                   <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -134,6 +136,8 @@
                   <td>{{ $cardPayment->cardLastFourDigits }}</td>
                   <td>{{ $cardPayment->remarks }}</td>
                   <td>{{ $cardPayment->isDp == 1 ? 'Downpayment' : 'EMI' }}</td>
+                  @if($user->employee)
+
                   <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCardPayment{{$cardPayment->id}}">Edit</button>
                     <div class="modal fade" id="editCardPayment{{$cardPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -176,6 +180,7 @@
                     </div>
 
                   </td>
+                    @endif
                 </tr>
                  @endforeach
                 </tbody>
@@ -188,7 +193,10 @@
                   <th>Last Four Digits</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                  @if($user->employee)
+
                   <th>Action</th>
+                    @endif
                 </tr>
                 </tfoot>
               </table>
@@ -218,7 +226,10 @@
                   <th>Receipt Number</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                          @if($user->employee)
+
                   <th>Action</th>
+                            @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -228,7 +239,10 @@
                   <td>{{ $cashPayment->amount }}</td>
                   <td>{{ $cashPayment->receiptNumber }}</td>
                   <td>{{ $cashPayment->remarks }}</td>
+                          @if($user->employee)
+
                   <td>{{ $cashPayment->isDp ? 'Downpayment' : 'EMI'}}</td>
+                  @endif
                   <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCashPayment{{$cashPayment->id}}">Edit</button>
                     <div class="modal fade" id="editCashPayment{{$cashPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -283,7 +297,10 @@
                   <th>Receipt Number</th>
                   <th>Remarks</th>
                   <th>DP</th>
+                          @if($user->employee)
+
                   <th>Action</th>
+                            @endif
                 </tr>
                 </tfoot>
               </table>
@@ -315,7 +332,10 @@
                       <th>Cheque Clearing Bank</th>
                       <th>Remarks</th>
                       <th>DP</th>
+                      @if($user->employee)
+
                       <th>Action</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -328,6 +348,8 @@
                         <td>{{ $chequePayment->chequeClearingBank }}</td>
                         <td>{{ $chequePayment->remarks }}</td>
                         <td>{{ $chequePayment->isDp == 1 ? 'Downpayment' : 'EMI' }}</td>
+                        @if($user->employee)
+
                         <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editChequePayment{{$chequePayment->id}}">Edit</button>
                           <div class="modal fade" id="editChequePayment{{$chequePayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -379,6 +401,8 @@
 
                         </td>
 
+                          @endif
+
                       </tr>
                     @endforeach
                     </tbody>
@@ -392,7 +416,10 @@
                       <th>Cheque Clearing Bank</th>
                       <th>Remarks</th>
                       <th>DP</th>
+                      @if($user->employee)
+
                       <th>Action</th>
+                        @endif
                     </tr>
                     </tfoot>
                   </table>

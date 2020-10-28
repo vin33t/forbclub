@@ -70,9 +70,9 @@
       @empty
         No Package Benefits Available
       @endforelse
-
-      <button type="button" class="btn btn-primary w-100 mt-1" onclick="$('#addPackageBenefitModal').modal()">Add</button>
-
+        @if($user->employee)
+        <button type="button" class="btn btn-primary w-100 mt-1" onclick="$('#addPackageBenefitModal').modal()">Add</button>
+@endif
     </div>
   </div>
   <div class="card">

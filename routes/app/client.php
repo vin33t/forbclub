@@ -26,7 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/welcome-letter/{slug}', 'Client\ClientController@welcomeLetter')->name('client.welcomeletter');
     Route::get('/send-ekit/{slug}', 'Client\ClientController@sendEkit')->name('client.sendekit');
 
-  Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client')->middleware(['role_or_permission:super-admin|view-client']);
+//  Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client')->middleware(['role_or_permission:super-admin|view-client']);
+  Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client');
 
   Route::prefix('comment')->middleware(['role_or_permission:super-admin|view-client'])->group(function () {
     Route::post('/{activityId}', 'Client\ClientController@storeTimelineComment')->name('create.client.timelineComment');

@@ -137,6 +137,10 @@
         </div>
       </div>
     </div>
+
+    @if($user->employee)
+
+    {{--    Follow Ups--}}
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -209,9 +213,6 @@
         </div>
       </div>
     </div>
-
-
-
     <!-- Modal -->
     <div class="modal fade" id="addFollowUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -253,6 +254,11 @@
         </div>
       </div>
     </div>
+{{--end followUp--}}
+    @endif
+
+
+    @if($user->employee)
 
     @if($client->Pdc->count())
     <div class="col-md-12">
@@ -373,35 +379,39 @@
           </form>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="addAsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Annual Subscription Charges</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="{{ route('add.asc') }}" method="post">
-            @csrf
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-12">
-                <input type="hidden" name="client" value="{{ $client->id }}">
-                <label for="asc">Annual Subscription Charges</label>
-                <input type="number" name="asc" id="asc" class="form-control" required>
-              </div>
+      <div class="modal fade" id="addAsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Annual Subscription Charges</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <form action="{{ route('add.asc') }}" method="post">
+              @csrf
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="hidden" name="client" value="{{ $client->id }}">
+                    <label for="asc">Annual Subscription Charges</label>
+                    <input type="number" name="asc" id="asc" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="Submit" class="btn btn-primary">Add</button>
+              </div>
+            </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="Submit" class="btn btn-primary">Add</button>
-          </div>
-          </form>
         </div>
       </div>
-    </div>
+
+    @endif
+
+  </div>
+
     {{--    @foreach($client->TimelineActivity->sortByDesc('created_at') as $activity)--}}
 {{--      <div class="col-md-12">--}}
 {{--        <div class="card">--}}

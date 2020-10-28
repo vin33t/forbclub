@@ -40,7 +40,13 @@
       </div>
       <div class="mt-1">
         <h6 class="mb-0">Status:</h6>
-        <p>{{ $package->status }} <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#updateStatus" >Update</button></p>
+        <p>{{ $package->status }}
+          @if($user->employee)
+            <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#updateStatus" >Update</button>
+          @endif
+        </p>
+        @if($user->employee)
+
         <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <form action="{{ route('update.status',['id'=>$package->id]) }}" method="post" enctype="multipart/form-data">
@@ -78,7 +84,7 @@
             </form>
           </div>
         </div>
-
+@endif
       </div>
 
       <div class="mt-1">
@@ -87,29 +93,33 @@
           @if($client->document)
           <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Maf</button></a>
           @else
-            <button data-toggle="modal" data-target="#uploadMaf" class="btn btn-warning">Upload MAF Now</button>
-        <div class="modal fade" id="uploadMaf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <form action="{{ route('upload.maf') }}" method="post" enctype="multipart/form-data">
-              @csrf
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Upload MAF</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+            @if($user->employee)
+              <button data-toggle="modal" data-target="#uploadMaf" class="btn btn-warning">Upload MAF Now</button>
+             <div class="modal fade" id="uploadMaf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <form action="{{ route('upload.maf') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload MAF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <input type="file" class="form-control" name="maf" id="maf" required  accept="application/pdf"/>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  <input type="file" class="form-control" name="maf" id="maf" required  accept="application/pdf"/>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
+        @else
+          {{ __('MAF NOT UPLOADED') }}
+        @endif
           @endif
         </p>
       </div>
@@ -121,7 +131,9 @@
     </div>
   </div>
 
+  @if($user->employee)
 
+  {{--sale BY--}}
   <div class="card">
     <div class="card-header">
       <h4 class="card-title">Sale By</h4>
@@ -139,7 +151,7 @@
     </div>
   </div>
 
-
+{{--sale manager--}}
   <div class="card">
     <div class="card-header">
       <h4 class="card-title">Sale Manager</h4>
@@ -156,10 +168,14 @@
       </div>
     </div>
   </div>
-
+@endif
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">EKIT <a href="{{ route('client.sendekit',['slug'=>$client->slug]) }}"><button class="btn btn-sm btn-primary">Send</button></a></h4>
+      <h4 class="card-title">EKIT
+        @if($user->employee)
+          <a href="{{ route('client.sendekit',['slug'=>$client->slug]) }}"><button class="btn btn-sm btn-primary">Send</button></a>
+      @endif
+      </h4>
     </div>
     <div class="card-body suggested-block">
       <div class="d-flex justify-content-start align-items-center mb-1">
