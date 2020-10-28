@@ -41,6 +41,10 @@ class User extends Authenticatable
     public function Employee(){
       return $this->belongsTo('App\Employee');
     }
+
+    public function Client(){
+      return $this->belongsTo('App\Client\Client');
+    }
   public function LoginLog(){
     return $this->hasMany('App\LoginLog');
   }

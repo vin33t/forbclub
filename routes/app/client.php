@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
   Route::prefix('create')->middleware(['role_or_permission:super-admin|create-client'])->group(function () {
     Route::get('/', 'Client\ClientController@createClient')->name('create.client');
     Route::post('/', 'Client\ClientController@storeClient')->name('create.client');
+    Route::post('/login/{slug}', 'Client\ClientController@createLogin')->name('create.client.login');
   });
 
     Route::get('/reports', 'Client\ClientController@reports')->name('client.reports');

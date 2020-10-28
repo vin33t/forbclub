@@ -27,6 +27,7 @@ class CreateClientsTable extends Migration
       $table->string('relationShipWithClient')->nullable();
       $table->date('coDob')->nullable();
       $table->longText('slug');
+      $table->longText('lastLogin');
       $table->timestamps();
     });
   }

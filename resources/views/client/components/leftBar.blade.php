@@ -193,5 +193,26 @@
   </div>
 
 
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Last Login @if(!$client->user)
+          <form action="{{ route('create.client.login',['slug'=>$client->slug]) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-primary">Create Login</button>
+          </form>
+        @endif</h4>
+    </div>
+
+    <div class="card-body suggested-block">
+      <div class="d-flex justify-content-start align-items-center mb-1">
+        <div class="user-page-info">
+          <p>@if($client->login) {{ $client->lastLogin == NULL ? $client->lastLogin : 'Login Never Used'}} @else {{ __('Login Not Created') }} @endif</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
 
 </div>

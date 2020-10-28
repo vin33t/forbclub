@@ -213,4 +213,8 @@ class Client extends Model
     return $this->hasMany('App\Client\Booking\Bookings','clientId');
   }
 
+  public function User(){
+    return $this->hasOne('App\User');
+  }
+
 }

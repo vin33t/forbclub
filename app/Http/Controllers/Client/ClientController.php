@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Client;
 use App\Client\Client;
 use App\Client\Package\SoldPackageBenefits;
 use App\Client\TimelineActivity;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Client\Package\SoldPackages;
 use App\Jobs\SendEkitJob;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\FollowUp;
 use App\Document;
+use Illuminate\Support\Facades\Hash;
 
 
 class ClientController extends Controller
@@ -15508,6 +15511,22 @@ class ClientController extends Controller
 
       dispatch(new SendEkitJob($details,Carbon::now()->toDateString(),Auth::id()));
       $message = 'Sent to ' . $contactName;
+      return redirect()->back();
+    }
+
+    public function createLogin($slug){
+        $client = Client::where('slug',$slug)->get()->first();
+      if (!User::where('email', $client->email)->count()) {
+        $client->User()->create([
+          'name' => $client->name,
+          'email' => strtolower($client->email),
+          'client_id' => $client->id,
+          'password' => Hash::make($client->email),
+        ]);
+        notifyToast('success', 'Login Created', $client->name . '\'s Login Created Successfully');
+      } else {
+        notifyToast('error', 'Duplicate Email', 'Login with email: ' . $client->email . ' already exists, Please Update the email and try again');
+      }
       return redirect()->back();
     }
 
