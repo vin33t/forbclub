@@ -19,4 +19,8 @@ class Bookings extends Model
     public function Employee(){
       return $this->belongsTo('App\User','addedBy');
     }
+
+    public function BookingOffer(){
+      return$this->hasOne('App\Client\Booking\BookingOffer','bookings_id');
+    }
 }

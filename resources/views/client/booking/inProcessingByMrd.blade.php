@@ -16,14 +16,15 @@
         <div class="col-md-6">
           <div class="card card-box">
             <div class="card-head">
-              <div class="row">
+              <div class="row text-center">
                 <div class="col-md-4 pull-left">
                   <a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}" target="_blank"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-md-4 center"><h4 class="font-weight-bold"><b>{{ $booking->client->name }}</b></h4></div>
 
               </div>
-              <div class="row">
+
+              <div class="row text-center">
                 <div class="col-md-4 center pull-left">Booking Date<br><h5 class="font-weight-bold"><b> {{ \Carbon\Carbon::parse(($booking->bookingRequestDate))->format('l, F jS, Y\\') }} </b></h5></div>
                 <div class="col-md-4 center pull-right">Travel Date<br><h5 class="font-weight-bold"><b> {{ \Carbon\Carbon::parse(($booking->travelDate))->format('l, F jS, Y\\') }}</b></h5></div>
                 <div class="col-md-4 center pull-right">Enrollment Date<br><h5 class="font-weight-bold"><b>{{ \Carbon\Carbon::parse(($booking->client->latestPackage->enrollmentDate))->format('l, F jS, Y\\') }}</b></h5></div>
@@ -99,10 +100,44 @@
                 </form>
               @else
                 <hr>
+              <div class="row">
+                <div class="col-md-12">
+
                 @if($booking->status == 'approved')
                   <strong>Approved By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
                   <strong>Approved On: {{ Carbon\Carbon::parse($booking->statusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
-                  <strong>Remarks: {{ $booking->statusRemarks }}</strong>
+                  <strong>Remarks: {{ $booking->statusRemarks }}</strong> <br>
+                </div>
+                <div class="col-md-12 text-center">
+                @if(!$booking->bookingOffer)
+                    <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-primary">Create Offer</button></a>
+                  @else
+                    <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-success">View Offer</button></a>
+                    <hr>
+                    <form action="{{ route('update.booking.status',['bookingId'=>$booking->id]) }}"  method="post">
+                      @csrf
+                      <div class="row">
+                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                        <div class="col-md-12">
+                          <select name="status" id="booking_status" required class="form-control">
+                            <option value="">--Select Status--</option>
+                            <option value="approved">Approve</option>
+                            <option value="rejected">Reject</option>
+                          </select>
+                          <br>
+                          <div >
+                            <textarea placeholder="Enter Remarks..." name="remarks" class="form-control" required></textarea>
+                            <br>
+                            <div class="text-center">
+                              <button class="btn btn-primary" type="submit">Approve Offer</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  @endif
+                </div>
+              </div>
 
                 @elseif($booking->status == 'rejected')
                   <strong>Rejected By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
@@ -110,7 +145,6 @@
                   <strong>Remarks: {{ $booking->statusRemarks }}</strong>
                 @endif
               @endif
-
 
             </div>
           </div>

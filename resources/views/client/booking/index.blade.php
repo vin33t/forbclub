@@ -16,14 +16,14 @@
       <div class="col-md-6">
         <div class="card card-box">
           <div class="card-head">
-            <div class="row">
+            <div class="row text-center">
               <div class="col-md-4 pull-left">
                 <a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}" target="_blank"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i></a>
               </div>
               <div class="col-md-4 center"><h4 class="font-weight-bold"><b>{{ $booking->client->name }}</b></h4></div>
 
             </div>
-            <div class="row">
+            <div class="row text-center">
               <div class="col-md-4 center pull-left">Booking Date<br><h5 class="font-weight-bold"><b> {{ \Carbon\Carbon::parse(($booking->bookingRequestDate))->format('l, F jS, Y\\') }} </b></h5></div>
               <div class="col-md-4 center pull-right">Travel Date<br><h5 class="font-weight-bold"><b> {{ \Carbon\Carbon::parse(($booking->travelDate))->format('l, F jS, Y\\') }}</b></h5></div>
               <div class="col-md-4 center pull-right">Enrollment Date<br><h5 class="font-weight-bold"><b>{{ \Carbon\Carbon::parse(($booking->client->latestPackage->enrollmentDate))->format('l, F jS, Y\\') }}</b></h5></div>

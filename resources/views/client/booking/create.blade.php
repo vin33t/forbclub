@@ -63,6 +63,8 @@
                   <option value="Fully Paid Holiday">Fully Paid Holiday</option>
                   <option value="Stay Only Holiday">Stay Only Holiday</option>
                   <option value="Adjustment">Adjustment</option>
+                  <option value="Flight Only">Flight Only</option>
+                  <option value="Offer Nights">Offer Nights</option>
                 </select>
               </div>
             </div>

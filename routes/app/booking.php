@@ -14,6 +14,8 @@ Route::middleware('auth')->group(function () {
   Route::prefix('create')->middleware(['role_or_permission:super-admin|create-client'])->group(function () {
     Route::get('/{slug}', 'Client\BookingController@createBooking')->name('create.client.booking');
     Route::post('/{slug}', 'Client\BookingController@storeBooking')->name('store.client.booking');
+    Route::get('/offer/{bookingId}', 'Client\BookingController@bookingOffer')->name('booking.offer');
+    Route::post('/offer/{bookingId}/store', 'Client\BookingController@storeBookingOffer')->name('store.booking.offer');
   });
     Route::get('/', 'Client\BookingController@index')->name('booking');
     Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
