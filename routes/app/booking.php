@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/{slug}', 'Client\BookingController@storeBooking')->name('store.client.booking');
   });
     Route::get('/', 'Client\BookingController@index')->name('booking');
+    Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
 
     Route::post('/status/update/{bookingId}', 'Client\BookingController@updateStatus')->name('update.booking.status');
   // Booking Route Ends //

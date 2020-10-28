@@ -8,11 +8,11 @@
 @endsection
 @section('content')
 
-
+@include('client.booking.navbar')
   <section id="basic-tabs-components">
     <div class="row">
 
-      @foreach(\App\Client\Booking\Bookings::all() as $booking)
+      @foreach($bookings as $booking)
       <div class="col-md-6">
         <div class="card card-box">
           <div class="card-head">

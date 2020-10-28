@@ -16,7 +16,8 @@ class BookingController extends Controller
 {
 
   public function index(){
-    return view('client.booking.index');
+    $bookings = Bookings::where('status',NULL)->get();
+    return view('client.booking.index')->with('bookings',$bookings);
   }
 
     public function createBooking($slug)
@@ -72,5 +73,9 @@ class BookingController extends Controller
       $booking->statusUpdatedOn = Carbon::now();
       $booking->save();
       return redirect()->back();
+    }
+    public function inProcessingByMrd(){
+    $bookings = Bookings::where('status','approved')->get();
+        return view('client.booking.inProcessingByMrd')->with('bookings',$bookings);
     }
 }
