@@ -15441,6 +15441,9 @@ class ClientController extends Controller
       $package->saleManager = $request->saleManager;
       $package->save();
       $client->save();
+      $user = $client->user;
+      $user->email = $client->email;
+      $user->save();
     }
     return redirect()->back();
   }
