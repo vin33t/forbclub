@@ -93,7 +93,7 @@
               </div>
               <div class="col-md-3">
                 <label for="kids">Kids</label>
-                <input type="number" name="kids[]" class="form-control">
+                <input type="number" name="kids[]" class="form-control" required>
               </div>
             </div>
             <div class="row">
