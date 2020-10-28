@@ -15525,7 +15525,7 @@ class ClientController extends Controller
           'name' => $client->name,
           'email' => strtolower($client->email),
           'client_id' => $client->id,
-          'password' => Hash::make('password'),
+          'password' => Hash::make('pass@123'),
         ]);
         notifyToast('success', 'Login Created', $client->name . '\'s Login Created Successfully');
       } else {

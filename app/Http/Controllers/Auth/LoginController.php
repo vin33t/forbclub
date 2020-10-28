@@ -16,54 +16,55 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Login Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles authenticating users for the application and
+  | redirecting them to your home screen. The controller uses a trait
+  | to conveniently provide its functionality to your applications.
+  |
+  */
 
-    use AuthenticatesUsers;
+  use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+  /**
+   * Where to redirect users after login.
+   *
+   * @var string
+   */
+  protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
 
-    // Login
-    public function showLoginForm(){
-      $pageConfigs = [
-          'bodyClass' => "bg-full-screen-image",
-          'blankPage' => true
-      ];
+  // Login
+  public function showLoginForm()
+  {
+    $pageConfigs = [
+      'bodyClass' => "bg-full-screen-image",
+      'blankPage' => true
+    ];
 
-      return view('/auth/login', [
-          'pageConfigs' => $pageConfigs
-      ]);
-    }
+    return view('/auth/login', [
+      'pageConfigs' => $pageConfigs
+    ]);
+  }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Log the user out of the application.
+   *
+   * @param \Illuminate\Http\Request $request
+   * @return \Illuminate\Http\Response
+   */
 
   /**
    * The user has been authenticated.
@@ -73,23 +74,29 @@ class LoginController extends Controller
   protected function authenticated(Request $request, $user)
   {
     Auth::logoutOtherDevices(request('password'));
-    if(Auth::user()->login_revoked){
+    if (Auth::user()->login_revoked) {
       Session::flash('message', '');
       $request->session()->invalidate();
-      return Redirect::route('login',['revoked'])->with(['message'=>'Login Revoked']);
+      return Redirect::route('login', ['revoked'])->with(['message' => 'Login Revoked']);
     }
-    $ipData = Http::get('http://api.ipstack.com/'. request()->getClientIp() .'?access_key=4326e660ef68ae733ba724dace0ff95c')->json();
+
+    $ipData = Http::get('http://api.ipstack.com/' . request()->getClientIp() . '?access_key=4326e660ef68ae733ba724dace0ff95c')->json();
     $agent = new \Jenssegers\Agent\Agent();
     $platform = $agent->platform();
     $browser = $agent->browser();
-    Auth::user()->LoginLog()->create([
-      'ip' => request()->getClientIp(),
-      'time'=> Carbon::now(),
-      'browser'=> $browser . ' - '.$agent->version($browser),
-      'platform'=> $platform . ' - '.$agent->version($platform),
-      'device'=> $agent->deviceType(),
-      'location'=> $ipData['city'].', '.$ipData['country_name']. ', '.$ipData['zip'],
-      'long_lat'=> $ipData['longitude'].', '.$ipData['latitude'],
-    ]);
+    if (Auth::user()->client) {
+      $client = Auth::user()->client;
+      $client->lastLogin = request()->getClientIp() . ' | ' . $agent->platform();
+    } else {
+      Auth::user()->LoginLog()->create([
+        'ip' => request()->getClientIp(),
+        'time' => Carbon::now(),
+        'browser' => $browser . ' - ' . $agent->version($browser),
+        'platform' => $platform . ' - ' . $agent->version($platform),
+        'device' => $agent->deviceType(),
+        'location' => $ipData['city'] . ', ' . $ipData['country_name'] . ', ' . $ipData['zip'],
+        'long_lat' => $ipData['longitude'] . ', ' . $ipData['latitude'],
+      ]);
+    }
   }
 }
