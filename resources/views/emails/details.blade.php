@@ -89,7 +89,7 @@
           <h4><span>Product Tenure</span> {{ $client->latestPackage->productTenure }}</h4>
           <h4><span>Enrolment Date(ED)</span>  {{ Carbon\Carbon::parse($client->latestPackage->enrollmentDate)->format('d/m/Y') }}</h4>
 {{--          @if($details->packages->first()->product_tenure == 10 OR $details->packages->first()->product_tenure == 15) @else <h4><span>Holiday Entitlement Month(HEM)</span> {{ Carbon\Carbon::parse($details->date_of_enrollment)->addMonths(7)->format('F Y\\') }}@endif</h4>--}}
-          <h4><span>Product Cost</span>  INR. {{$client->latestPackage->productName}}/-</h4>
+          <h4><span>Product Cost</span>  INR. {{$client->latestPackage->productCost}}/-</h4>
 {{--          <h4><span>Product Discount</span> {{$details->fclp_discount}}</h4>--}}
           <h4><span>Referred by</span>  NA</h4>
           <p class="font-weight-bold mt-3">*Full Payment - Discount is applicable on the payment collected at the time of sale.</p><br><hr>
@@ -107,7 +107,7 @@
           <h4><span>LAC Complimentary Enrolment</span>
             <span>
                                 @forelse($client->latestPackage->Benefits as $benefit)
-                {{ $benefit->benefitName }} @if($benefit->benefitDescription ) @endif
+                {{ $benefit->benefitName }} - {{ $benefit->benefitDescription  }}
                 @if($client->latestPackage->Benefits->count() > 1) + @endif
               @empty
                 {{ 'No Enrolment Benefits' }}
