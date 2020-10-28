@@ -1,5 +1,9 @@
 <?php
+
+use App\Client\Client;
 use App\Http\Controllers\LanguageController;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Laravolt\Avatar\Facade as Avatar;
 
@@ -16,7 +20,7 @@ use Laravolt\Avatar\Facade as Avatar;
 
 Auth::routes();
 
-Route::get('/agent', function(){
+Route::get('/agent', function () {
   $res = [
     'listItems' => [
       ["name" => "Pricing", "url" => "pricing", "icon" => "fa fa-money"],
@@ -26,6 +30,24 @@ Route::get('/agent', function(){
     ]
   ];
   return $res;
+});
+
+Route::get('/createClientLogin', function () {
+  $clients = Client::all();
+  foreach ($clients as $client) {
+    if (!$client->email == '' or !$client->email == 'no email' or !$client->email == 'no mail id ' or !$client == 'no email  id') {
+
+      if (!User::where('email', $client->email)->count()) {
+        $client->User()->create([
+          'name' => $client->name,
+          'email' => strtolower($client->email),
+          'client_id' => $client->id,
+          'password' => Hash::make('pass@123'),
+        ]);
+      }
+    }
+  }
+
 });
 // Route url
 Route::middleware('auth')->group(function () {
