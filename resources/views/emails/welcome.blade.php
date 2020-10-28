@@ -39,10 +39,10 @@
 
       <p>Forb Club offers exotic holidays in over <b>940,530</b> luxury hotels & resorts worldwide and is rapidly expanding its holiday destination footprint. Being part of the Forb Club community means different things to different people, spending valuable vacations with us and creating special memories together. Relish the chance to focus on each other. A lifestyle to call your own. This isn’t just a vacation. It’s a lifestyle. It’s about flexibility and the freedom to choose your own adventure. Something to call “YOURS”. <br><br>
 
-        Please do take some time out to familiarize yourself with all the documentation and details we are providing attached with this mail. For any correction of personal details or require any other clarifications, you may email us at <b>feedback@forbclub.com</b>. We can hardly wait to assist you plan your first holiday with Forb. Do mail us at <b>booking@forbclub.com</b> for booking your holidays or to check availability at your destination. For further information or any kind of travel assistance, please write to us at <b>support@forbclub.com</b>.
+        Please do take some time out to familiarize yourself with all the documentation and details we are providing attached with this mail. For any correction of personal details or require any other clarifications, you may email us at <b>feedback@forbclub.com</b>. We can hardly wait to assist you plan your first holiday with Forb. Do mail us at <b>booking@forbclub.com</b> for booking your holidays or to check availability at your destination, <b>mrd@forclub.com</b> for membership queries. For further information or any kind of travel assistance, please write to us at <b>support@forbclub.com</b>.
         <br><br>
 
-        We have a dedicated New Member Helpline 1800-5720-530 or you may reach Member Relationship Department at +91 8264097782 and Accounts Department at +91 8264096782(9.00am to 6.00pm; for HP, Haryana, J&K and Punjab only) to answer all your queries pertaining to your new Leisureship.
+        We have a dedicated New Member Helpline <b>1800-5720-530</b> or you may reach Member Relationship Department at <b>+91 8264097782</b> and Accounts Department at <b>+91 8264096782</b>(9.00am to 6.00pm; for HP, Haryana, J&K and Punjab only) to answer all your queries pertaining to your new Leisureship.
         <br><br>
 
         We look forward to having you and your family vacation with us soon.
