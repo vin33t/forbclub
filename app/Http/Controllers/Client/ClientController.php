@@ -15515,6 +15515,15 @@ class ClientController extends Controller
 
       dispatch(new SendEkitJob($details,Carbon::now()->toDateString(),Auth::id()));
       $message = 'Sent to ' . $contactName;
+      if (!User::where('email', $details->email)->count()) {
+        $details->User()->create([
+          'name' => $details->name,
+          'email' => strtolower($details->email),
+          'client_id' => $details->id,
+          'password' => Hash::make('pass@123'),
+        ]);
+        notifyToast('success', 'Login Created', $details->name . '\'s Login Created Successfully');
+      }
       return redirect()->back();
     }
 
