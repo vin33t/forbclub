@@ -726,5 +726,12 @@ class BookingController extends Controller
     return view('client.booking.deniedByManager')->with('bookings',$bookings);
   }
 
+  public function convertedToHoliday(){
+    $bookings = Bookings::whereHas('ClientHoliday')->get();
+    return view('client.booking.deniedByManager')->with('bookings',$bookings);
+  }
+
+
+
 
 }

@@ -6,8 +6,8 @@
       Denied By Manager ({{ $bookings->count() }})
     @elseif(Route::currentRouteName() == 'booking.manager.approved')
       Approved By Manager ({{ $bookings->count() }})
-    @elseif(Route::currentRouteName() == 'booking.holiday.progress')
-      Holiday In Progress ({{ $bookings->count() }})
+    @elseif(Route::currentRouteName() == 'booking.converted')
+      Converted to Holiday{{ $bookings->count() }})
     @endif
 
 
@@ -23,7 +23,7 @@
           <a class="nav-link" href="{{ route('booking.denied.manager') }}">Denied By Manager</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('booking.manager.approved') }}">Converted to Holiday</a>
+          <a class="nav-link" href="{{ route('booking.converted') }}">Converted to Holiday</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('booking.holiday.progress') }}">Cancelled Requests</a>
