@@ -186,7 +186,7 @@
                 </tbody>
 
                 <tfoot>
-                <tr>
+                <tr>make.partialPayment
                   <th>Payment Date</th>
                   <th>Amount</th>
                   <th>Card Type</th>

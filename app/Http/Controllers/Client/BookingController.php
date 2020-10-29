@@ -112,10 +112,18 @@ class BookingController extends Controller
           if(!$booking->bookingOffer){
             if($booking->holidayType == 'Stay Only Holiday'){
               return view('client.booking.offer.stayOnly')->with('booking',$booking);
+            }  elseif($booking->holidayType == 'Adjustment'){
+              return view('client.booking.offer.Adjustment')->with('booking',$booking);
+            } elseif($booking->holidayType == 'Fully Paid Holiday'){
+              return view('client.booking.offer.FullyPaid')->with('booking',$booking);
             }
           } else {
             if($booking->holidayType == 'Stay Only Holiday'){
               return view('client.booking.offer.editStayOnly')->with('booking',$booking)->with('convert',0);
+            }  elseif($booking->holidayType == 'Adjustment'){
+              return view('client.booking.offer.editAdjustment')->with('booking',$booking)->with('convert',0);
+            } elseif($booking->holidayType == 'Fully Paid Holiday'){
+              return view('client.booking.offer.editFullyPaid')->with('booking',$booking)->with('convert',0);
             }
           }
         }
@@ -439,6 +447,10 @@ class BookingController extends Controller
 
         if($booking->holidayType == 'Stay Only Holiday'){
           return view('client.booking.offer.editStayOnly')->with('booking',$booking)->with('convert',1);
+        }  elseif($booking->holidayType == 'Adjustment'){
+          return view('client.booking.offer.editAdjustment')->with('booking',$booking)->with('convert',1);
+        } elseif($booking->holidayType == 'Fully Paid Holiday'){
+          return view('client.booking.offer.editFullyPaid')->with('booking',$booking)->with('convert',1);
         }
   }
 

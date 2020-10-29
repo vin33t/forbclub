@@ -217,4 +217,8 @@ class Client extends Model
     return $this->hasOne('App\User');
   }
 
+  public function ClientHoliday(){
+    return $this->hasMany('App\Client\Holiday\ClientHoliday');
+  }
+
 }
