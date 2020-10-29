@@ -35,6 +35,11 @@ class CreateBookingsTable extends Migration
             $table->string('status')->nullable();
             $table->longText('statusRemarks')->nullable();
             $table->integer('statusUpdatedBy')->nullable();
+            $table->dateTime('statusUpdatedOn')->nullable();
+            $table->string('offerStatus')->nullable();
+            $table->longText('offerStatusRemarks')->nullable();
+            $table->integer('offerStatusUpdatedBy')->nullable();
+            $table->dateTime('offerStatusUpdatedOn')->nullable();
             $table->string('addedBy')->nullable();
             $table->timestamps();
         });

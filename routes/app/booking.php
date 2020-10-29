@@ -17,14 +17,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/offer/{bookingId}', 'Client\BookingController@bookingOffer')->name('booking.offer');
     Route::post('/offer/{bookingId}/store', 'Client\BookingController@storeBookingOffer')->name('store.booking.offer');
   });
+    Route::post('/offer/{bookingId}/update', 'Client\BookingController@updateBookingOffer')->name('update.booking.offer');
 
     Route::get('/', 'Client\BookingController@index')->name('booking');
     Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
+    Route::get('/approved-by-manager', 'Client\BookingController@approvedByManager')->name('booking.manager.approved');
+    Route::get('/holiday-in-progress', 'Client\BookingController@holidayInProgress')->name('booking.holiday.progress');
+    Route::get('/convert-booking/{bookingId}', 'Client\BookingController@ConvertBooking')->name('booking.convert');
+    Route::post('/add-transaction', 'Client\BookingController@addTransaction')->name('booking.add.transaction');
+    Route::post('/convert-booking', 'Client\BookingController@convert')->name('booking.convert');
 
     Route::post('/status/update/{bookingId}', 'Client\BookingController@updateStatus')->name('update.booking.status');
 
 
-    Route::post('/approve/offer/{offerId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
+    Route::post('/approve/offer/{bookingId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
   // Booking Route Ends //
 
 });

@@ -23,4 +23,8 @@ class Bookings extends Model
     public function BookingOffer(){
       return$this->hasOne('App\Client\Booking\BookingOffer','bookings_id');
     }
+
+  public function ClientHoliday(){
+    return $this->hasOne('App\Client\Holiday\ClientHoliday');
+  }
 }

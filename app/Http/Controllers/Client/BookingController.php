@@ -13,7 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Comparator\Book;
-
+use App\Client\Holiday\ClientHoliday;
+use App\Client\Holiday\ClientHolidayDetails;
+use App\Client\Holiday\ClientHolidayTransactions;
 class BookingController extends Controller
 {
 
@@ -76,9 +78,32 @@ class BookingController extends Controller
       $booking->save();
       return redirect()->back();
     }
+
+    public function approveOffer(Request $request,$bookingId){
+      $booking =  Bookings::find($bookingId);
+      $booking->offerStatus = $request->status;
+      $booking->offerStatusRemarks = $request->remarks;
+      $booking->offerStatusUpdatedBy = Auth::user()->id;
+      $booking->offerStatusUpdatedOn = Carbon::now();
+      $booking->save();
+      return redirect()->back();
+    }
+
+
+
     public function inProcessingByMrd(){
-    $bookings = Bookings::where('status','approved')->get();
+    $bookings = Bookings::where('status','approved')->where('offerStatus',NULL)->get();
         return view('client.booking.inProcessingByMrd')->with('bookings',$bookings);
+    }
+
+    public function approvedByManager(){
+    $bookings = Bookings::where('status','approved')->where('offerStatus','approved')->doesntHave('ClientHoliday')->get();
+        return view('client.booking.approvedByManager')->with('bookings',$bookings);
+    }
+
+    public function holidayInProgress(){
+    $bookings = Bookings::where('status','approved')->where('offerStatus','approved')->whereHas('ClientHoliday')->get();
+        return view('client.booking.holidayInProgress')->with('bookings',$bookings);
     }
 
     public function BookingOffer($bookingId){
@@ -250,6 +275,429 @@ class BookingController extends Controller
       return redirect()->back();
     }
 
+
+  public function updateBookingOffer(Request $request){
+    $booking = \App\Client\Booking\Bookings::find($request->booking_id);
+    $bo = $booking->BookingOffer;
+
+    $bo->bookings_id = $booking->id;
+    $bo->holiday_type = $request->holiday_type;
+    $bo->destination = $request->offer_destination;
+    $bo->date_of_travel = $request->date_of_travel;
+    $bo->save();
+
+    foreach($bo->BookingOfferInfo as $boi){
+      $boi->delete();
+    }
+
+    $hotel_counter = 0;
+    $flight_counter = 0;
+
+    foreach($request->service_type as $index => $service_type){
+      if($request->service_type[$index] == 'Hotel'){
+        $boi = new \App\Client\Booking\BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+
+        $boi->nights = $request->nights[$hotel_counter];
+        $boi->pax = $request->pax[$hotel_counter];
+        $boi->check_in = $request->check_in[$hotel_counter];
+        $boi->check_out = $request->check_out[$hotel_counter];
+        $boi->hotel_name = $request->hotel_name[$hotel_counter];
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+        $hotel_counter++;
+
+      }elseif($request->service_type[$index] == 'Land Package/Transfer'){
+        $boi = new BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+
+        $boi->nights = $request->nights[$hotel_counter];
+        $boi->pax = $request->pax[$hotel_counter];
+        $boi->check_in = $request->check_in[$hotel_counter];
+        $boi->check_out = $request->check_out[$hotel_counter];
+        $boi->hotel_name = $request->hotel_name[$hotel_counter];
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+        $hotel_counter++;
+
+      }elseif($request->service_type[$index] == 'Flight'){
+        $boi = new BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+
+
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+
+        $boi->check_in_baggage = $request->check_in_baggage[$flight_counter];
+        $boi->check_in_baggage_price = $request->check_in_baggage_price[$flight_counter];
+        $boi->cabin_baggage = $request->cabin_baggage[$flight_counter];
+        $boi->flight_pax = $request->flight_pax[$flight_counter];
+        $boi->flight_details = $request->flight_details[$flight_counter];
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+        $flight_counter++;
+
+      }elseif($request->service_type[$index] == 'Visa'){
+        $boi = new BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+
+      }elseif($request->service_type[$index] == 'Insurance'){
+        $boi = new BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+
+      }elseif($request->service_type[$index] == 'Cruise'){
+        $boi = new BookingOfferInfo;
+        $boi->booking_offer_id = $bo->id;
+        $boi->service_type = $request->service_type[$index];
+        $boi->vendor_name = $request->vendor[$index];
+        $boi->destination = $request->destination[$index];
+        $boi->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $boi->vendor_price = $request->vendor_price[$index];
+          $boi->our_price = $request->our_price[$index];
+        }else{
+          $boi->add_on_service_price = $request->add_on_service_price[$index];
+          $boi->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $boi->add_on = 1;
+        }
+        $boi->add_more = $request->add_more[$index];
+        $boi->save();
+      }
+
+    }
+    return redirect()->back();
+  }
+
+  public function ConvertBooking($bookingId){
+    $booking =  Bookings::find($bookingId);
+
+        if($booking->holidayType == 'Stay Only Holiday'){
+          return view('client.booking.offer.editStayOnly')->with('booking',$booking)->with('convert',1);
+        }
+  }
+
+  public function AddTransaction(Request $request){
+    $booking = Bookings::find($request->booking_id);
+    $boi = BookingOfferInfo::find($request->boi_id);
+    $bo = $booking->BookingOffer;
+    $add_on = Bookings::find($request->booking_id)->BookingOffer->BookingOfferInfo->where('add_on',1);
+    // dd($booking, $boi, $bo, $add_on);
+    return view('client.booking.addTransaction')->with('booking',$booking)
+      ->with('boi',$boi)
+      ->with('add_on',$add_on)
+      ->with('bo',$bo);
+  }
+
+  public function Convert(Request $request){
+//    return $request;
+    // dd($request->all());
+    $booking = Bookings::find($request->booking_id);
+    $ch = new ClientHoliday;
+    $ch->client_id = $booking->clientId;
+    $ch->bookings_id = $booking->id;
+    $ch->holiday_type = $request->holiday_type;
+    $ch->destination = $request->offer_destination;
+    $ch->date_of_travel = $request->date_of_travel;
+    $ch->converted_by = Auth::id();
+    $ch->save();
+
+    $hotel_counter = 0;
+    $flight_counter = 0;
+
+    foreach($request->service_type as $index => $service_type){
+      if($service_type == 'Hotel'){
+        $chd = new ClientHolidayDetails;
+        $chd->client_holiday_id = $ch->id;
+        $chd->service_type = $service_type;
+        $chd->vendor_name = $request->vendor[$index];
+        $chd->destination = $request->destination[$index];
+        $chd->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $chd->vendor_price = $request->vendor_price[$index];
+          $chd->our_price = $request->our_price[$index];
+        }else{
+          $chd->add_on_service_price = $request->add_on_service_price[$index];
+          $chd->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $chd->add_on = 1;
+        }
+
+        $chd->nights = $request->nights[$hotel_counter];
+        $chd->pax = $request->pax[$hotel_counter];
+        $chd->check_in = $request->check_in[$hotel_counter];
+        $chd->check_out = $request->check_out[$hotel_counter];
+        $chd->hotel_name = $request->hotel_name[$hotel_counter];
+        $chd->save();
+        $hotel_counter++;
+
+
+        foreach($request->amount as $k=>$amount){
+          if($request->verify[$k] == $request->verify_token[$index] ){
+            $cht = new ClientHolidayTransactions;
+            $cht->client_holiday_details_id = $chd->id;
+            $cht->amount = $amount;
+            $cht->client_id = $booking->clientId;
+            $cht->date_of_payment = $request->date_of_payment[$k];
+            $cht->mode_of_payment  = $request->mode_of_payment[$k];
+            if($request->mode_of_payment[$k] == null){
+              $cht->paid  = 0;
+            }else{
+              $cht->paid  = 1;
+            }
+            $cht->last_four_card_digits = $request->last_four_card_digits[$k];
+            $cht->card_description = $request->card_description[$k];
+            $cht->bank_name = $request->bank_name[$k];
+            $cht->cheque_number = $request->cheque_number[$k];
+            $cht->add_on = $request->add_on[$index];
+            $cht->save();
+          }
+        }
+
+      }elseif($service_type == 'Land Package/Transfer'){
+        $chd = new ClientHolidayDetails;
+        $chd->client_holiday_id = $ch->id;
+        $chd->service_type = $service_type;
+        $chd->vendor_name = $request->vendor[$index];
+        $chd->destination = $request->destination[$index];
+        $chd->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $chd->vendor_price = $request->vendor_price[$index];
+          $chd->our_price = $request->our_price[$index];
+        }else{
+          $chd->add_on_service_price = $request->add_on_service_price[$index];
+          $chd->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $chd->add_on = 1;
+        }
+
+        $chd->nights = $request->nights[$hotel_counter];
+        $chd->pax = $request->pax[$hotel_counter];
+        $chd->check_in = $request->check_in[$hotel_counter];
+        $chd->check_out = $request->check_out[$hotel_counter];
+        $chd->hotel_name = $request->hotel_name[$hotel_counter];
+        $chd->save();
+        $hotel_counter++;
+
+        foreach($request->amount as $k=>$amount){
+          if($request->verify[$k] == $request->verify_token[$index] ){
+            $cht = new ClientHolidayTransactions;
+            $cht->client_holiday_details_id = $chd->id;
+            $cht->amount = $amount;
+            $cht->client_id = $booking->clientId;
+            $cht->date_of_payment = $request->date_of_payment[$k];
+            $cht->mode_of_payment  = $request->mode_of_payment[$k];
+            if($request->mode_of_payment[$k] == null){
+              $cht->paid  = 0;
+            }else{
+              $cht->paid  = 1;
+            }
+            $cht->last_four_card_digits = $request->last_four_card_digits[$k];
+            $cht->card_description = $request->card_description[$k];
+            $cht->bank_name = $request->bank_name[$k];
+            $cht->cheque_number = $request->cheque_number[$k];
+            $cht->add_on = $request->add_on[$index];
+            $cht->save();
+          }
+        }
+
+      }elseif($service_type == 'Flight'){
+        $chd = new ClientHolidayDetails;
+        $chd->client_holiday_id = $ch->id;
+        $chd->service_type = $service_type;
+        $chd->vendor_name = $request->vendor[$index];
+        $chd->destination = $request->destination[$index];
+        $chd->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $chd->vendor_price = $request->vendor_price[$index];
+          $chd->our_price = $request->our_price[$index];
+        }else{
+          $chd->add_on_service_price = $request->add_on_service_price[$index];
+          $chd->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $chd->add_on = 1;
+        }
+
+        $chd->flight_pax = $request->flight_pax[$flight_counter];
+        $chd->flight_details = $request->flight_details[$flight_counter];
+        $chd->save();
+        $flight_counter++;
+
+        foreach($request->amount as $k=>$amount){
+          if($request->verify[$k] == $request->verify_token[$index] ){
+            $cht = new ClientHolidayTransactions;
+            $cht->client_holiday_details_id = $chd->id;
+            $cht->amount = $amount;
+            $cht->client_id = $booking->clientId;
+            $cht->date_of_payment = $request->date_of_payment[$k];
+            $cht->mode_of_payment  = $request->mode_of_payment[$k];
+            if($request->mode_of_payment[$k] == null){
+              $cht->paid  = 0;
+            }else{
+              $cht->paid  = 1;
+            }
+            $cht->last_four_card_digits = $request->last_four_card_digits[$k];
+            $cht->card_description = $request->card_description[$k];
+            $cht->bank_name = $request->bank_name[$k];
+            $cht->cheque_number = $request->cheque_number[$k];
+            $cht->add_on = $request->add_on[$index];
+            $cht->save();
+          }
+        }
+
+      }elseif($service_type == 'Visa'){
+        $chd = new ClientHolidayDetails;
+        $chd->client_holiday_id = $ch->id;
+        $chd->service_type = $service_type;
+        $chd->vendor_name = $request->vendor[$index];
+        $chd->destination = $request->destination[$index];
+        $chd->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $chd->vendor_price = $request->vendor_price[$index];
+          $chd->our_price = $request->our_price[$index];
+        }else{
+          $chd->add_on_service_price = $request->add_on_service_price[$index];
+          $chd->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $chd->add_on = 1;
+        }
+
+        $chd->save();
+
+        foreach($request->amount as $k=>$amount){
+          if($request->verify[$k] == $request->verify_token[$index] ){
+            $cht = new ClientHolidayTransactions;
+            $cht->client_holiday_details_id = $chd->id;
+            $cht->amount = $amount;
+            $cht->client_id = $booking->clientId;
+            $cht->date_of_payment = $request->date_of_payment[$k];
+            $cht->mode_of_payment  = $request->mode_of_payment[$k];
+            if($request->mode_of_payment[$k] == null){
+              $cht->paid  = 0;
+            }else{
+              $cht->paid  = 1;
+            }
+            $cht->last_four_card_digits = $request->last_four_card_digits[$k];
+            $cht->card_description = $request->card_description[$k];
+            $cht->bank_name = $request->bank_name[$k];
+            $cht->cheque_number = $request->cheque_number[$k];
+            $cht->add_on = $request->add_on[$index];
+            $cht->save();
+          }
+        }
+
+      }elseif($service_type == 'Insurance'){
+        $chd = new ClientHolidayDetails;
+        $chd->client_holiday_id = $ch->id;
+        $chd->service_type = $service_type;
+        $chd->vendor_name = $request->vendor[$index];
+        $chd->destination = $request->destination[$index];
+        $chd->remarks = $request->remarks[$index];
+
+        if($request->add_on[$index] == 0){
+          $chd->vendor_price = $request->vendor_price[$index];
+          $chd->our_price = $request->our_price[$index];
+        }else{
+          $chd->add_on_service_price = $request->add_on_service_price[$index];
+          $chd->amount_paid_by_client = $request->amount_paid_by_client[$index];
+          $chd->add_on = 1;
+        }
+
+        $chd->save();
+
+        foreach($request->amount as $k=>$amount){
+          if($request->verify[$k] == $request->verify_token[$index] ){
+            $cht = new ClientHolidayTransactions;
+            $cht->client_holiday_details_id = $chd->id;
+            $cht->amount = $amount;
+            $cht->client_id = $booking->clientId;
+            $cht->date_of_payment = $request->date_of_payment[$k];
+            $cht->mode_of_payment  = $request->mode_of_payment[$k];
+            if($request->mode_of_payment[$k] == null){
+              $cht->paid  = 0;
+            }else{
+              $cht->paid  = 1;
+            }
+            $cht->last_four_card_digits = $request->last_four_card_digits[$k];
+            $cht->card_description = $request->card_description[$k];
+            $cht->bank_name = $request->bank_name[$k];
+            $cht->cheque_number = $request->cheque_number[$k];
+            $cht->add_on = $request->add_on[$index];
+            $cht->save();
+          }
+        }
+
+      }
+
+    }
+
+    return redirect()->route('booking');
+  }
 
 
 

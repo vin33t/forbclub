@@ -100,44 +100,56 @@
                 </form>
               @else
                 <hr>
-              <div class="row">
-                <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
 
-                @if($booking->status == 'approved')
-                  <strong>Approved By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
-                  <strong>Approved On: {{ Carbon\Carbon::parse($booking->statusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
-                  <strong>Remarks: {{ $booking->statusRemarks }}</strong> <br>
-                </div>
-                <div class="col-md-12 text-center">
-                @if(!$booking->bookingOffer)
-                    <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-primary">Create Offer</button></a>
-                  @else
-                    <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-success">View Offer</button></a>
-                    <hr>
-                    <form action="{{ route('approve.booking.offer',['bookingId'=>$booking->id]) }}"  method="post">
-                      @csrf
-                      <div class="row">
-                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
-                        <div class="col-md-12">
-                          <select name="status" id="booking_status" required class="form-control">
-                            <option value="">--Select Status--</option>
-                            <option value="approved">Approve</option>
-                            <option value="rejected">Reject</option>
-                          </select>
-                          <br>
-                          <div >
-                            <textarea placeholder="Enter Remarks..." name="remarks" class="form-control" required></textarea>
+                    @if($booking->status == 'approved')
+                      <strong>Approved By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>
+                      <strong>Approved On: {{ Carbon\Carbon::parse($booking->statusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
+                      <strong>Remarks: {{ $booking->statusRemarks }}</strong> <br>
+                  </div>
+                  <div class="col-md-12 text-center">
+                    @if(!$booking->bookingOffer)
+                      <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-primary">Create Offer</button></a>
+                    @else
+                      <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-success">View Offer</button></a>
+                      <hr>
+                      @if($booking->offerStatus == 'approved')
+                        @if($booking->BookingOffer)
+                          <a href="{{ route('booking.convert',['bookingId'=>$booking->id]) }}" class="btn btn-md btn-success">Convert To Holiday</a>
+                        @endif
+                      @endif
+                      <hr>
+                    @if($booking->offerStatus == NULL)
+                      <form action="{{ route('approve.booking.offer',['bookingId'=>$booking->id]) }}"  method="post">
+                        @csrf
+                        <div class="row">
+                          <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                          <div class="col-md-12">
+                            <select name="status" id="booking_status" required class="form-control">
+                              <option value="">--Select Status--</option>
+                              <option value="approved">Approve</option>
+                              <option value="rejected">Reject</option>
+                            </select>
                             <br>
-                            <div class="text-center">
-                              <button class="btn btn-primary" type="submit">Approve Offer</button>
+                            <div >
+                              <textarea placeholder="Enter Remarks..." name="remarks" class="form-control" required></textarea>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-primary" type="submit">Approve Offer</button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </form>
-                  @endif
+                      </form>
+                      @else
+                        <strong>Approved By: {{ \App\User::find($booking->offerStatusUpdatedBy)->name }}</strong> <br>
+                        <strong>Approved On: {{ Carbon\Carbon::parse($booking->offerStatusUpdatedOn)->format('D d, Y h:i A') }}</strong> <br>
+                        <strong>Remarks: {{ $booking->offerStatusRemarks }}</strong> <br>
+                      @endif
+                    @endif
+                  </div>
                 </div>
-              </div>
 
                 @elseif($booking->status == 'rejected')
                   <strong>Rejected By: {{ \App\User::find($booking->statusUpdatedBy)->name }}</strong> <br>

@@ -4,7 +4,11 @@
   @if(Route::currentRouteName() == 'booking')
     New Bookings ({{ \App\Client\Booking\Bookings::where('status',NULL)->get()->count() }})
   @elseif(Route::currentRouteName() == 'booking.processing.mrd')
-    In Processing By MRD
+    In Processing By MRD  ({{ $bookings->count() }})
+    @elseif(Route::currentRouteName() == 'booking.manager.approved')
+   Approved By Manager ({{ $bookings->count() }})
+    @elseif(Route::currentRouteName() == 'booking.holiday.progress')
+   Holiday In Progress ({{ $bookings->count() }})
   @endif
 
 
@@ -19,6 +23,12 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('booking.processing.mrd') }}">In Processing By MRD</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('booking.manager.approved') }}">Approved By Manager</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('booking.holiday.progress') }}">Holiday In Progress</a>
       </li>
 
     </ul>

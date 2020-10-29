@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-md-12">
 
-      <form @if(!$convert) action="update offer" @else action="booking add transaction" @endif method="post">
+      <form @if(!$convert) action="{{ route('update.booking.offer',['bookingId'=>$booking->id]) }}" @else action="{{ route('booking.add.transaction') }}" @endif method="post">
         @csrf
         <input type="hidden" name="booking_id" value="{{$booking->id}}">
         <div class="row">
