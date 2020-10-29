@@ -21,6 +21,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', 'Client\BookingController@index')->name('booking');
     Route::get('/all', 'Client\BookingController@show')->name('booking.all');
+    Route::get('/denied-by-mrd', 'Client\BookingController@DeniedByMrd')->name('booking.denied.mrd');
+    Route::get('/denied-by-manager', 'Client\BookingController@DeniedByManager')->name('booking.denied.manager');
+
     Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
     Route::get('/approved-by-manager', 'Client\BookingController@approvedByManager')->name('booking.manager.approved');
     Route::get('/holiday-in-progress', 'Client\BookingController@holidayInProgress')->name('booking.holiday.progress');

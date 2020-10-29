@@ -716,5 +716,15 @@ class BookingController extends Controller
   }
 
 
+  public function DeniedByMrd(){
+    $bookings = Bookings::where('status','rejected')->get();
+    return view('client.booking.deniedByMrd')->with('bookings',$bookings);
+  }
+
+  public function DeniedByManager(){
+    $bookings = Bookings::where('offerStatus','rejected')->get();
+    return view('client.booking.deniedByManager')->with('bookings',$bookings);
+  }
+
 
 }
