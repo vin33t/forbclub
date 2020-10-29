@@ -24,17 +24,17 @@
               <label>Benefit Description </label>
               </div>
             </div>
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-sm-12" style="display: none">
               <div class="form-label-group">
-                <textarea class="form-control" id="label-textarea" rows="3" placeholder="Benefit Conditions" name="benefitConditions" required></textarea>
+                <textarea class="form-control" id="label-textarea" rows="3" placeholder="Benefit Conditions" name="benefitConditions" required>asdasd</textarea>
                 <label for="label-textarea">Benefit Conditions</label>
               </div>
             </div>
 
 
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-sm-12" style="display: none">
               <fieldset class="form-label-group">
-                <input type="date" class="form-control" name="benefitValidity" required>
+                <input type="date" class="form-control" name="benefitValidity" required value="{{ \Carbon\Carbon::now() }}">
                 <label for="label-textarea">Benefit Validity</label>
               </fieldset>
             </div>

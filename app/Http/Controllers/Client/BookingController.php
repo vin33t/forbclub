@@ -731,7 +731,4 @@ class BookingController extends Controller
     return view('client.booking.deniedByManager')->with('bookings',$bookings);
   }
 
-
-
-
 }
