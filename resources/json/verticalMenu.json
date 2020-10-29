@@ -45,7 +45,21 @@
       "icon": "feather icon-book",
       "i18n": "nav.app_email",
       "role": "super-admin",
-      "permission": "view-import-history"
+      "permission": "view-import-history",
+      "submenu": [
+        {
+      "url": "booking/all",
+      "name": "All",
+      "icon": "feather icon-circle",
+      "i18n": "nav.dashboard_analytics"
+      },
+        {
+          "url": "booking/",
+          "name": "Active Booking Requests",
+          "icon": "feather icon-circle",
+          "i18n": "nav.dashboard_analytics"
+        }
+      ]
     },
     {
       "url": "transaction/downlaod/axis-mis",

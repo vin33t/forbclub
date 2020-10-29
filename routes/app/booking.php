@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/offer/{bookingId}/update', 'Client\BookingController@updateBookingOffer')->name('update.booking.offer');
 
     Route::get('/', 'Client\BookingController@index')->name('booking');
+    Route::get('/all', 'Client\BookingController@show')->name('booking.all');
     Route::get('/in-processing-by-mrd', 'Client\BookingController@inProcessingByMrd')->name('booking.processing.mrd');
     Route::get('/approved-by-manager', 'Client\BookingController@approvedByManager')->name('booking.manager.approved');
     Route::get('/holiday-in-progress', 'Client\BookingController@holidayInProgress')->name('booking.holiday.progress');

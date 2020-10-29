@@ -23,6 +23,10 @@ class BookingController extends Controller
     $bookings = Bookings::where('status',NULL)->get();
     return view('client.booking.index')->with('bookings',$bookings);
   }
+  public function show(){
+    $bookings = Bookings::all();
+    return view('client.booking.all')->with('bookings',$bookings);
+  }
 
     public function createBooking($slug)
     {

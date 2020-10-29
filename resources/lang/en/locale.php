@@ -9,6 +9,8 @@ return [
     "Upload Transactions" => "Upload Transactions",
     "Download Cheques" => "Download Cheques",
     "Booking Requests" => "Booking Requests",
+    "Active Booking Requests" => "Active Booking Requests",
+    "All" => "All",
     "Reimbursement" => "Reimbursement",
     "Venue Expense" => "Venue Expense",
     "Create" => "Create",
