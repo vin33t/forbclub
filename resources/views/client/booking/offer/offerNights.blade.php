@@ -20,7 +20,7 @@
   @endif
   <div class="row">
     <div class="col-md-12">
-      <form action="{{ route('booking.offer',['bookingId',$booking->id])}}" method="post">
+      <form action="{{ route('store.booking.offer',['bookingId'=>$booking->id])}}" method="post">
           @csrf
           <input type="hidden" name="booking_id" value="{{$booking->id}}">
           <div class="row">
