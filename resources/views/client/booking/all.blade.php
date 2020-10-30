@@ -59,7 +59,6 @@
                           @endphp {{ '₹ ' . IND_money_format($total) }} @endif</td>
                       {{-- <td>{{ \Carbon\Carbon::parse($booking->created_at)->toDayDateTimeString() }} <br> ({{ $booking->created_at->diffForHumans() }})</td> --}}
                       <td>
-                      <td>
                         <button class="btn btn-primary btn-sm" data-toggle="modal"
                                 data-target="#bookingDetailsView{{$booking->id}}">View
                         </button>
