@@ -1,4 +1,3 @@
-
 @extends('layouts/contentLayoutMaster')
 
 @section('title', 'Booking Requests')
@@ -34,6 +33,7 @@
                     <th>Offer Status</th>
                     <th>Offer Approved/Rejected By</th>
                     <th>Amount</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -42,7 +42,9 @@
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $booking->created_at }}</td>
                       <td>{{ $booking->bookingRequestDate }}</td>
-                      <td><a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}">{{ $booking->Client->name }}</a></td>
+                      <td><a
+                          href="{{ route('view.client',['slug'=>$booking->client->slug]) }}">{{ $booking->Client->name }}</a>
+                      </td>
                       <td>{{ strtoupper($booking->status) }}</td>
                       <td>{{ strtoupper($booking->holidayType) }}</td>
                       <td>{{ App\User::find($booking->addedBy)->name }}</td>
@@ -57,6 +59,72 @@
                           @endphp {{ '₹ ' . IND_money_format($total) }} @endif</td>
                       {{-- <td>{{ \Carbon\Carbon::parse($booking->created_at)->toDayDateTimeString() }} <br> ({{ $booking->created_at->diffForHumans() }})</td> --}}
                       <td>
+                      <td>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#bookingDetailsView{{$booking->id}}">View
+                        </button>
+                        <div class="modal fade" id="bookingDetailsView{{$booking->id}}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">{{ $booking->client->name }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                @foreach($booking->BookingInfo as $info)
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Destination:</strong></div>
+                                  <div class="col-md-4">{{ $info->destination }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Nights:</strong></div>
+                                  <div class="col-md-4">{{ $info->nights }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Pax:</strong></div>
+                                  <div class="col-md-4">{{ $info->adults }} Adults ,{{$info->kids}} Kids</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Breakfast:</strong></div>
+                                  <div class="col-md-4">{{ $booking->breakfast ? 'Yes' : 'No' }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Eligible:</strong></div>
+                                  <div class="col-md-4">{{ $booking->eligible ? 'Yes' : 'No' }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Check In::</strong></div>
+                                  <div class="col-md-4">{{ $booking->check_in }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Check out:</strong></div>
+                                  <div class="col-md-4">{{ $booking->check_in }}</div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-4"><strong>Remarks:</strong></div>
+                                  <div class="col-md-4">{{ $booking->remarks }}</div>
+                                </div>
+
+                                @endforeach
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -72,6 +140,7 @@
                     <th>Status</th>
                     <th>Approved/Rejected By</th>
                     <th>Amount</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
