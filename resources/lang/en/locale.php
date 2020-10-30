@@ -12,6 +12,7 @@ return [
     "Active Booking Requests" => "Active Booking Requests",
     "All" => "All",
     "Closed Booking Requests" => "Closed Booking Requests",
+    "Upcoming Transactions" => "Upcoming Transactions",
     "Reimbursement" => "Reimbursement",
     "Venue Expense" => "Venue Expense",
     "Create" => "Create",

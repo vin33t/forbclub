@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Import History')
+@section('title', 'Booking Requests')
 
 @section('vendor-style')
   {{-- vendor css files --}}

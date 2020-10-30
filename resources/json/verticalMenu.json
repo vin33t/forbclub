@@ -39,6 +39,14 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },
+    {
+      "url": "/booking/upcoming-transactions",
+      "name": "Upcoming Transactions",
+      "icon": "feather icon-chevrons-up",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },{
       "url": "/booking",
       "name": "Booking Requests",
