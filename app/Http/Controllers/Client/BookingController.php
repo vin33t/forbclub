@@ -117,9 +117,9 @@ class BookingController extends Controller
             if($booking->holidayType == 'Stay Only Holiday'){
               return view('client.booking.offer.stayOnly')->with('booking',$booking);
             }  elseif($booking->holidayType == 'Adjustment'){
-              return view('client.booking.offer.Adjustment')->with('booking',$booking);
+              return view('client.booking.offer.adjustment')->with('booking',$booking);
             } elseif($booking->holidayType == 'Fully Paid Holiday'){
-              return view('client.booking.offer.FullyPaid')->with('booking',$booking);
+              return view('client.booking.offer.fullyPaid')->with('booking',$booking);
             }
           } else {
             if($booking->holidayType == 'Stay Only Holiday'){
