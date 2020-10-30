@@ -112,7 +112,6 @@
   </div>
 
 
-  @if($user->employee)
 
 @include('client.transaction.add.card',['client'=>$client])
 @include('client.transaction.add.cash',['client'=>$client])
@@ -124,7 +123,6 @@
 
 @include('client.components.editBasic',['client'=>$client])
 
-@endif
 @endsection
 
 
@@ -214,7 +212,7 @@
   <script src="{{ asset(mix('js/scripts/pages/user-profile.js')) }}"></script>
 {{--  <script src="{{ asset(mix('js/scripts/extensions/context-menu.js')) }}"></script>--}}
 
-  @if($user->employee)
+
 
     <script>
     function eventFire(el, etype){
@@ -287,7 +285,7 @@
       return true;
     }
   </script>
-  @endif
+
 
   @if(count($client->transactionSummaryChart))
   <script>
