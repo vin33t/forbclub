@@ -103,12 +103,12 @@
                                 <div class="row">
                                   <div class="col-md-2"></div>
                                   <div class="col-md-4"><strong>Check In::</strong></div>
-                                  <div class="col-md-4">{{ $booking->check_in }}</div>
+                                  <div class="col-md-4">{{ $info->check_in }}</div>
                                 </div>
                                 <div class="row">
                                   <div class="col-md-2"></div>
                                   <div class="col-md-4"><strong>Check out:</strong></div>
-                                  <div class="col-md-4">{{ $booking->check_in }}</div>
+                                  <div class="col-md-4">{{ $info->check_in }}</div>
                                 </div>
                                 <div class="row">
                                   <div class="col-md-2"></div>
