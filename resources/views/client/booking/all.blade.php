@@ -42,7 +42,7 @@
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $booking->created_at }}</td>
                       <td>{{ $booking->bookingRequestDate }}</td>
-                      <td><a href="{{ route('view.client',['slug',$booking->client->slug]) }}">{{ $booking->Client->name }}</a></td>
+                      <td><a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}">{{ $booking->Client->name }}</a></td>
                       <td>{{ strtoupper($booking->status) }}</td>
                       <td>{{ strtoupper($booking->holidayType) }}</td>
                       <td>{{ App\User::find($booking->addedBy)->name }}</td>
