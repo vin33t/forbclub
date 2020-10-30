@@ -505,6 +505,18 @@ class TransactionController extends Controller
     return redirect()->back();
   }
 
+  public function editOthers(Request $request, $transactionId){
+    $payment = OtherPayment::find($transactionId);
+    if($payment){
+    $payment->paymentDate = $request->paymentDate;
+    $payment->amount = $request->paymentAmount;
+    $payment->remarks = $request->paymentRemarks;
+    $payment->modeOfPayment = $request->modeOfPayment;
+    $payment->save();
+    }
+    return redirect()->back();
+  }
+
 //  public function createOther(Request $request,$clientId){
 //    return $request;
 //  }

@@ -186,7 +186,7 @@
                 </tbody>
 
                 <tfoot>
-                <tr>make.partialPayment
+                <tr>
                   <th>Payment Date</th>
                   <th>Amount</th>
                   <th>Card Type</th>
@@ -448,6 +448,10 @@
                       <th>Mode Of Payment</th>
                       <th>Remarks</th>
                       <th>DP</th>
+                      @if($user->employee)
+
+                      <th>Action</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -458,6 +462,54 @@
                         <td>{{ $otherPayment->modeOfPayment }}</td>
                         <td>{{ $otherPayment->remarks }}</td>
                         <td>{{ $otherPayment->idDp }}</td>
+                        @if($user->employee)
+
+                          <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editOtherPayment{{$otherPayment->id}}">Edit</button>
+                            <div class="modal fade" id="editOtherPayment{{$otherPayment->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Cheque Transaction</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form action="{{ route('edit.transaction.others',['transactionId'=>$otherPayment->id]) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <label for="paymentDate">Payment Date</label>
+                                          <input type="date" class="form-control" name="paymentDate" value="{{ $otherPayment->paymentDate }}" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                          <label for="paymentAmount">Amount</label>
+                                          <input type="number" class="form-control" name="paymentAmount" value="{{ $otherPayment->amount }}" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                          <label for="paymentChequeNumber">Mode Of Payment</label>
+                                          <input type="text" class="form-control" name="modeOfPayment" value="{{ $otherPayment->modeOfPayment }}" required>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                          <label for="paymentRemarks">Remarks</label>
+                                          <input type="text" class="form-control" name="paymentRemarks" value="{{ $otherPayment->remarks }}" required>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+
+                          </td>
+
+                        @endif
+
                       </tr>
                     @endforeach
                     </tbody>
@@ -469,6 +521,9 @@
                       <th>Mode Of Payment</th>
                       <th>Remarks</th>
                       <th>DP</th>
+                      @if($user->employee)
+                      <th>Action</th>
+                        @endif
                     </tr>
                     </tfoot>
                   </table>
