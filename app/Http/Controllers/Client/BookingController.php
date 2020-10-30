@@ -120,6 +120,8 @@ class BookingController extends Controller
               return view('client.booking.offer.adjustment')->with('booking',$booking);
             } elseif($booking->holidayType == 'Fully Paid Holiday'){
               return view('client.booking.offer.fullyPaid')->with('booking',$booking);
+            }elseif($booking->holidayType == 'Flight Only'){
+              return view('client.booking.offer.flight')->with('booking',$booking);
             }
           } else {
             if($booking->holidayType == 'Stay Only Holiday'){
@@ -128,6 +130,8 @@ class BookingController extends Controller
               return view('client.booking.offer.editAdjustment')->with('booking',$booking)->with('convert',0);
             } elseif($booking->holidayType == 'Fully Paid Holiday'){
               return view('client.booking.offer.editFullyPaid')->with('booking',$booking)->with('convert',0);
+            }elseif($booking->holidayType == 'Flight Only'){
+              return view('client.booking.offer.editFlight')->with('booking',$booking)->with('convert',0);
             }
           }
         }
