@@ -90,13 +90,26 @@
 
           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-Transaction
+            Transaction
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addCardTransaction">Add Card</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addCashTransaction">Add Cash</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addChequeTransaction">Add Cheque</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addOtherTransaction">Add Other Payment</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="dropdown">
+
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#disableNach">Disable Nach</a>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addPdc">Add PDC</a>
           </div>
         </div>
       </div>
