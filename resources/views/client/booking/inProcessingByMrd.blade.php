@@ -62,7 +62,7 @@
                   <div class="col-md-12 text-center"><h5 class="font-weight-bold"><b>  {{ $info->destination }}  </b></h5></div>
                 </div>
                 <div class="row center">
-                  <div class="col-md-4">Pax <br> <b>{{ $info->adults }} Adults <br>   </b>
+                  <div class="col-md-4">Pax <br> <b>{{ $info->adults }} Adults + {{ $info->kids }} Kids<br>   </b>
                   </div>
                   <div class="col-md-4">Check In <br> <b>   {{ $info->check_in }}</b> </div>
                   <div class="col-md-4">Check Out <br> <b> {{ $info->check_out }} </b> </div>
