@@ -42,11 +42,11 @@
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $booking->created_at }}</td>
                       <td>{{ $booking->bookingRequestDate }}</td>
-                      <td>{{ $booking->Client->name }}</td>
+                      <td><a href="{{ route('view.client',['slug',$booking->client->slug]) }}">{{ $booking->Client->name }}</a></td>
                       <td>{{ strtoupper($booking->status) }}</td>
                       <td>{{ strtoupper($booking->holidayType) }}</td>
                       <td>{{ App\User::find($booking->addedBy)->name }}</td>
-                      <td>{{ strtoupper($booking->offerStatus) }}</td>
+                      <td>{{ $booking->offerStatus != NULL ? strtoupper($booking->offerStatus) : 'Offer Not Sent Yet' }}</td>
                       <td>{{ $booking->offerStatusUpdatedBy != NULL ? App\User::find($booking->offerStatusUpdatedBy)->name : 'Not Updated' }}</td>
                       <td>@if(!$booking->ClientHoliday) @if($booking->BookingOffer){{ '₹ ' . IND_money_format($booking->BookingOffer->BookingOfferInfo->pluck('our_price')->sum()) }} @else {{ 'Offer Not Sent Yet' }}@endif  @else
                           @php
