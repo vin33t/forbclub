@@ -30,11 +30,11 @@
                   <div class="row">
                     <div class="col-md-4">
                       <label for="holiday_type">Holiday Type</label>
-                      <input type="text" readonly name="holiday_type" value="{{$booking->holiday_type}}" class="form-control">
+                      <input type="text" readonly name="holiday_type" value="{{$booking->holidayType}}" class="form-control">
                     </div>
                     <div class="col-md-4">
                       <label for="date_of_travel" class="pull-left">Date of Travel</label>
-                      <input type="date" id="date_of_travel" value="{{$booking->travel_date}}" name="date_of_travel" class="form-control" required/>
+                      <input type="date" id="date_of_travel" value="{{$booking->travelDate}}" name="date_of_travel" class="form-control" required/>
                     </div>
                     <div class="col-md-4">
                       <label for="offer_destination" class="pull-left">Destination</label>

@@ -18,6 +18,11 @@
       </ul>
     </div>
   @endif
+  @php
+    $bo = $booking->BookingOffer;
+    $add_on = $bo->BookingOfferInfo->where('add_on',1);
+    $add_more = $bo->BookingOfferInfo->where('add_more',1);
+  @endphp
   <div class="row">
     <div class="col-md-12">
       <form @if(!$convert) action="{{ route('update.booking.offer',['bookingId'=>$booking->id]) }}" @else action="{{ route('booking.add.transaction') }}" @endif method="post">

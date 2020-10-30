@@ -18,6 +18,17 @@
       </ul>
     </div>
   @endif
+  @php
+    $bo = $booking->BookingOffer;
+    $hotel = $bo->BookingOfferInfo->where('service_type' , 'Hotel')->where('add_on',0)->where('add_more',0)->first();
+    $flight = $bo->BookingOfferInfo->where('add_on',0)->where('add_more',0)->where('service_type' , 'Flight')->first();
+    $visa = $bo->BookingOfferInfo->where('add_on',0)->where('add_more',0)->where('service_type' , 'Visa')->first();
+    $land = $bo->BookingOfferInfo->where('add_on',0)->where('add_more',0)->where('service_type' , 'Land Package/Transfer')->first();
+    $insurance = $bo->BookingOfferInfo->where('add_on',0)->where('add_more',0)->where('service_type' , 'Insurance')->first();
+
+    $add_on = $bo->BookingOfferInfo->where('add_on',1);
+    $add_more = $bo->BookingOfferInfo->where('add_more',1);
+  @endphp
   <div class="row">
     <div class="col-md-12">
       <form @if(!$convert) action="{{ route('update.booking.offer',['bookingId'=>$booking->id]) }}" @else action="{{ route('booking.add.transaction') }}" @endif method="post">
