@@ -459,6 +459,8 @@ class BookingController extends Controller
           return view('client.booking.offer.editAdjustment')->with('booking',$booking)->with('convert',1);
         } elseif($booking->holidayType == 'Fully Paid Holiday'){
           return view('client.booking.offer.editFullyPaid')->with('booking',$booking)->with('convert',1);
+        }elseif($booking->holidayType == 'Flight Only'){
+          return view('client.booking.offer.editFlight')->with('booking',$booking)->with('convert',1);
         }
   }
 
