@@ -7,7 +7,7 @@ return [
     "Download Axis MIS" => "Download Axis MIS",
     "Upload Axis MIS" => "Upload Axis MIS",
     "Upload Transactions" => "Upload Transactions",
-    "Download Cheques" => "Download Cheques",
+    "Cheques" => "Cheques",
     "Booking Requests" => "Booking Requests",
     "Active Booking Requests" => "Active Booking Requests",
     "All" => "All",

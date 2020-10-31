@@ -345,6 +345,29 @@ class TransactionController extends Controller
     return redirect()->back()->withSuccess('PDC Added');
   }
 
+  public function updatePdc(Request $request){
+    $v = Validator::make($request->all(),[
+      'cheque_number' => 'required',
+      'date_of_execution' => 'required',
+      'amount' => 'required',
+      'status' => 'required',
+    ]);
+
+    if ($v->fails()) {
+      return redirect()->back()->withErrors($v)->withInput();
+    }
+    $pdc = PDC::find($request->pdc);
+    $pdc->cheque_no = $request->cheque_number;
+    $pdc->date_of_execution = $request->date_of_execution;
+    $pdc->amount = $request->amount;
+    $pdc->micr_number = $request->micr_number;
+    $pdc->remarks= $request->remarks;
+    $pdc->status= $request->status;
+    $pdc->save();
+
+    return redirect()->back()->withSuccess('PDC Added');
+  }
+
   public function updatePdcStatus(Request $request,$id){
     $pdc = PDC::find($id);
     if($pdc){

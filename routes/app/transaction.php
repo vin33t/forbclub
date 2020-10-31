@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/add/pdc', 'Client\TransactionController@addPdc')->name('add.pdc');
+    Route::post('/update/pdc', 'Client\TransactionController@updatePdc')->name('update.pdc');
     Route::post('/update/pdc/status/{id}', 'Client\TransactionController@updatePdcStatus')->name('update.pdc.status');
 
     Route::get('/reimbursement', 'Client\TransactionController@reimbursementIndex')->name('reimbursement.index');

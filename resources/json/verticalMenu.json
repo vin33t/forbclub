@@ -84,7 +84,7 @@
       "permission": "view-import-history"
     },{
       "url": "transaction/download/cheques",
-      "name": "Download Cheques",
+      "name": "Cheques",
       "icon": "feather icon-download-cloud",
       "i18n": "nav.app_email",
       "role": "super-admin",
