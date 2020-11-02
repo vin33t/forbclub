@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-md-12">
                                   <label for="expenseAmount">Expense Amount</label>
-                                  <input type="text" name="expenseAmount" class="form-control" required>
+                                  <input type="number" name="expenseAmount" class="form-control" required>
                                 </div>
                                 <div class="col-md-12">
                                   <label for="expenseDetails">Expense Details</label>
@@ -128,7 +128,7 @@
                               <td>{{ $expense->expense_name }}</td>
                               <td>{{ $expense->expense_amount }}</td>
                               <td>{{ $expense->expense_details }}</td>
-                              <td><a href="{{ asset('/uploads/venueexpense/'.$expense->expenseBill) }}">Download</a></td>
+                              <td><a href="{{ asset('/uploads/'.$expense->expenseBill) }}">Download</a></td>
                                   </tr>
                               </tbody>
 

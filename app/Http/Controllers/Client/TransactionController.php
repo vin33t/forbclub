@@ -23,7 +23,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -452,13 +451,9 @@ class TransactionController extends Controller
       $expense->expense_details = $request->expenseDetails;
       $expense->venue_id = $request->id;
 
-    $fileName = time().'_'.'venueExpenseBill'.'_'.$request->expenseBill->getClientOriginalName();
-    $bill = $request->file('maf');
-
-    $t = Storage::disk('s3')->put($fileName, file_get_contents($bill), 'public');
-    $expenseLink = Storage::disk('s3')->url($fileName);
-//    $request->expenseBill->move(public_path('uploads'), $fileName);
-    $expense->expenseBill = $expenseLink;
+    $fileName = time().'_venue_expense_bill'.$request->expenseBill->getClientOriginalName();
+    $request->expenseBill->move(public_path('uploads'), $fileName);
+    $expense->expenseBill = $fileName;
 
       $expense->save();
       return \redirect()->back();
