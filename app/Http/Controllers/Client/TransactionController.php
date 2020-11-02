@@ -451,9 +451,13 @@ class TransactionController extends Controller
       $expense->expense_details = $request->expenseDetails;
       $expense->venue_id = $request->id;
 
-    $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
-    $request->expenseBill->move(public_path('uploads'), $fileName);
-    $expense->expenseBill = $fileName;
+    $fileName = time().'_'.'venueExpenseBill'.'_'.$request->expenseBill->getClientOriginalName();
+    $bill = $request->file('maf');
+
+    $t = Storage::disk('s3')->put($fileName, file_get_contents($bill), 'public');
+    $expenseLink = Storage::disk('s3')->url($fileName);
+//    $request->expenseBill->move(public_path('uploads'), $fileName);
+    $expense->expenseBill = $expenseLink;
 
       $expense->save();
       return \redirect()->back();
