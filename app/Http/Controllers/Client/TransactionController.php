@@ -414,7 +414,9 @@ class TransactionController extends Controller
     $reimbursement->amount = $request->amount;
 
     $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
-    $request->expenseBill->move(public_path('uploads'), $fileName);
+//    $request->expenseBill->move(public_path('uploads'), $fileName);
+    $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
+
     $reimbursement->expenseBill = $fileName;
 
     $reimbursement->remarks = $request->remarks;

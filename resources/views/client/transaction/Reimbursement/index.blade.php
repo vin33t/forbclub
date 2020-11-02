@@ -92,7 +92,9 @@
               <td>{{ $reimbursement->amount }}</td>
               <td>{{ $reimbursement->expenseType }}</td>
               <td>{{ $reimbursement->remarks }}</td>
-              <td><a href="{{ asset('/uploads/'.$reimbursement->expenseBill) }}">Download</a></td>
+{{--              <td><a href="{{ asset('/uploads/'.$reimbursement->expenseBill) }}">Download</a></td>--}}
+              <td><a href="{{ asset('/storage/uploads/'.$reimbursement->expenseBill) }}">Download</a></td>
+
               <td>
                 @if(!$reimbursement->reimbursed)
                   <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}">Not Reimbursed</a>
