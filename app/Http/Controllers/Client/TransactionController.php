@@ -483,7 +483,6 @@ class TransactionController extends Controller
       $link = url('/excel/'.$fileName);
       return Redirect::to($link);
     }else{
-      notification('Oops!!','No Cheques', 'warning','okay');
       return redirect()->back();
     }
   }

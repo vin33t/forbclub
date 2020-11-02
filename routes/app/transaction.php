@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
 
 
+
     Route::get('/venue-expense', 'Client\TransactionController@venueExpense')->name('venue.expense');
     Route::post('/venue/add', 'Client\TransactionController@venueAdd')->name('venue.add');
     Route::post('/venue/expense/add', 'Client\TransactionController@venueExpenseAdd')->name('venue.add.expense');
