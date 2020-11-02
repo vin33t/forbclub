@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\FollowUp;
 use App\Document;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class ClientController extends Controller
