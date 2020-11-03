@@ -55,12 +55,13 @@
                 <th>Venue Date</th>
                 <th>Venue Location</th>
                 <th>Total Expense</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
               @foreach($venues as $venue)
                 <tr>
-                  <td>{{ $venue->venue_name }}</td>
+                  <td>{{ $venue->venue_name }} {{ $venue->cancelled ? '(Cancelled)' : ''}}</td>
                   <td>{{ $venue->venue_date }}</td>
                   <td>{{ $venue->venue_location }}</td>
                   <td>
@@ -168,6 +169,40 @@
                     </div>
                       @endif
                   </td>
+                  <td>
+                    @if(!$venue->cancelled)
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelVenue{{ $venue->id }}"><i class="fa fa-trash"></i></button>
+                    <div class="modal fade" id="cancelVenue{{$venue->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel {{ $venue->venue_name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="{{ route('venue.cancel') }}" method="POST">
+                          @csrf
+                          <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label for="">Remarks</label>
+                                  <input type="hidden" name="id" value="{{ $venue->id }}">
+                                  <textarea name="remarks" id="" cols="30" rows="10" class="form-control" placeholder="Cancellation Remarks" required></textarea>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                          </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+                    <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                  </td>
                 </tr>
               @endforeach
               </tbody>
@@ -177,6 +212,7 @@
                 <th>Venue Date</th>
                 <th>Venue Location</th>
                 <th>Total Expense</th>
+                <th>Action</th>
               </tr>
               </tfoot>
             </table>

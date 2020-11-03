@@ -18,6 +18,9 @@ class CreateVenuesTable extends Migration
             $table->string('venue_name');
             $table->string('venue_location');
             $table->string('venue_date');
+            $table->boolean('cancelled')->nullable();
+            $table->longText('cancellationReason')->nullable();
+            $table->integer('cancelledBy')->nullable();
             $table->timestamps();
         });
     }

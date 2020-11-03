@@ -461,48 +461,51 @@ class TransactionController extends Controller
   public function venueExpenseSummary()
   {
 
+    if(Venue::all()->count()) {
+      $start = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->first()->venue_date)->startOfYear();
+      $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->last()->venue_date)->endOfYear();
 
-    $start = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->first()->venue_date)->startOfYear();
-    $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->last()->venue_date)->endOfYear();
 
-
-    $interval = \DateInterval::createFromDateString('1 month');
-    $period   = new \DatePeriod($start, $interval, $end);
-    $dates  = collect();
-    foreach ($period as $dt) {
-      $dates->push($dt->format("Y-m"));
-    }
-    $summary = collect();
-    foreach ($dates as $date){
-      $year = explode('-',$date)[0];
-      $month = explode('-',$date)[1];
-      $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
-      $end = Carbon::createFromDate($year, $month)->endOfMonth();
-      $venues = Venue::whereBetween('venue_date',[$start,$end])->get();
-      $venueCost = 0;
-      $venueFoodCost = 0;
-      $venueStayCost = 0;
-      $venueTravelCost = 0;
-      $venueOtherCost = 0;
-      foreach ($venues as $venue){
-        $venueCost += $venue->Expense->pluck('expense_amount')->sum();
-        $venueStayCost += $venue->Expense->where('expense_type','stay')->pluck('expense_amount')->sum();
-        $venueOtherCost += $venue->Expense->where('expense_type','other')->pluck('expense_amount')->sum();
-        $venueFoodCost += $venue->Expense->where('expense_type','food')->pluck('expense_amount')->sum();
-        $venueTravelCost += $venue->Expense->where('expense_type','travel')->pluck('expense_amount')->sum();
+      $interval = \DateInterval::createFromDateString('1 month');
+      $period = new \DatePeriod($start, $interval, $end);
+      $dates = collect();
+      foreach ($period as $dt) {
+        $dates->push($dt->format("Y-m"));
       }
-      $data = [
-        'month' => Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1)->format('F Y'),
-        'rawMonth' => $month,
-        'rawYear' => $year,
-        'totalVenues' => $venues->count(),
-        'venueCost' => $venueCost,
-        'foodCost' => $venueFoodCost,
-        'otherCost' => $venueOtherCost,
-        'travelCost' => $venueTravelCost,
-        'stayCost' => $venueStayCost,
-      ];
-      $summary->push($data);
+      $summary = collect();
+      foreach ($dates as $date) {
+        $year = explode('-', $date)[0];
+        $month = explode('-', $date)[1];
+        $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
+        $end = Carbon::createFromDate($year, $month)->endOfMonth();
+        $venues = Venue::whereBetween('venue_date', [$start, $end])->get();
+        $venueCost = 0;
+        $venueFoodCost = 0;
+        $venueStayCost = 0;
+        $venueTravelCost = 0;
+        $venueOtherCost = 0;
+        foreach ($venues as $venue) {
+          $venueCost += $venue->Expense->pluck('expense_amount')->sum();
+          $venueStayCost += $venue->Expense->where('expense_type', 'stay')->pluck('expense_amount')->sum();
+          $venueOtherCost += $venue->Expense->where('expense_type', 'other')->pluck('expense_amount')->sum();
+          $venueFoodCost += $venue->Expense->where('expense_type', 'food')->pluck('expense_amount')->sum();
+          $venueTravelCost += $venue->Expense->where('expense_type', 'travel')->pluck('expense_amount')->sum();
+        }
+        $data = [
+          'month' => Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1)->format('F Y'),
+          'rawMonth' => $month,
+          'rawYear' => $year,
+          'totalVenues' => $venues->count(),
+          'venueCost' => $venueCost,
+          'foodCost' => $venueFoodCost,
+          'otherCost' => $venueOtherCost,
+          'travelCost' => $venueTravelCost,
+          'stayCost' => $venueStayCost,
+        ];
+        $summary->push($data);
+      }
+    } else {
+      $summary = collect();
     }
     return view('client.transaction.venueexpense.summary')->with('venues',$summary);
   }
@@ -673,6 +676,15 @@ class TransactionController extends Controller
     }
     return redirect()->back();
 
+  }
+
+  public function venueCancel(Request $request){
+    $venue = Venue::find($request->id);
+    $venue->cancelled = 1;
+    $venue->cancellationReason = $request->remarks;
+    $venue->cancelledBy = Auth::user()->id;
+    $venue->save();
+    return \redirect()->back();
   }
 
 
