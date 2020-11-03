@@ -24,9 +24,16 @@
 
           </div>
           <div class="card-body">
-            <strong>Total Venue Expense: </strong>{{ \App\VenueExpenses::all()->pluck('expense_amount')->sum() }}<br>
-            <strong>Paid Venue Expense</strong>{{ \App\VenueExpenses::where('paid',1)->get()->pluck('expense_amount')->sum() }} <br>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addVenueExpense" >Add Venue</button>
+            @php
+            $venueExpense = 0;
+            $paidVenueExpense = 0;
+              foreach ($venues as $venue){
+                $venueExpense += $venue->Expense->pluck('expense_amount')->sum();
+                $paidVenueExpense += $venue->Expense->where('paid',1)->pluck('expense_amount')->sum();
+            }
+            @endphp
+            <strong>Total Venue Expense: </strong>{{ $venueExpense }}<br>
+            <strong>Paid Venue Expense</strong>{{ $paidVenueExpense }}<br>
           </div>
         </div>
       </div>
@@ -51,7 +58,7 @@
               </tr>
               </thead>
               <tbody>
-              @foreach(\App\Venue::all() as $venue)
+              @foreach($venues as $venue)
                 <tr>
                   <td>{{ $venue->venue_name }}</td>
                   <td>{{ $venue->venue_date }}</td>
@@ -82,12 +89,23 @@
                                   <input type="number" name="expenseAmount" class="form-control" required>
                                 </div>
                                 <div class="col-md-12">
+                                  <label for="expenseType">Expense Type</label>
+                                  <select name="expenseType" id="" class="form-control">
+                                    <option value="">--Select--</option>
+                                    <option value="stay">Stay</option>
+                                    <option value="food">Food</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="others">Others</option>
+                                  </select>
+{{--                                  <input type="number" name="expenseType" class="form-control" required>--}}
+                                </div>
+                                <div class="col-md-12">
                                   <label for="expenseDetails">Expense Details</label>
                                   <textarea name="expenseDetails" id="" cols="30" rows="10" class="form-control" required></textarea>
                                 </div>
                                 <div class="col-md-12">
                                   <label for="expenseBill">Expense Bill (PDF Only)</label>
-                                  <input type="file" name="expenseBill" id="expenseBill" class="form-control"  accept="application/pdf" required>
+                                  <input type="file" name="expenseBill" id="expenseBill" class="form-control"  accept="application/pdf" >
                                 </div>
                               </div>
                           </div>
@@ -129,7 +147,7 @@
                               <td>{{ $expense->expense_amount }}</td>
                               <td>{{ $expense->expense_details }}</td>
 {{--                              <td><a href="{{ asset('/storage/uploads/'.$expense->expenseBill) }}">Download</a></td>--}}
-                              <td><a href="{{ asset('/storage/uploads/'.$expense->expenseBill) }}">Download</a></td>
+                              <td>@if($expense->expenseBill) <a href="{{ asset('/storage/uploads/'.$expense->expenseBill) }}">Download</a> @else Not Uploaded @endif</td>
                                   </tr>
                               </tbody>
 
@@ -170,43 +188,6 @@
   </div>
 
 
-  <div class="modal fade" id="addVenueExpense" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header ">
-          <h5 class="modal-title"><strong>Add Venue Expense</strong></h5>
-          <span aria-hidden="true" data-dismiss="modal">×</span>
-        </div>
-        <form action="{{ route('venue.add') }}" method="post" enctype="multipart/form-data">
-          @csrf
-          <div class="modal-body">
-            <div class="row">
-
-              <div class="col-md-12">
-                <label for="venueDate">Venue Date</label>
-                <input type="date" name="venueDate" id="venueDate" class="form-control" required>
-              </div>
-
-              <div class="col-md-12">
-                <label for="Venue Name">Venue Name</label>
-                <input type="text" name="Venue Name" id="Venue Name" class="form-control"  required>
-              </div>
-              <div class="col-md-12">
-                <label for="venueLocation">Venue Location</label>
-                <input type="text" name="venueLocation" id="venueLocation" class="form-control" required>
-              </div>
-
-            </div>
-
-          </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-info">Add</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 @endsection
 @section('vendor-script')
   {{-- vendor files --}}

@@ -27,24 +27,22 @@ use Illuminate\Support\Facades\Validator;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 
-
 class TransactionController extends Controller
 {
   public function createCheque(Request $request, $clientId)
   {
 //    return $request;
     $request->validate([
-      'chequeClearedOn'=>'required|date',
-      'paymentAmount'=>'required|integer',
-      'paymentChequeNumber'=>'required|string',
-      'paymentChequeRemarks'=>'required|string',
-      'paymentChequeIssuer'=>'required|string',
-      'paymentChequeClearingBank'=>'required|string',
+      'chequeClearedOn' => 'required|date',
+      'paymentAmount' => 'required|integer',
+      'paymentChequeNumber' => 'required|string',
+      'paymentChequeRemarks' => 'required|string',
+      'paymentChequeIssuer' => 'required|string',
+      'paymentChequeClearingBank' => 'required|string',
     ]);
-    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
-      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
-    }
-    else {
+    if ($request->has('paymentDownPayment') and $request->has('paymentAddon')) {
+      notifyToast('error', 'OOPS!!', 'A payment can either be Addon or Down payment.');
+    } else {
       DB::beginTransaction();
       try {
         $transaction = new ChequePayment();
@@ -58,9 +56,9 @@ class TransactionController extends Controller
         $transaction->chequeIssuer = $request->paymentChequeIssuer;
         $transaction->chequeClearingBank = $request->paymentChequeClearingBank;
         $transaction->save();
-        if($request->has('paymentForMonth')){
+        if ($request->has('paymentForMonth')) {
           $co = 0;
-          foreach ($request->paymentForMonth as $month){
+          foreach ($request->paymentForMonth as $month) {
             $transactionMonth = new TransactionMonth;
 ////            return $request->paymentForMonth;
 //            $transactionMonth->transaction_id  =$transaction->id;
@@ -69,12 +67,12 @@ class TransactionController extends Controller
 //            $transactionMonth->transactionType  = 'card';
 //            $transactionMonth->save();
             $transactionMonth->create([
-              'transaction_id'=>$transaction->id,
-              'paidMonth'=>$month,
-              'paidYear'=>$request->paymentForYear[$co],
-              'transactionType'=>'cheque',
+              'transaction_id' => $transaction->id,
+              'paidMonth' => $month,
+              'paidYear' => $request->paymentForYear[$co],
+              'transactionType' => 'cheque',
             ]);
-            $co ++;
+            $co++;
           }
         }
         (new TimelineActivity)->create([
@@ -97,17 +95,16 @@ class TransactionController extends Controller
   public function createCard(Request $request, $clientId)
   {
     $request->validate([
-      'paymentReceivedOn'=>'required|date',
-      'paymentAmount'=>'required|integer',
-      'paymentCardType'=>'required|string',
-      'paymentCardProvider'=>'required|string',
-      'paymentCardLastFourDigits'=>'required|integer',
-      'paymentCardRemarks'=>'required|string',
+      'paymentReceivedOn' => 'required|date',
+      'paymentAmount' => 'required|integer',
+      'paymentCardType' => 'required|string',
+      'paymentCardProvider' => 'required|string',
+      'paymentCardLastFourDigits' => 'required|integer',
+      'paymentCardRemarks' => 'required|string',
     ]);
-    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
-      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
-    }
-    else {
+    if ($request->has('paymentDownPayment') and $request->has('paymentAddon')) {
+      notifyToast('error', 'OOPS!!', 'A payment can either be Addon or Down payment.');
+    } else {
       DB::beginTransaction();
       try {
         $transaction = new CardPayment;
@@ -121,9 +118,9 @@ class TransactionController extends Controller
         $transaction->isAddon = $request->paymentAddOn ? 1 : 0;
         $transaction->remarks = $request->paymentCardRemarks;
         $transaction->save();
-        if($request->has('paymentForMonth')){
+        if ($request->has('paymentForMonth')) {
           $co = 0;
-          foreach ($request->paymentForMonth as $month){
+          foreach ($request->paymentForMonth as $month) {
             $transactionMonth = new TransactionMonth;
 ////            return $request->paymentForMonth;
 //            $transactionMonth->transaction_id  =$transaction->id;
@@ -132,12 +129,12 @@ class TransactionController extends Controller
 //            $transactionMonth->transactionType  = 'card';
 //            $transactionMonth->save();
             $transactionMonth->create([
-              'transaction_id'=>$transaction->id,
-              'paidMonth'=>$month,
-              'paidYear'=>$request->paymentForYear[$co],
-              'transactionType'=>'card',
+              'transaction_id' => $transaction->id,
+              'paidMonth' => $month,
+              'paidYear' => $request->paymentForYear[$co],
+              'transactionType' => 'card',
             ]);
-            $co ++;
+            $co++;
           }
         }
         (new TimelineActivity)->create([
@@ -161,15 +158,14 @@ class TransactionController extends Controller
   public function createCash(Request $request, $clientId)
   {
     $request->validate([
-      'paymentReceivedOn'=>'required|date',
-      'paymentAmount'=>'required|integer',
-      'paymentReceiptNumber'=>'required|string',
-      'paymentCashRemarks'=>'required|string',
+      'paymentReceivedOn' => 'required|date',
+      'paymentAmount' => 'required|integer',
+      'paymentReceiptNumber' => 'required|string',
+      'paymentCashRemarks' => 'required|string',
     ]);
-    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
-      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
-    }
-    else {
+    if ($request->has('paymentDownPayment') and $request->has('paymentAddon')) {
+      notifyToast('error', 'OOPS!!', 'A payment can either be Addon or Down payment.');
+    } else {
       DB::beginTransaction();
       try {
         $transaction = new CashPayment;
@@ -181,17 +177,17 @@ class TransactionController extends Controller
         $transaction->isAddon = $request->paymentAddOn ? 1 : 0;
         $transaction->remarks = $request->paymentCashRemarks;
         $transaction->save();
-        if($request->has('paymentForMonth')){
+        if ($request->has('paymentForMonth')) {
           $co = 0;
-          foreach ($request->paymentForMonth as $month){
+          foreach ($request->paymentForMonth as $month) {
             $transactionMonth = new TransactionMonth;
             $transactionMonth->create([
-              'transaction_id'=>$transaction->id,
-              'paidMonth'=>$month,
-              'paidYear'=>$request->paymentForYear[$co],
-              'transactionType'=>'cash',
+              'transaction_id' => $transaction->id,
+              'paidMonth' => $month,
+              'paidYear' => $request->paymentForYear[$co],
+              'transactionType' => 'cash',
             ]);
-            $co ++;
+            $co++;
           }
         }
         (new TimelineActivity)->create([
@@ -213,70 +209,73 @@ class TransactionController extends Controller
   }
 
 
-
-  public function importHistory(){
+  public function importHistory()
+  {
     return view('client.transaction.importHistory');
   }
 
-  public function importHistoryDetails($importId, $bank){
-    if($bank == 'yes'){
-      $transactions = YesNachPayment::where('meta_id',$importId)->get();
-    }elseif($bank == 'axis'){
-      $transactions = AxisNachPayment::where('meta_id',$importId)->get();
+  public function importHistoryDetails($importId, $bank)
+  {
+    if ($bank == 'yes') {
+      $transactions = YesNachPayment::where('meta_id', $importId)->get();
+    } elseif ($bank == 'axis') {
+      $transactions = AxisNachPayment::where('meta_id', $importId)->get();
     }
-    return view('client.transaction.importDetails')->with('transactions',$transactions)->with('bank',$bank);
+    return view('client.transaction.importDetails')->with('transactions', $transactions)->with('bank', $bank);
   }
 
-  public function downloadAxisMis(){
+  public function downloadAxisMis()
+  {
     return view('client.downloadAxisMis');
   }
 
-  public function downloadAxisMisFile(Request $request){
+  public function downloadAxisMisFile(Request $request)
+  {
     $collection = collect();
-    $clients = Client::find(AxisMis::where('client_id','!=',null)->pluck('client_id')->unique());
-    foreach($clients as $client){
+    $clients = Client::find(AxisMis::where('client_id', '!=', null)->pluck('client_id')->unique());
+    foreach ($clients as $client) {
       $foo = collect();
-      $foo->put('CLIENT NAME',$client->name);
-      $foo->put('UMRNNO',$client->AxisMis->sortBy('created_at')->last()->UMRNNO);
-      $foo->put('SYSTEM_STATUS',$client->AxisMis->sortBy('created_at')->last()->SYSTEM_STATUS);
-      $foo->put('REASONNAME',$client->AxisMis->sortBy('created_at')->last()->REASONNAME);
-      $foo->put('DEBTOR_CUSTOMER_REFERENCE_NO',$client->AxisMis->sortBy('created_at')->last()->DEBTOR_CUSTOMER_REFERENCE_NO);
-      $foo->put('PAYMENTTYPE',$client->AxisMis->sortBy('created_at')->last()->PAYMENTTYPE);
-      $foo->put('DEBTORACCOUNTNO',$client->AxisMis->sortBy('created_at')->last()->DEBTORACCOUNTNO);
-      $foo->put('DEBITORBANKNAME',$client->AxisMis->sortBy('created_at')->last()->DEBITORBANKNAME);
-      $foo->put('DEBTORBANKCODE',$client->AxisMis->sortBy('created_at')->last()->DEBTORBANKCODE);
-      $foo->put('DEBTORNAME',$client->AxisMis->sortBy('created_at')->last()->DEBTORNAME);
-      $foo->put('CREDITORNAME',$client->AxisMis->sortBy('created_at')->last()->CREDITORNAME);
-      $foo->put('FREQUENCY',$client->AxisMis->sortBy('created_at')->last()->FREQUENCY);
-      $foo->put('AMOUNT',$client->AxisMis->sortBy('created_at')->last()->AMOUNT);
-      $foo->put('STARTDATE',$client->AxisMis->sortBy('created_at')->last()->STARTDATE);
-      $foo->put('ENDDATE',$client->AxisMis->sortBy('created_at')->last()->ENDDATE);
-      $foo->put('MANDATE_INITIATED_BUSINESS_DATE',$client->AxisMis->sortBy('created_at')->last()->MANDATE_INITIATED_BUSINESS_DATE);
-      $foo->put('SPONSOR_CHECKER_APPROVAL_DATE',$client->AxisMis->sortBy('created_at')->last()->SPONSOR_CHECKER_APPROVAL_DATE);
-      $foo->put('MANDATE_CREATION_DATE',$client->AxisMis->sortBy('created_at')->last()->MANDATE_CREATION_DATE);
-      $foo->put('MANDATE_ACCEPTANCE_DATE',$client->AxisMis->sortBy('created_at')->last()->MANDATE_ACCEPTANCE_DATE);
-      $foo->put('CREDITORUTILITYCODE',$client->AxisMis->sortBy('created_at')->last()->CREDITORUTILITYCODE);
-      $foo->put('PRO_DATE',$client->AxisMis->sortBy('created_at')->last()->PRO_DATE);
-      $foo->put('LOT',$client->AxisMis->sortBy('created_at')->last()->LOT);
-      $foo->put('SRNO',$client->AxisMis->sortBy('created_at')->last()->SRNO);
-      $foo->put('CLIENT_COD',$client->AxisMis->sortBy('created_at')->last()->CLIENT_COD);
-      $foo->put('OLD_UMRN',$client->AxisMis->sortBy('created_at')->last()->OLD_UMRN);
-      $foo->put('DATE',$client->AxisMis->sortBy('created_at')->last()->DATE);
-      $foo->put('SP_BKCODE',$client->AxisMis->sortBy('created_at')->last()->SP_BKCODE);
-      $foo->put('ACTION',$client->AxisMis->sortBy('created_at')->last()->ACTION);
-      $foo->put('AC_TYPE',$client->AxisMis->sortBy('created_at')->last()->AC_TYPE);
-      $foo->put('MOBILE',$client->AxisMis->sortBy('created_at')->last()->MOBILE);
-      $foo->put('PICKUP_LOC',$client->AxisMis->sortBy('created_at')->last()->PICKUP_LOC);
-      $foo->put('INWARD_DATE',$client->AxisMis->sortBy('created_at')->last()->INWARD_DATE);
-      $foo->put('SP_BANK',$client->AxisMis->sortBy('created_at')->last()->SP_BANK);
-      $foo->put('SCHEME',$client->AxisMis->sortBy('created_at')->last()->SCHEME);
-      if(Carbon::parse($client->AxisMis->sortBy('created_at')->last()->ENDDATE)->gt(Carbon::now())){
+      $foo->put('CLIENT NAME', $client->name);
+      $foo->put('UMRNNO', $client->AxisMis->sortBy('created_at')->last()->UMRNNO);
+      $foo->put('SYSTEM_STATUS', $client->AxisMis->sortBy('created_at')->last()->SYSTEM_STATUS);
+      $foo->put('REASONNAME', $client->AxisMis->sortBy('created_at')->last()->REASONNAME);
+      $foo->put('DEBTOR_CUSTOMER_REFERENCE_NO', $client->AxisMis->sortBy('created_at')->last()->DEBTOR_CUSTOMER_REFERENCE_NO);
+      $foo->put('PAYMENTTYPE', $client->AxisMis->sortBy('created_at')->last()->PAYMENTTYPE);
+      $foo->put('DEBTORACCOUNTNO', $client->AxisMis->sortBy('created_at')->last()->DEBTORACCOUNTNO);
+      $foo->put('DEBITORBANKNAME', $client->AxisMis->sortBy('created_at')->last()->DEBITORBANKNAME);
+      $foo->put('DEBTORBANKCODE', $client->AxisMis->sortBy('created_at')->last()->DEBTORBANKCODE);
+      $foo->put('DEBTORNAME', $client->AxisMis->sortBy('created_at')->last()->DEBTORNAME);
+      $foo->put('CREDITORNAME', $client->AxisMis->sortBy('created_at')->last()->CREDITORNAME);
+      $foo->put('FREQUENCY', $client->AxisMis->sortBy('created_at')->last()->FREQUENCY);
+      $foo->put('AMOUNT', $client->AxisMis->sortBy('created_at')->last()->AMOUNT);
+      $foo->put('STARTDATE', $client->AxisMis->sortBy('created_at')->last()->STARTDATE);
+      $foo->put('ENDDATE', $client->AxisMis->sortBy('created_at')->last()->ENDDATE);
+      $foo->put('MANDATE_INITIATED_BUSINESS_DATE', $client->AxisMis->sortBy('created_at')->last()->MANDATE_INITIATED_BUSINESS_DATE);
+      $foo->put('SPONSOR_CHECKER_APPROVAL_DATE', $client->AxisMis->sortBy('created_at')->last()->SPONSOR_CHECKER_APPROVAL_DATE);
+      $foo->put('MANDATE_CREATION_DATE', $client->AxisMis->sortBy('created_at')->last()->MANDATE_CREATION_DATE);
+      $foo->put('MANDATE_ACCEPTANCE_DATE', $client->AxisMis->sortBy('created_at')->last()->MANDATE_ACCEPTANCE_DATE);
+      $foo->put('CREDITORUTILITYCODE', $client->AxisMis->sortBy('created_at')->last()->CREDITORUTILITYCODE);
+      $foo->put('PRO_DATE', $client->AxisMis->sortBy('created_at')->last()->PRO_DATE);
+      $foo->put('LOT', $client->AxisMis->sortBy('created_at')->last()->LOT);
+      $foo->put('SRNO', $client->AxisMis->sortBy('created_at')->last()->SRNO);
+      $foo->put('CLIENT_COD', $client->AxisMis->sortBy('created_at')->last()->CLIENT_COD);
+      $foo->put('OLD_UMRN', $client->AxisMis->sortBy('created_at')->last()->OLD_UMRN);
+      $foo->put('DATE', $client->AxisMis->sortBy('created_at')->last()->DATE);
+      $foo->put('SP_BKCODE', $client->AxisMis->sortBy('created_at')->last()->SP_BKCODE);
+      $foo->put('ACTION', $client->AxisMis->sortBy('created_at')->last()->ACTION);
+      $foo->put('AC_TYPE', $client->AxisMis->sortBy('created_at')->last()->AC_TYPE);
+      $foo->put('MOBILE', $client->AxisMis->sortBy('created_at')->last()->MOBILE);
+      $foo->put('PICKUP_LOC', $client->AxisMis->sortBy('created_at')->last()->PICKUP_LOC);
+      $foo->put('INWARD_DATE', $client->AxisMis->sortBy('created_at')->last()->INWARD_DATE);
+      $foo->put('SP_BANK', $client->AxisMis->sortBy('created_at')->last()->SP_BANK);
+      $foo->put('SCHEME', $client->AxisMis->sortBy('created_at')->last()->SCHEME);
+      if (Carbon::parse($client->AxisMis->sortBy('created_at')->last()->ENDDATE)->gt(Carbon::now())) {
         $collection->push($foo);
       }
     }
-    $fileName = $request->month .' - ' .$request->year.'-AxisMis'.time().rand() .'.xlsx';
-    (new FastExcel($collection))->export('excel/'.$fileName);
-    $link = url('/excel/'.$fileName);
+    $fileName = $request->month . ' - ' . $request->year . '-AxisMis' . time() . rand() . '.xlsx';
+    (new FastExcel($collection))->export('excel/' . $fileName);
+    $link = url('/excel/' . $fileName);
     return Redirect::to($link);
     // session(['axis-mis-collection' => $collection]);
 
@@ -284,22 +283,28 @@ class TransactionController extends Controller
   }
 
 
-  public function uploadAxisMis(){
+  public function uploadAxisMis()
+  {
     return view('client.uploadAxisMis');
   }
-  public function uploadAxisMisFile(Request $request){
+
+  public function uploadAxisMisFile(Request $request)
+  {
     return \redirect()->back();
   }
 
-  public function uploadTransaction(){
+  public function uploadTransaction()
+  {
     return view('client.transaction.upload');
   }
 
-  public function uploadTransactionFile(Request $request){
+  public function uploadTransactionFile(Request $request)
+  {
     return \redirect()->back();
   }
 
-  public function disableNach(Request $request){
+  public function disableNach(Request $request)
+  {
 //    return $request;
     try {
       DisableNach::create([
@@ -311,22 +316,22 @@ class TransactionController extends Controller
         'bank' => Client::find($request->client)->AxisPayments->count() ? 'AXIS' : 'YES'
       ]);
       return \redirect()->back();
-    }
-    catch( \Exception $e){
+    } catch (\Exception $e) {
       return \redirect()->back()->withErrors($e);
     }
   }
 
 
-  public function addPdc(Request $request){
-    $v = Validator::make($request->all(),[
+  public function addPdc(Request $request)
+  {
+    $v = Validator::make($request->all(), [
       'cheque_number' => 'required',
       'date_of_execution' => 'required',
       'amount' => 'required',
     ]);
 
     if ($v->fails()) {
-      notification('Opps!!','Please Fix the errors', 'warning','okay');
+      notification('Opps!!', 'Please Fix the errors', 'warning', 'okay');
       return redirect()->back()->withErrors($v)->withInput();
     }
     $pdc = new PDC;
@@ -337,16 +342,17 @@ class TransactionController extends Controller
     $pdc->micr_number = $request->micr_number;
     $pdc->branch_name = $request->branch_name;
     $pdc->branch_address = $request->branch_address;
-    $pdc->remarks= $request->remarks;
-    $pdc->status= 'unused';
+    $pdc->remarks = $request->remarks;
+    $pdc->status = 'unused';
     $pdc->employee_id = Auth::user()->id;
     $pdc->save();
 
     return redirect()->back()->withSuccess('PDC Added');
   }
 
-  public function updatePdc(Request $request){
-    $v = Validator::make($request->all(),[
+  public function updatePdc(Request $request)
+  {
+    $v = Validator::make($request->all(), [
       'cheque_number' => 'required',
       'date_of_execution' => 'required',
       'amount' => 'required',
@@ -361,17 +367,18 @@ class TransactionController extends Controller
     $pdc->date_of_execution = $request->date_of_execution;
     $pdc->amount = $request->amount;
     $pdc->micr_number = $request->micr_number;
-    $pdc->remarks= $request->remarks;
-    $pdc->status= $request->status;
+    $pdc->remarks = $request->remarks;
+    $pdc->status = $request->status;
     $pdc->save();
 
     return redirect()->back()->withSuccess('PDC Added');
   }
 
-  public function updatePdcStatus(Request $request,$id){
+  public function updatePdcStatus(Request $request, $id)
+  {
     $pdc = PDC::find($id);
-    if($pdc){
-      if($request->status == 'CLEARED'){
+    if ($pdc) {
+      if ($request->status == 'CLEARED') {
         $transaction = new ChequePayment();
         $transaction->client_id = $pdc->client_id;
         $transaction->paymentDate = $pdc->date_of_execution;
@@ -392,12 +399,14 @@ class TransactionController extends Controller
     }
   }
 
-  public function reimbursementIndex(){
+  public function reimbursementIndex()
+  {
 
     return view('client.transaction.Reimbursement.index');
   }
 
-  public function reimbursementAdd(Request $request){
+  public function reimbursementAdd(Request $request)
+  {
 //    return $request;
     $this->validate($request, [
       'employee' => 'required|integer',
@@ -413,7 +422,7 @@ class TransactionController extends Controller
     $reimbursement->expenseType = $request->expenseType;
     $reimbursement->amount = $request->amount;
 
-    $fileName = time().'_'.$request->expenseBill->getClientOriginalName();
+    $fileName = time() . '_' . $request->expenseBill->getClientOriginalName();
 //    $request->expenseBill->move(public_path('uploads'), $fileName);
     $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
 
@@ -424,7 +433,8 @@ class TransactionController extends Controller
     return redirect()->back();
   }
 
-  public function reimburse(Request $request){
+  public function reimburse(Request $request)
+  {
     $reimbursement = Reimbursement::find($request->id);
     $reimbursement->reimbursed = 1;
     $reimbursement->reimbursedOn = $request->reimbursementDate;
@@ -433,42 +443,109 @@ class TransactionController extends Controller
     return redirect()->back();
   }
 
-  public function venueExpense(){
-    return view('client.transaction.venueexpense.index');
+  public function venueExpense()
+  {
+    if(\request()->month | \request()->year){
+      $year = \request()->year;
+      $month = \request()->month;
+      $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
+      $end = Carbon::createFromDate($year, $month)->endOfMonth();
+      $venues = Venue::whereBetween('venue_date',[$start,$end])->get();
+    } else{
+      $venues = \App\Venue::all()->sortByDesc('venue_date');
+    }
+    return view('client.transaction.venueexpense.index')->with('venues',$venues);
   }
 
-  public function venueAdd(Request $request){
+
+  public function venueExpenseSummary()
+  {
+
+
+    $start = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->first()->venue_date)->startOfYear();
+    $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->last()->venue_date)->endOfYear();
+
+
+    $interval = \DateInterval::createFromDateString('1 month');
+    $period   = new \DatePeriod($start, $interval, $end);
+    $dates  = collect();
+    foreach ($period as $dt) {
+      $dates->push($dt->format("Y-m"));
+    }
+    $summary = collect();
+    foreach ($dates as $date){
+      $year = explode('-',$date)[0];
+      $month = explode('-',$date)[1];
+      $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
+      $end = Carbon::createFromDate($year, $month)->endOfMonth();
+      $venues = Venue::whereBetween('venue_date',[$start,$end])->get();
+      $venueCost = 0;
+      $venueFoodCost = 0;
+      $venueStayCost = 0;
+      $venueTravelCost = 0;
+      $venueOtherCost = 0;
+      foreach ($venues as $venue){
+        $venueCost += $venue->Expense->pluck('expense_amount')->sum();
+        $venueStayCost += $venue->Expense->where('expense_type','stay')->pluck('expense_amount')->sum();
+        $venueOtherCost += $venue->Expense->where('expense_type','other')->pluck('expense_amount')->sum();
+        $venueFoodCost += $venue->Expense->where('expense_type','food')->pluck('expense_amount')->sum();
+        $venueTravelCost += $venue->Expense->where('expense_type','travel')->pluck('expense_amount')->sum();
+      }
+      $data = [
+        'month' => Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1)->format('F Y'),
+        'rawMonth' => $month,
+        'rawYear' => $year,
+        'totalVenues' => $venues->count(),
+        'venueCost' => $venueCost,
+        'foodCost' => $venueFoodCost,
+        'otherCost' => $venueOtherCost,
+        'travelCost' => $venueTravelCost,
+        'stayCost' => $venueStayCost,
+      ];
+      $summary->push($data);
+    }
+    return view('client.transaction.venueexpense.summary')->with('venues',$summary);
+  }
+
+  public function venueAdd(Request $request)
+  {
     $venue = new Venue;
     $venue->venue_name = $request->Venue_Name;
     $venue->venue_location = $request->venueLocation;
     $venue->venue_date = $request->venueDate;
     $venue->save();
     return \redirect()->back();
-}
-
-  public function venueExpenseAdd(Request $request){
-      $expense = new VenueExpenses;
-      $expense->expense_name = $request->expenseName;
-      $expense->expense_amount = $request->expenseAmount;
-      $expense->expense_details = $request->expenseDetails;
-      $expense->venue_id = $request->id;
-
-    $fileName = time().'_venue_expense_bill'.$request->expenseBill->getClientOriginalName();
-    $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
-    $expense->expenseBill = $fileName;
-
-      $expense->save();
-      return \redirect()->back();
   }
 
-  public function downloadChequesView(){
+  public function venueExpenseAdd(Request $request)
+  {
+    $expense = new VenueExpenses;
+    $expense->expense_name = $request->expenseName;
+    $expense->expense_amount = $request->expenseAmount;
+    $expense->expense_details = $request->expenseDetails;
+    $expense->expense_type = $request->expenseType;
+    $expense->venue_id = $request->id;
+    if ($request->expenseBill) {
+
+      $fileName = time() . '_venue_expense_bill' . $request->expenseBill->getClientOriginalName();
+      $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
+      $expense->expenseBill = $fileName;
+    }
+
+    $expense->save();
+    return \redirect()->back();
+  }
+
+  public function downloadChequesView()
+  {
     return view('client.downloadCheque');
   }
 
-  public function downloadCheques(Request $request){
-    if(PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->count()){
-      $fileName = '(Total Amount:    ₹'. (PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->get()->pluck('amount')->sum()) .'   )'. Carbon::parse($request->from)->format('d-m-y') . ' to ' . Carbon::parse($request->to)->format('d-m-y') .'-pdc-'.time().rand() .'.xlsx';
-      $url =  (new FastExcel(PDC::whereDate('date_of_execution','>=',Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution','<=',Carbon::parse($request->to)->format('y-m-d'))->get()))->export('excel/' .  $fileName , function ($pdc) {
+  public function downloadCheques(Request $request)
+  {
+    if (PDC::whereDate('date_of_execution', '>=', Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution', '<=', Carbon::parse($request->to)->format('y-m-d'))->count()) {
+      $fileName = '(Total Amount:    ₹' . (PDC::whereDate('date_of_execution', '>=', Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution', '<=', Carbon::parse($request->to)->format('y-m-d'))->get()->pluck('amount')->sum()) . '   )' . Carbon::parse($request->from)->format('d-m-y') . ' to ' . Carbon::parse($request->to)->format('d-m-y') . '-pdc-' . time() . rand() . '.xlsx';
+      $url = (new FastExcel(PDC::whereDate('date_of_execution', '>=', Carbon::parse($request->from)->format('y-m-d'))->whereDate('date_of_execution', '<=', Carbon::parse($request->to)->format('y-m-d'))->get()))->export('excel/' . $fileName, function ($pdc) {
         return [
           'Cheque Date' => Carbon::parse($pdc->date_of_execution)->format('d-m-y'),
           'Cheque Number' => $pdc->cheque_no,
@@ -476,67 +553,71 @@ class TransactionController extends Controller
           'MICR No.' => strtoupper($pdc->micr_number),
           'Branch Name' => strtoupper($pdc->branch_name),
           'Branch Address' => strtoupper($pdc->branch_address),
-          'MAF No' => strtoupper($pdc->client->latestPackage->mafNo) ,
+          'MAF No' => strtoupper($pdc->client->latestPackage->mafNo),
           'FTK' => strtoupper($pdc->client->latestPackage->fclpId),
           'Name' => strtoupper($pdc->client->name),
           'Cheque Status' => strtoupper($pdc->status),
         ];
       });
-      $link = url('/excel/'.$fileName);
+      $link = url('/excel/' . $fileName);
       return Redirect::to($link);
-    }else{
+    } else {
       return redirect()->back();
     }
   }
 
-  public function editCard(Request $request, $transactionId){
+  public function editCard(Request $request, $transactionId)
+  {
     $payment = CardPayment::find($transactionId);
-    if($payment){
+    if ($payment) {
 
-    $payment->paymentDate = $request->paymentDate;
-    $payment->amount = $request->paymentAmount;
-    $payment->cardType = $request->paymentCardType;
-    $payment->remarks = $request->paymentRemarks;
-    $payment->save();
+      $payment->paymentDate = $request->paymentDate;
+      $payment->amount = $request->paymentAmount;
+      $payment->cardType = $request->paymentCardType;
+      $payment->remarks = $request->paymentRemarks;
+      $payment->save();
     }
     return redirect()->back();
   }
 
 
-  public function editCheque(Request $request, $transactionId){
+  public function editCheque(Request $request, $transactionId)
+  {
     $payment = ChequePayment::find($transactionId);
-    if($payment){
-    $payment->paymentDate = $request->paymentDate;
-    $payment->amount = $request->paymentAmount;
-    $payment->chequeNumber = $request->paymentChequeNumber;
-    $payment->chequeIssuer = $request->paymentChequeIssuer;
-    $payment->chequeClearingBank = $request->paymentChequeClearingBank;
-    $payment->remarks = $request->paymentRemarks;
-    $payment->save();
+    if ($payment) {
+      $payment->paymentDate = $request->paymentDate;
+      $payment->amount = $request->paymentAmount;
+      $payment->chequeNumber = $request->paymentChequeNumber;
+      $payment->chequeIssuer = $request->paymentChequeIssuer;
+      $payment->chequeClearingBank = $request->paymentChequeClearingBank;
+      $payment->remarks = $request->paymentRemarks;
+      $payment->save();
     }
     return redirect()->back();
   }
 
-  public function editCash(Request $request, $transactionId){
+  public function editCash(Request $request, $transactionId)
+  {
     $payment = CashPayment::find($transactionId);
-    if($payment){
-    $payment->paymentDate = $request->paymentDate;
-    $payment->amount = $request->paymentAmount;
-    $payment->receiptNumber = $request->paymentReceiptNumber;
-    $payment->remarks = $request->paymentRemarks;
-    $payment->save();
+    if ($payment) {
+      $payment->paymentDate = $request->paymentDate;
+      $payment->amount = $request->paymentAmount;
+      $payment->receiptNumber = $request->paymentReceiptNumber;
+      $payment->remarks = $request->paymentRemarks;
+      $payment->save();
     }
     return redirect()->back();
   }
 
-  public function editOthers(Request $request, $transactionId){
+  public function editOthers(Request $request, $transactionId)
+  {
     $payment = OtherPayment::find($transactionId);
-    if($payment){
-    $payment->paymentDate = $request->paymentDate;
-    $payment->amount = $request->paymentAmount;
-    $payment->remarks = $request->paymentRemarks;
-    $payment->modeOfPayment = $request->modeOfPayment;
-    $payment->save();
+    if ($payment) {
+      $payment->paymentDate = $request->paymentDate;
+      $payment->amount = $request->paymentAmount;
+      $payment->remarks = $request->paymentRemarks;
+      $payment->modeOfPayment = $request->modeOfPayment;
+      $payment->save();
     }
     return redirect()->back();
   }
@@ -548,15 +629,14 @@ class TransactionController extends Controller
   public function createOther(Request $request, $clientId)
   {
     $request->validate([
-      'paymentReceivedOn'=>'required|date',
-      'paymentAmount'=>'required|integer',
-      'modeOfPayment'=>'required|string',
-      'paymentCardRemarks'=>'required|string',
+      'paymentReceivedOn' => 'required|date',
+      'paymentAmount' => 'required|integer',
+      'modeOfPayment' => 'required|string',
+      'paymentCardRemarks' => 'required|string',
     ]);
-    if($request->has('paymentDownPayment') AND $request->has('paymentAddon')){
-      notifyToast('error','OOPS!!', 'A payment can either be Addon or Down payment.');
-    }
-    else {
+    if ($request->has('paymentDownPayment') and $request->has('paymentAddon')) {
+      notifyToast('error', 'OOPS!!', 'A payment can either be Addon or Down payment.');
+    } else {
       DB::beginTransaction();
       try {
         $transaction = new OtherPayment();
@@ -566,9 +646,9 @@ class TransactionController extends Controller
         $transaction->modeOfPayment = $request->modeOfPayment;
         $transaction->remarks = $request->paymentCardRemarks;
         $transaction->save();
-        if($request->has('paymentForMonth')){
+        if ($request->has('paymentForMonth')) {
           $co = 0;
-          foreach ($request->paymentForMonth as $month){
+          foreach ($request->paymentForMonth as $month) {
             $transactionMonth = new TransactionMonth;
 ////            return $request->paymentForMonth;
 //            $transactionMonth->transaction_id  =$transaction->id;
@@ -577,12 +657,12 @@ class TransactionController extends Controller
 //            $transactionMonth->transactionType  = 'card';
 //            $transactionMonth->save();
             $transactionMonth->create([
-              'transaction_id'=>$transaction->id,
-              'paidMonth'=>$month,
-              'paidYear'=>$request->paymentForYear[$co],
-              'transactionType'=>'card',
+              'transaction_id' => $transaction->id,
+              'paidMonth' => $month,
+              'paidYear' => $request->paymentForYear[$co],
+              'transactionType' => 'card',
             ]);
-            $co ++;
+            $co++;
           }
         }
         DB::commit();

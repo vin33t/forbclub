@@ -114,7 +114,7 @@
       "role": "super-admin",
       "permission": "view-import-history"
     },{
-      "url": "transaction/venue-expense",
+      "url": "transaction/venue-expense-summary",
       "name": "Venue Expense",
       "icon": "feather icon-file-text",
       "i18n": "nav.app_email",

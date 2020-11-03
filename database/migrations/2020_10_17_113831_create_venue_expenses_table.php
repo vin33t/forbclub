@@ -19,6 +19,7 @@ class CreateVenueExpensesTable extends Migration
             $table->string('expense_name');
             $table->integer('expense_amount');
             $table->longText('expense_details');
+            $table->string('expense_type');
             $table->boolean('paid')->default(0);
             $table->date('paid_on')->nullable();
             $table->longText('payment_remarks')->nullable();
