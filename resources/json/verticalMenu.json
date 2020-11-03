@@ -107,7 +107,7 @@
       "permission": "view-import-history"
     },
     {
-      "url": "transaction/reimbursement",
+      "url": "transaction/reimbursement-summary",
       "name": "Reimbursement",
       "icon": "feather icon-briefcase",
       "i18n": "nav.app_email",

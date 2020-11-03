@@ -401,8 +401,58 @@ class TransactionController extends Controller
 
   public function reimbursementIndex()
   {
+    if(\request()->month | \request()->year){
+      $year = \request()->year;
+      $month = \request()->month;
+      $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
+      $end = Carbon::createFromDate($year, $month)->endOfMonth();
+      $reimbursements = Reimbursement::whereBetween('expenseDate',[$start,$end])->get();
+    } else{
+      $reimbursements = \App\Reimbursement::all()->sortByDesc('expenseDate');
+    }
+    return view('client.transaction.Reimbursement.index')->with('reimbursements',$reimbursements);
+  }
 
-    return view('client.transaction.Reimbursement.index');
+  public function reimbursementSummary()
+  {
+    if(Reimbursement::all()->count()) {
+      $start = \Carbon\Carbon::parse(Reimbursement::all()->sortByDesc('expenseDate')->first()->expenseDate)->startOfYear();
+      $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('expenseDate')->last()->expenseDate)->endOfYear();
+
+
+      $interval = \DateInterval::createFromDateString('1 month');
+      $period = new \DatePeriod($start, $interval, $end);
+      $dates = collect();
+      foreach ($period as $dt) {
+        $dates->push($dt->format("Y-m"));
+      }
+      $summary = collect();
+      foreach ($dates as $date) {
+        $year = explode('-', $date)[0];
+        $month = explode('-', $date)[1];
+        $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
+        $end = Carbon::createFromDate($year, $month)->endOfMonth();
+        $reimbursements = Reimbursement::whereBetween('expenseDate', [$start, $end])->get();
+
+          $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
+          $reimbursementClaimRejected = $reimbursements->where('rejected',1)->pluck('amount')->sum();
+          $reimbursementClaimProcessed = $reimbursements->where('reimbursed',1)->pluck('amount')->sum();
+          $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
+        $data = [
+          'month' => Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1)->format('F Y'),
+          'rawMonth' => $month,
+          'rawYear' => $year,
+          'received' => $reimbursementClaimReceived,
+          'rejected' => $reimbursementClaimRejected,
+          'processed' => $reimbursementClaimProcessed,
+          'pending' => $reimbursementClaimPending,
+        ];
+        $summary->push($data);
+      }
+    } else {
+      $summary = collect();
+    }
+    return view('client.transaction.Reimbursement.summary')->with('reimbursements',$summary);
   }
 
   public function reimbursementAdd(Request $request)
@@ -683,6 +733,15 @@ class TransactionController extends Controller
     $venue->cancelled = 1;
     $venue->cancellationReason = $request->remarks;
     $venue->cancelledBy = Auth::user()->id;
+    $venue->save();
+    return \redirect()->back();
+  }
+
+  public function venueEdit(Request $request){
+    $venue = Venue::find($request->id);
+    $venue->venue_name = $request->Venue_Name;
+    $venue->venue_location = $request->venueLocation;
+    $venue->venue_date = $request->venueDate;
     $venue->save();
     return \redirect()->back();
   }

@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/update/pdc/status/{id}', 'Client\TransactionController@updatePdcStatus')->name('update.pdc.status');
 
     Route::get('/reimbursement', 'Client\TransactionController@reimbursementIndex')->name('reimbursement.index');
+    Route::get('/reimbursement-summary', 'Client\TransactionController@reimbursementSummary')->name('reimbursement.summary');
     Route::post('/reimbursement/add-new', 'Client\TransactionController@reimbursementAdd')->name('reimbursement.add');
     Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
 
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/venue-expense', 'Client\TransactionController@venueExpense')->name('venue.expense');
     Route::get('/venue-expense-summary', 'Client\TransactionController@venueExpenseSummary')->name('venue.expense.summary');
     Route::post('/venue/add', 'Client\TransactionController@venueAdd')->name('venue.add');
+    Route::post('/venue/edit', 'Client\TransactionController@venueEdit')->name('venue.edit');
     Route::post('/venue/cancel', 'Client\TransactionController@venueCancel')->name('venue.cancel');
     Route::post('/venue/expense/add', 'Client\TransactionController@venueExpenseAdd')->name('venue.add.expense');
 

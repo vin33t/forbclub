@@ -201,7 +201,48 @@
                       </div>
                     </div>
                     @endif
-                    <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editVenue{{ $venue->id }}"><i class="fa fa-edit"></i></button>
+                      <div class="modal fade" id="editVenue{{$venue->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Edit {{ $venue->venue_name }}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <form action="{{ route('venue.edit') }}" method="post" enctype="multipart/form-data">
+                              @csrf
+                              <div class="modal-body">
+                                <div class="row">
+                                  <input type="hidden" name="id" value="{{ $venue->id }}">
+                                  <div class="col-md-12">
+                                    <label for="venueDate">Venue Date</label>
+                                    <input type="date" name="venueDate" id="venueDate" class="form-control" value="{{ $venue->venue_date }}" required>
+                                  </div>
+
+                                  <div class="col-md-12">
+                                    <label for="Venue Name">Venue Name</label>
+                                    <input type="text" name="Venue Name" id="Venue Name" class="form-control" value="{{ $venue->venue_name }}" required>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <label for="venueLocation">Venue Location</label>
+                                    <input type="text" name="venueLocation" id="venueLocation" class="form-control" value="{{ $venue->venue_location }}" required>
+                                  </div>
+
+                                </div>
+
+                              </div>
+                              <div class="modal-footer ">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Update</button>
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                      </div>
+
                   </td>
                 </tr>
               @endforeach

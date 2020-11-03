@@ -21,6 +21,8 @@ class CreateReimbursementsTable extends Migration
             $table->bigInteger('amount');
             $table->longText('expenseBill');
             $table->longText('remarks');
+            $table->boolean('rejected')->default(0);
+            $table->longText('rejectedRemarks')->nullable();
             $table->boolean('reimbursed')->default(0);
             $table->date('reimbursedOn')->nullable();
             $table->longText('reimbursedRemarks')->nullable();

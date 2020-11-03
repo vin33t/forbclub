@@ -54,10 +54,9 @@
 
           </div>
             <div class="card-body">
-            <strong>Total Reimbursements: </strong>{{  \App\Reimbursement::all()->pluck('amount')->sum()  }}<br>
-            <strong>Paid Reimbursements</strong>{{ \App\Reimbursement::where('reimbursed',1)->get()->pluck('amount')->sum() }} <br>
-            <strong>Unpaid Paid Reimbursements</strong>{{ \App\Reimbursement::where('reimbursed',0)->get()->pluck('amount')->sum() }}<br>
-              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addNewReimbursement" >Add new</button>
+            <strong>Total Reimbursements: </strong>{{  $reimbursements->pluck('amount')->sum()  }}<br>
+            <strong>Paid Reimbursements</strong>{{ $reimbursements->pluck('amount')->sum() }} <br>
+            <strong>Unpaid Paid Reimbursements</strong>{{ $reimbursements->pluck('amount')->sum() }}<br>
             </div>
         </div>
       </div>
@@ -85,7 +84,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(\App\Reimbursement::all() as $reimbursement)
+            @foreach($reimbursements as $reimbursement)
             <tr>
               <td>{{ $reimbursement->employee->name }}</td>
               <td>{{ $reimbursement->expenseDate }}</td>
@@ -158,58 +157,6 @@
   </div>
 
 
-  <div class="modal fade" id="addNewReimbursement" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header ">
-          <h5 class="modal-title"><strong>Add Reimbursement</strong></h5>
-          <span aria-hidden="true" data-dismiss="modal">×</span>
-        </div>
-        <form action="{{ route('reimbursement.add') }}" method="post" enctype="multipart/form-data">
-          @csrf
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-12">
-                <label for="employee">Employee</label>
-                <select name="employee" id="employee" class="form-control">
-                  <option value="">--Select Employee--</option>
-                  @foreach(\App\Employee::all() as $employee)
-                  <option value="{{ $employee->id  }}">{{ $employee->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-md-12">
-                <label for="expenseDate">Expense Date</label>
-                <input type="date" name="expenseDate" id="expenseDate" class="form-control" required>
-              </div>
-
-              <div class="col-md-12">
-                <label for="expenseType">Expense Date</label>
-                <input type="text" name="expenseType" id="expenseType" class="form-control" placeholder="Food/Travel/Stay etc." required>
-              </div>
-              <div class="col-md-12">
-                <label for="amount">Amount</label>
-                <input type="number" name="amount" id="amount" class="form-control" required>
-              </div>
-              <div class="col-md-12">
-                <label for="expenseBill">Expense Bill (PDF Only)</label>
-                <input type="file" name="expenseBill" id="expenseBill" class="form-control"  accept="application/pdf" required>
-              </div>
-              <div class="col-md-12">
-                <label for="remarks" class="pull-left">Remarks</label>
-                <textarea name="remarks" id="remarks" class="form-control"></textarea>
-              </div>
-            </div>
-
-          </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-info">Add</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 @endsection
 @section('vendor-script')
   {{-- vendor files --}}
