@@ -23,7 +23,7 @@
       </ul>
     </div>
   @endif
-  <form action="{{ route('create.client') }}" method="POST">
+  <form action="{{ route('create.client') }}" method="POST" id="createClientForm" enctype="multipart/form-data">
     @csrf
   <section id="basic-horizontal-layouts">
     <div class="row match-height">
@@ -323,6 +323,74 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
+{{--            <h4 class="card-title">Package Benefits <button class="btn btn-primary btn-sm" onclick="addMoreBenefit()" type="button">Add More</button></h4>--}}
+            <h4 class="card-title">Package Benefits </h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6  col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control" >
+                    <label>Benefit Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Description" class="form-control" name="benefitDescription[]" >
+                    <label>Benefit Description </label>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+              <div class="row">
+                <div class="col-md-6  col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control" >
+                    <label>Benefit Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Description" class="form-control" name="benefitDescription[]" >
+                    <label>Benefit Description </label>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+              <div class="row">
+                <div class="col-md-6  col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control" >
+                    <label>Benefit Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-label-group">
+                    <input type="text" placeholder="Benefit Description" class="form-control" name="benefitDescription[]" >
+                    <label>Benefit Description </label>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
             <h4 class="card-title">File Upload</h4>
           </div>
           <div class="card-content">
@@ -332,7 +400,7 @@
                   <fieldset class="form-group">
                     <label for="basicInputFile">MAF</label>
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                      <input type="file" class="custom-file-input" name="clientMaf" id="inputGroupFile01">
                       <label class="custom-file-label" for="inputGroupFile01">Choose MAF File</label>
                     </div>
                   </fieldset>
@@ -375,6 +443,10 @@
   <!-- Page js files -->
   <script src="{{ asset(mix('js/scripts/forms/select/form-select2.js')) }}"></script>
   <script src="{{ asset(mix('js/scripts/extensions/dropzone.js')) }}"></script>
-
+  <script>
+    function addMoreBenefit(){
+      console.log('asd');
+    }
+  </script>
 @endsection
 

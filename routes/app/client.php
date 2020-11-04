@@ -30,8 +30,8 @@ Route::middleware('auth')->group(function () {
   Route::get('/profile/{slug}', 'Client\ClientController@viewClient')->name('view.client');
 
   Route::prefix('comment')->middleware(['role_or_permission:super-admin|view-client'])->group(function () {
-    Route::post('/{activityId}', 'Client\ClientController@storeTimelineComment')->name('create.client.timelineComment');
-    Route::post('/reply', 'Client\ClientController@storeClient')->name('create.client');
+//    Route::post('/{activityId}', 'Client\ClientController@storeTimelineComment')->name('create.client.timelineComment');
+//    Route::post('/reply', 'Client\ClientController@storeClient')->name('create.client');
 
   });
 

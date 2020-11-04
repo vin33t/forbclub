@@ -99,24 +99,55 @@ class ClientController extends Controller
         'emiAmount' => $request->noOfEmi,
 //        'modeOfPayment'=>$request->productModeOfPayment,
       ]);
+      $i = 0;
+      foreach ($request->benefitName as $cb){
+      $packageSold = $client->latestPackage;
+      $benefit = new SoldPackageBenefits;
+      $benefit->soldPackageId = $packageSold->id;
+      $benefit->clientId = $packageSold->clientId;
+      $benefit->benefitName = $cb;
+      $benefit->benefitDescription = $request->benefitDescription[$i];
+      $benefit->benefitConditions = '-';
+      $benefit->benefitValidity =Carbon::now()->format('Y-m-d');
+      $benefit->save();
+      $i++;
+
+      }
+      if($request->hasFile('clientMaf')) {
+        $this->validate($request, [
+          'maf' => 'mimes:pdf|max:99048',
+        ]);
+        $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
+        $image = $request->file('maf');
+        $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
+        $mafURL = Storage::disk('s3')->url($mafName);
+        Document::create([
+          'client_id'=>$client->id,
+          'type'=>'maf',
+          'url'=> $mafURL,
+        ]);
+      }
       DB::commit();
+      return redirect()->route('view.client',['slug'=>$client->slug]);
     } catch (\Exception $e) {
+      return $e;
       DB::rollBack();
+      return redirect()->back();
     }
   }
 
-  public function storeTimelineComment(Request $request, $activityId)
-  {
-    $request->validate([
-      'activityComment' => 'required|max:320'
-    ]);
-    TimelineActivity::findOrFail($activityId)->Comments()->create([
-      'body' => $request->activityComment,
-      'user_id' => Auth::user()->id,
-    ]);
-    notifyToast('Success', 'Comment Posted', '');
-    return redirect()->back();
-  }
+//  public function storeTimelineComment(Request $request, $activityId)
+//  {
+//    $request->validate([
+//      'activityComment' => 'required|max:320'
+//    ]);
+//    TimelineActivity::findOrFail($activityId)->Comments()->create([
+//      'body' => $request->activityComment,
+//      'user_id' => Auth::user()->id,
+//    ]);
+//    notifyToast('Success', 'Comment Posted', '');
+//    return redirect()->back();
+//  }
 
   public function updateModeOfPayment(Request $request)
   {
@@ -153,14 +184,14 @@ class ClientController extends Controller
     $benefit->benefitValidity = $input['benefitValidity'];
     $benefit->save();
 
-    (new TimelineActivity)->create([
-      'user_id' => Auth::user()->id,
-      'client_id' => $clientId,
-      'title' => 'New Package Benefit',
-      'parent_model' => 'App\Client\Package\SoldPackageBenefits',
-      'parent_id' => $benefit->id,
-      'body' => '<strong>' . $benefit->benefitName . '</strong> added. <br><strong>Description: </strong>' . $benefit->benefitDescription . ' <br> <strong>Conditions: </strong>' . $benefit->benefitConditions
-    ]);
+//    (new TimelineActivity)->create([
+//      'user_id' => Auth::user()->id,
+//      'client_id' => $clientId,
+//      'title' => 'New Package Benefit',
+//      'parent_model' => 'App\Client\Package\SoldPackageBenefits',
+//      'parent_id' => $benefit->id,
+//      'body' => '<strong>' . $benefit->benefitName . '</strong> added. <br><strong>Description: </strong>' . $benefit->benefitDescription . ' <br> <strong>Conditions: </strong>' . $benefit->benefitConditions
+//    ]);
     notifyToast('Success', 'Package Benefit Added', $benefit->benefitName . ' Added');
 
     return redirect()->back();
