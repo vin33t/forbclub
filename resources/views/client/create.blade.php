@@ -387,6 +387,51 @@
         </div>
       </div>
     </div>
+
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-box" >
+          <div class="card-head">
+            <header>Acocunt Status</header>
+          </div>
+          <div class="card-body no-padding height-9">
+            <div class="row">
+              <div class="col-md-2">
+                <label for="nach">NACH: </label><br>
+                <input type="radio" name="nach_a"value="0" >No
+                <input type="radio" name="nach_a" value="1" >Yes
+                {{-- <input type="checkbox" class="form" id="nach" name="nach" value="1" @if($details->activationStatus) @if($details->activationStatus->nach == 1) checked @endif @endif> --}}
+              </div>
+{{--              <div class="col-md-2">--}}
+{{--                <label for="">PDC</label> <span onclick="$('input[name=pdc_a]').attr('checked',false);"><i class="fa fa-refresh" aria-hidden="true"></i></span><br>--}}
+{{--                <input type="radio" name="pdc_a" class="from-control"  value="1" >1 PDC--}}
+{{--                <input type="radio" name="pdc_a" class="from-control" value="2" >2 PDC--}}
+{{--              </div>--}}
+              <div class="col-md-2">
+                <input type="checkbox" class="from-control" name="idProof_a" value="1"> <label>ID Proof</label>
+              </div>
+              <div class="col-md-2">
+                <input type="checkbox" class="from-control" name="tc_a" value="1" > <label>T&C</label>
+              </div>
+              <div class="col-md-2">
+                <input type="checkbox" class="from-control" name="cancelledCheque_a" value="1"> <label>Cancelled Cheque</label>
+              </div>
+              <div class="col-md-2">
+                <input type="checkbox" class="" name="maf_a" value="1"> <label>MAF</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
     <div class="row">
       <div class="col-12">
         <div class="card">
