@@ -492,6 +492,14 @@ class TransactionController extends Controller
     $reimbursement->save();
     return redirect()->back();
   }
+  public function reject(Request $request)
+  {
+    $reimbursement = Reimbursement::find($request->id);
+    $reimbursement->rejected = 1;
+    $reimbursement->rejectedRemarks = $request->reimbursementRemarks;
+    $reimbursement->save();
+    return redirect()->back();
+  }
 
   public function venueExpense()
   {
@@ -573,6 +581,24 @@ class TransactionController extends Controller
   public function venueExpenseAdd(Request $request)
   {
     $expense = new VenueExpenses;
+    $expense->expense_name = $request->expenseName;
+    $expense->expense_amount = $request->expenseAmount;
+    $expense->expense_details = $request->expenseDetails;
+    $expense->expense_type = $request->expenseType;
+    $expense->venue_id = $request->id;
+    if ($request->expenseBill) {
+
+      $fileName = time() . '_venue_expense_bill' . $request->expenseBill->getClientOriginalName();
+      $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
+      $expense->expenseBill = $fileName;
+    }
+
+    $expense->save();
+    return \redirect()->back();
+  }
+  public function venueExpenseEdit(Request $request)
+  {
+    $expense = VenueExpenses::find($request->id);
     $expense->expense_name = $request->expenseName;
     $expense->expense_amount = $request->expenseAmount;
     $expense->expense_details = $request->expenseDetails;

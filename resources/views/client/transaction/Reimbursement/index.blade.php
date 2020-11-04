@@ -55,8 +55,9 @@
           </div>
             <div class="card-body">
             <strong>Total Reimbursements: </strong>{{  $reimbursements->pluck('amount')->sum()  }}<br>
-            <strong>Paid Reimbursements</strong>{{ $reimbursements->pluck('amount')->sum() }} <br>
-            <strong>Unpaid Paid Reimbursements</strong>{{ $reimbursements->pluck('amount')->sum() }}<br>
+            <strong>Paid Reimbursements</strong>{{ $reimbursements->where('reimbursed',1)->pluck('amount')->sum() }} <br>
+            <strong>Unpaid Reimbursements</strong>{{ $reimbursements->where('rejected',0)->where('reimbursed',0)->pluck('amount')->sum() }}<br>
+            <strong>Rejected Reimbursements</strong>{{ $reimbursements->where('rejected',1)->pluck('amount')->sum() }}<br>
             </div>
         </div>
       </div>
@@ -95,8 +96,8 @@
               <td><a href="{{ asset('/storage/uploads/'.$reimbursement->expenseBill) }}">Download</a></td>
 
               <td>
-                @if(!$reimbursement->reimbursed)
-                  <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}">Not Reimbursed</a>
+                @if(!$reimbursement->reimbursed and !$reimbursement->rejected)
+                  <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}" class="btn btn-success btn-sm">Reimburse</a>
                   <div class="modal fade" id="reimburse{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
@@ -129,10 +130,46 @@
                       </div>
                     </div>
                   </div>
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reject{{$reimbursement->id}}">Reject</button>
+                  <div class="modal fade" id="reject{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Reject</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form action="{{ route('reimbursement.reject') }}" method="POST">
+                          @csrf
+                          <input type="hidden" value="{{ $reimbursement->id }}" name="id">
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <label for="reimbursementRemarks">Rejection Remarks</label>
+                                <textarea name="reimbursementRemarks" id="" cols="30" rows="10" class="form-control" required></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reject</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
                 @else
+                  @if($reimbursement->reimbursed)
                   Reimbursed On: {{ $reimbursement->reimbursedOn }} <br>
                   Remarks: {{ $reimbursement->reimbursedRemarks }}
+                    @else
+                    Claim Rejected <br>
+                    Remarks: {{ $reimbursement->rejectRemarks }}
+                    @endif
                 @endif
+
               </td>
             </tr>
             @endforeach

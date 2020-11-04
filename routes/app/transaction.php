@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reimbursement-summary', 'Client\TransactionController@reimbursementSummary')->name('reimbursement.summary');
     Route::post('/reimbursement/add-new', 'Client\TransactionController@reimbursementAdd')->name('reimbursement.add');
     Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
+    Route::post('/reject', 'Client\TransactionController@reject')->name('reimbursement.reject');
 
 
 
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/venue/edit', 'Client\TransactionController@venueEdit')->name('venue.edit');
     Route::post('/venue/cancel', 'Client\TransactionController@venueCancel')->name('venue.cancel');
     Route::post('/venue/expense/add', 'Client\TransactionController@venueExpenseAdd')->name('venue.add.expense');
+    Route::post('/venue/expense/edit', 'Client\TransactionController@venueExpenseEdit')->name('venue.edit.expense');
 
 
   // Client Route Ends //
