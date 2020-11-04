@@ -97,6 +97,8 @@
 
               <td>
                 @if(!$reimbursement->reimbursed and !$reimbursement->rejected)
+                  @if(!Auth::user()->name = 'Amit Chhada')
+
                   <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}" class="btn btn-success btn-sm">Reimburse</a>
                   <div class="modal fade" id="reimburse{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -159,7 +161,9 @@
                       </div>
                     </div>
                   </div>
-
+                  @else
+                    Pending
+                  @endif
                 @else
                   @if($reimbursement->reimbursed)
                   Reimbursed On: {{ $reimbursement->reimbursedOn }} <br>

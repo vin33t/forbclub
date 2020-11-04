@@ -163,6 +163,7 @@
                                         href="{{ asset('/storage/uploads/'.$expense->expenseBill) }}">Download</a> @else
                                         Not Uploaded @endif</td>
                                     <td>
+
                                       <button class="btn btn-primary btn-sm" data-toggle="modal"
                                               data-target="#editExpense{{ $expense->id }}"><i class="fa fa-edit"></i></button>
                                       <div class="modal fade" id="editExpense{{$expense->id}}" tabindex="-1" role="dialog"
@@ -213,6 +214,7 @@
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                                                 <button type="submit" class="btn btn-primary">Edit Expense</button>
                                               </div>
                                             </form>
@@ -278,8 +280,11 @@
                         </div>
                       </div>
                     @endif
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editVenue{{ $venue->id }}">
+                      @if(!Auth::user()->name = 'Amit Chhada')
+
+                      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editVenue{{ $venue->id }}">
                       <i class="fa fa-edit"></i></button>
+                      @endif
                     <div class="modal fade" id="editVenue{{$venue->id}}" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
