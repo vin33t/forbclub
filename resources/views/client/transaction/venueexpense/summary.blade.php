@@ -19,6 +19,10 @@
 <div class="row">
   <div class="col-md-12">
     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addVenue" >Add Venue</button>
+    @if(Auth::user()->name = 'Amit Chhada')
+    <a href="{{ route('reimbursement.summary') }}"><button type="submit" class="btn btn-primary" >Reimbursement</button></a>
+    @endif
+
     <div class="modal fade" id="addVenue" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

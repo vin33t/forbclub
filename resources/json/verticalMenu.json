@@ -112,7 +112,7 @@
       "icon": "feather icon-briefcase",
       "i18n": "nav.app_email",
       "role": "super-admin",
-      "permission": "view-import-history"
+      "permission": "view-reimbursement"
     },{
       "url": "transaction/venue-expense-summary",
       "name": "Venue Expense",

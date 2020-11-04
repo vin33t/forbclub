@@ -18,6 +18,8 @@ class DashboardController extends Controller
         return view('/client/profile', [
           'breadcrumbs' => $breadcrumbs
         ], compact('client'));
+      }  elseif(Auth::user()->name = 'Amit Chhada'){
+          return redirect()->route('reimbursement.summary');
       } else {
 
         $pageConfigs = [

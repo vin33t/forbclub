@@ -30,12 +30,12 @@
                 <i class="feather icon-user mr-25"></i><span class="d-none d-sm-block">Roles</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#information"
-                 aria-controls="information" role="tab" aria-selected="false">
-                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Permission</span>
-              </a>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--              <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#information"--}}
+{{--                 aria-controls="information" role="tab" aria-selected="false">--}}
+{{--                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Permission</span>--}}
+{{--              </a>--}}
+{{--            </li>--}}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="roles" aria-labelledby="roles-tab" role="tabpanel">
