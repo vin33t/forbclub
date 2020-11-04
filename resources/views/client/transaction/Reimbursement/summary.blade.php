@@ -39,7 +39,7 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table zero-configuration">
+            <table class="table reimbursementSummary">
               <thead>
               <tr>
                 <th>Month</th>
@@ -50,7 +50,7 @@
               </tr>
               </thead>
               <tbody>
-              @foreach($reimbursements as $reimbursement)
+              @foreach($reimbursements->reverse() as $reimbursement)
                 <tr>
                   <td><a href="{{ route('reimbursement.index',['month'=>$reimbursement['rawMonth'],'year'=>$reimbursement['rawYear']]) }}">{{ $reimbursement['month'] }} </a></td>
                   <td>{{ $reimbursement['received'] }}</td>
@@ -145,6 +145,13 @@
 
 @section('page-script')
   <!-- Page js files -->
-  <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
+{{--  <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>--}}
   <script src="{{ asset(mix('js/scripts/modal/components-modal.js')) }}"></script>
+  <script>
+    <script>
+    $('.reimbursementSummary').DataTable({
+      "order": []
+    });
+
+  </script>
 @endsection

@@ -65,7 +65,7 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table zero-configuration">
+            <table class="table venue-expense">
               <thead>
               <tr>
                 <th>Month</th>
@@ -78,7 +78,7 @@
               </tr>
               </thead>
               <tbody>
-              @foreach($venues as $venue)
+              @foreach($venues->reverse() as $venue)
                 <tr>
                   <td><a href="{{ route('venue.expense',['month'=>$venue['rawMonth'],'year'=>$venue['rawYear']]) }}">{{ $venue['month'] }} </a></td>
                   <td>{{ $venue['totalVenues'] }}</td>
@@ -125,6 +125,12 @@
 
 @section('page-script')
   <!-- Page js files -->
-  <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
+{{--  <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>--}}
   <script src="{{ asset(mix('js/scripts/modal/components-modal.js')) }}"></script>
+  <script>
+    $('.venue-expense').DataTable({
+      "order": []
+    });
+
+  </script>
 @endsection
