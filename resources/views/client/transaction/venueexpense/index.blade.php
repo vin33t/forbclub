@@ -101,6 +101,8 @@
                                     <option value="food">Food</option>
                                     <option value="travel">Travel</option>
                                     <option value="others">Others</option>
+                                    <option value="hotel" {{ $expense->expense_type == 'hotel' ? 'selected' : '' }}>Hotel</option>
+
                                   </select>
                                   {{--                                  <input type="number" name="expenseType" class="form-control" required>--}}
                                 </div>
