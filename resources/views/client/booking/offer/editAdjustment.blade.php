@@ -774,13 +774,7 @@
         for(var i= 0; i < buttons.length; i++){
           $(buttons[i]).parents('.card').remove();
         }
-        alert('Booking Transactions will be created. Click Okay to continue');
 
-        // swal({
-        //   title: 'Converting!!....',
-        //   text: 'Please Wait',
-        //   icon: 'success'
-        // });
         $('#submit').click()
       }
 

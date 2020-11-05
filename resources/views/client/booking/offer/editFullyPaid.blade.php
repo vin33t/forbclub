@@ -1172,46 +1172,51 @@
 
       if(!hotel.length || !flight.length || !visa.length || !insurance.length || !land.length){
         if(!hotel.length){
-          swal({
-            title: 'Oops!!',
-            text: 'You Must Have A Hotel Service',
-            icon: 'error'
-          });
+        alert('You Must Have A Hotel Service');
+          // swal({
+          //   title: 'Oops!!',
+          //   text: 'You Must Have A Hotel Service',
+          //   icon: 'error'
+          // });
         }else if(!flight.length){
-          swal({
-            title: 'Oops!!',
-            text: 'You Must Have A Flight Service',
-            icon: 'error'
-          });
+                  alert('You Must Have A Flight Service');
+
+          // swal({
+          //   title: 'Oops!!',
+          //   text: 'You Must Have A Flight Service',
+          //   icon: 'error'
+          // });
         }else if(!visa.length){
-          swal({
-            title: 'Oops!!',
-            text: 'You Must Have A Visa Service',
-            icon: 'error'
-          });
+                  alert('You Must Have A Visa Service');
+          //
+          // swal({
+          //   title: 'Oops!!',
+          //   text: 'You Must Have A Visa Service',
+          //   icon: 'error'
+          // });
         }else if(!insurance.length){
-          swal({
-            title: 'Oops!!',
-            text: 'You Must Have A Insurance Service ',
-            icon: 'error'
-          });
+                  alert('You Must Have A Insurance Service ');
+          //
+          // swal({
+          //   title: 'Oops!!',
+          //   text: 'You Must Have A Insurance Service ',
+          //   icon: 'error'
+          // });
         }else if(!land.length){
-          swal({
-            title: 'Oops!!',
-            text: 'You Must Have A Land PAckage/Transfer Service',
-            icon: 'error'
-          });
+                  alert('You Must Have A Land PAckage/Transfer Service');
+
+          // swal({
+          //   title: 'Oops!!',
+          //   text: 'You Must Have A Land PAckage/Transfer Service',
+          //   icon: 'error'
+          // });
         }
       }else{
         var buttons = $('input[type="checkbox"]:not(:checked)')
         for(var i= 0; i < buttons.length; i++){
           $(buttons[i]).parents('.card').remove();
         }
-        swal({
-          title: 'Converting!!....',
-          text: 'Please Wait',
-          icon: 'success'
-        });
+
         $('#submit').click()
       }
 

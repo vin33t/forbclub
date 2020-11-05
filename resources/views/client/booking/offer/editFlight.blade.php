@@ -817,21 +817,18 @@
       var land = $('input[type="checkbox"][class="land"]:checked');
 
       if(!hotel.length){
-        swal({
-          title: 'Oops!!',
-          text: 'You Must Have A Hotel Service',
-          icon: 'error'
-        });
+        alert('You Must Have A Hotel Service');
+        // swal({
+        //   title: 'Oops!!',
+        //   text: 'You Must Have A Hotel Service',
+        //   icon: 'error'
+        // });
       }else{
         var buttons = $('input[type="checkbox"]:not(:checked)')
         for(var i= 0; i < buttons.length; i++){
           $(buttons[i]).parents('.card').remove();
         }
-        swal({
-          title: 'Converting!!....',
-          text: 'Please Wait',
-          icon: 'success'
-        });
+
         $('#submit').click()
       }
 
