@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Client;
 use App\Client\Client;
 use App\Client\Package\SoldPackageBenefits;
 use App\Client\TimelineActivity;
+use App\Client\Transaction\CardPayment;
+use App\Client\Transaction\CashPayment;
+use App\Client\Transaction\ChequePayment;
+use App\Client\Transaction\OtherPayment;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Client\Package\SoldPackages;
@@ -25,10 +29,10 @@ class ClientController extends Controller
 
   public function viewClient($slug)
   {
-    if(Auth::user()->client){
+    if (Auth::user()->client) {
       $client = Auth::user()->client;
-    } else{
-    $client = Client::where('slug', $slug)->first();
+    } else {
+      $client = Client::where('slug', $slug)->first();
     }
     if ($client) {
 
@@ -100,20 +104,65 @@ class ClientController extends Controller
 //        'modeOfPayment'=>$request->productModeOfPayment,
       ]);
       $i = 0;
-      foreach ($request->benefitName as $cb){
-      $packageSold = $client->latestPackage;
-      $benefit = new SoldPackageBenefits;
-      $benefit->soldPackageId = $packageSold->id;
-      $benefit->clientId = $packageSold->clientId;
-      $benefit->benefitName = $cb;
-      $benefit->benefitDescription = $request->benefitDescription[$i];
-      $benefit->benefitConditions = '-';
-      $benefit->benefitValidity =Carbon::now()->format('Y-m-d');
-      $benefit->save();
-      $i++;
+      foreach ($request->benefitName as $cb) {
+        $packageSold = $client->latestPackage;
+        $benefit = new SoldPackageBenefits;
+        $benefit->soldPackageId = $packageSold->id;
+        $benefit->clientId = $packageSold->clientId;
+        $benefit->benefitName = $cb;
+        $benefit->benefitDescription = $request->benefitDescription[$i];
+        $benefit->benefitConditions = '-';
+        $benefit->benefitValidity = Carbon::now()->format('Y-m-d');
+        $benefit->save();
+        $i++;
 
       }
-      if($request->hasFile('clientMaf')) {
+      if ($request->productModeOfPayment) {
+        if ($request->productModeOfPayment == 'Credit Card' or $request->productModeOfpayment == 'Debit Card') {
+          $transaction = new CardPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->cardType = $request->fclp_card_type_one;
+          $transaction->bankName = $request->fclp_card_issue_bank_name_one;
+          $transaction->cardLastFourDigits = $request->fclp_card_number_one;
+          $transaction->isDp = 1;
+          $transaction->isAddon =0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        }
+
+        elseif ($request->productModeOfPayment == 'Cash') {
+          $transaction = new CashPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->receiptNumber = $request->cash_receipt_no_one;
+          $transaction->isDp = 1 ;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        } elseif ($request->productModeOfPayment == 'Cheque') {
+          $transaction = new ChequePayment();
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->chequeNumber = $request->cheque_no_one;
+          $transaction->isDp = 1 ;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        } elseif ($request->productModeOfPayment == 'Paytm' or $request->productModeOfPayment == 'Online') {
+          $transaction = new OtherPayment();
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->productEnrollmentDate;
+          $transaction->amount = $request->dpAmount;
+          $transaction->modeOfPayment = $request->productModeOfPayment;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        }
+      }
+      if ($request->hasFile('clientMaf')) {
         $this->validate($request, [
           'maf' => 'mimes:pdf|max:99048',
         ]);
@@ -122,13 +171,13 @@ class ClientController extends Controller
         $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
         $mafURL = Storage::disk('s3')->url($mafName);
         Document::create([
-          'client_id'=>$client->id,
-          'type'=>'maf',
-          'url'=> $mafURL,
+          'client_id' => $client->id,
+          'type' => 'maf',
+          'url' => $mafURL,
         ]);
       }
       DB::commit();
-      return redirect()->route('view.client',['slug'=>$client->slug]);
+      return redirect()->route('view.client', ['slug' => $client->slug]);
     } catch (\Exception $e) {
       return $e;
       DB::rollBack();
@@ -210,10 +259,10 @@ class ClientController extends Controller
     return redirect()->back();
   }
 
-  public function deleteFollowUp(Request $request,$id)
+  public function deleteFollowUp(Request $request, $id)
   {
     $followUp = FollowUp::find($id);
-    if($followUp){
+    if ($followUp) {
       $followUp->delete();
     }
     return redirect()->back();
@@ -15420,7 +15469,7 @@ class ClientController extends Controller
 //                $package->noOfEmi = $cl->first()->emiRegularPLan;
 //                $package->save();
 //      }
-    }
+  }
 
 
   function search($array, $search_list)
@@ -15480,102 +15529,110 @@ class ClientController extends Controller
     return redirect()->back();
   }
 
-      public function uploadMaf(Request $request){
-        $client = Client::findOrFail($request->id);
-        $client->verified = 1;
-        if($request->hasFile('maf')) {
-            $this->validate($request, [
-                'maf' => 'mimes:pdf|max:99048',
-            ]);
-            $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
-            $image = $request->file('maf');
-            $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
-            $mafURL = Storage::disk('s3')->url($mafName);
-            Document::create([
-              'client_id'=>$client->id,
-              'type'=>'maf',
-              'url'=> $mafURL,
-            ]);
-        }
-        notification('Client Updated', 'MAF UPLOADED', 'success','okay');
-        return redirect()->back();
+  public function uploadMaf(Request $request)
+  {
+    $client = Client::findOrFail($request->id);
+    $client->verified = 1;
+    if ($request->hasFile('maf')) {
+      $this->validate($request, [
+        'maf' => 'mimes:pdf|max:99048',
+      ]);
+      $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
+      $image = $request->file('maf');
+      $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
+      $mafURL = Storage::disk('s3')->url($mafName);
+      Document::create([
+        'client_id' => $client->id,
+        'type' => 'maf',
+        'url' => $mafURL,
+      ]);
     }
+    notification('Client Updated', 'MAF UPLOADED', 'success', 'okay');
+    return redirect()->back();
+  }
 
-    public function updateStatus(Request $request,$id){
-        $package = SoldPackages::find($id);
-        if($package){
-          $package->status = $request->status;
-          $package->remarks = $request->remarks;
-          $package->save();
-        }
-        return redirect()->back();
-
+  public function updateStatus(Request $request, $id)
+  {
+    $package = SoldPackages::find($id);
+    if ($package) {
+      $package->status = $request->status;
+      $package->remarks = $request->remarks;
+      $package->save();
     }
+    return redirect()->back();
 
-    public function reports(){
+  }
+
+  public function reports()
+  {
     return 'asdjhvasdj abs djhvhkasdkh';
+  }
+
+  public function eMaf($slug)
+  {
+    $client = Client::where('slug', $slug)->get()->first();
+    if ($client) {
+      return view('emails.details')->with('client', $client);
     }
+    return redirect()->back();
+  }
 
-    public function eMaf($slug){
-        $client =  Client::where('slug',$slug)->get()->first();
-        if($client){
-          return view('emails.details')->with('client',$client);
-        }
-        return redirect()->back();
+  public function welcomeLetter($slug)
+  {
+    $client = Client::where('slug', $slug)->get()->first();
+    if ($client) {
+      return view('emails.welcome')->with('client', $client);
     }
+    return redirect()->back();
+  }
 
-    public function welcomeLetter($slug){
-      $client =  Client::where('slug',$slug)->get()->first();
-      if($client){
-        return view('emails.welcome')->with('client',$client);
-      }
-      return redirect()->back();
+  public function certificate($slug)
+  {
+    $client = Client::where('slug', $slug)->get()->first();
+    if ($client) {
+      return view('emails.certificate')->with('client', $client);
     }
+    return redirect()->back();
+  }
 
-    public function certificate($slug){
-      $client =  Client::where('slug',$slug)->get()->first();
-      if($client){
-        return view('emails.certificate')->with('client',$client);
-      }
-      return redirect()->back();
+  public function sendEkit($slug)
+  {
+    $details = Client::where('slug', $slug)->get()->first();
+    $contactEmail = $details->email;
+    $contactName = $details->name;
+
+    $details['email'] = $contactEmail;
+    $details['id'] = $details->id;
+
+    dispatch(new SendEkitJob($details, Carbon::now()->toDateString(), Auth::id()));
+    $message = 'Sent to ' . $contactName;
+    if (!User::where('email', $details->email)->count()) {
+      $details->User()->create([
+        'name' => $details->name,
+        'email' => strtolower($details->email),
+        'client_id' => $details->id,
+        'password' => Hash::make('pass@123'),
+      ]);
+      notifyToast('success', 'Login Created', $details->name . '\'s Login Created Successfully');
     }
+    return redirect()->back();
+  }
 
-    public function sendEkit($slug){
-      $details = Client::where('slug',$slug)->get()->first();
-      $contactEmail = $details->email;
-      $contactName = $details->name;
-
-      $details['email'] = $contactEmail;
-      $details['id'] = $details->id;
-
-      dispatch(new SendEkitJob($details,Carbon::now()->toDateString(),Auth::id()));
-      $message = 'Sent to ' . $contactName;
-      if (!User::where('email', $details->email)->count()) {
-        $details->User()->create([
-          'name' => $details->name,
-          'email' => strtolower($details->email),
-          'client_id' => $details->id,
-          'password' => Hash::make('pass@123'),
-        ]);
-        notifyToast('success', 'Login Created', $details->name . '\'s Login Created Successfully');
-      }
-      return redirect()->back();
+  public function createLogin($slug)
+  {
+    $client = Client::where('slug', $slug)->get()->first();
+    if (!User::where('email', $client->email)->count()) {
+      $client->User()->create([
+        'name' => $client->name,
+        'email' => strtolower($client->email),
+        'client_id' => $client->id,
+        'password' => Hash::make('pass@123'),
+      ]);
+      notifyToast('success', 'Login Created', $client->name . '\'s Login Created Successfully');
+    } else {
+      notifyToast('error', 'Duplicate Email', 'Login with email: ' . $client->email . ' already exists, Please Update the email and try again');
     }
-
-    public function createLogin($slug){
-        $client = Client::where('slug',$slug)->get()->first();
-      if (!User::where('email', $client->email)->count()) {
-        $client->User()->create([
-          'name' => $client->name,
-          'email' => strtolower($client->email),
-          'client_id' => $client->id,
-          'password' => Hash::make('pass@123'),
-        ]);
-        notifyToast('success', 'Login Created', $client->name . '\'s Login Created Successfully');
-      } else {
-        notifyToast('error', 'Duplicate Email', 'Login with email: ' . $client->email . ' already exists, Please Update the email and try again');
-      }
-      return redirect()->back();
-    }
+    return redirect()->back();
+  }
 
 }

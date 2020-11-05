@@ -132,7 +132,7 @@
 
                       <div class="modal fade" id="viewVenueExpense{{ $venue->id }}" tabindex="-1" role="dialog"
                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLongTitle">Venue: {{ $venue->venue_name }}
@@ -166,7 +166,7 @@
 
                                       <button class="btn btn-primary btn-sm" data-toggle="modal"
                                               data-target="#editExpense{{ $expense->id }}"><i class="fa fa-edit"></i></button>
-                                      <div class="modal fade" id="editExpense{{$expense->id}}" tabindex="-1" role="dialog"
+                                      <div class="modal fade modal-lg" id="editExpense{{$expense->id}}" tabindex="-1" role="dialog"
                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                           <div class="modal-content">
@@ -187,7 +187,7 @@
                                                   </div>
                                                   <div class="col-md-12">
                                                     <label for="expenseAmount">Expense Amount</label>
-                                                    <input type="number" name="expenseAmount" class="form-control" required value="{{ $expense->expense_name }}">
+                                                    <input type="number" name="expenseAmount" class="form-control" required value="{{ $expense->expense_amount }}">
                                                   </div>
                                                   <div class="col-md-12">
                                                     <label for="expenseType">Expense Type</label>
@@ -280,7 +280,7 @@
                         </div>
                       </div>
                     @endif
-                      @if(!Auth::user()->name = 'Amit Chhada')
+                      @if(!Auth::user()->name == 'Amit Chhada')
 
                       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editVenue{{ $venue->id }}">
                       <i class="fa fa-edit"></i></button>
