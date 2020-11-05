@@ -109,14 +109,22 @@
                       <strong>Remarks: {{ $booking->statusRemarks }}</strong> <br>
                   </div>
                   <div class="col-md-12 text-center">
+
                     @if(!$booking->bookingOffer)
                       <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-primary">Create Offer</button></a>
                     @else
+                      @if(!$booking->ClientHoliday)
+
                       <a href="{{ route('booking.offer',['bookingId'=>$booking->id]) }}"><button class="btn btn-success">View Offer</button></a>
+                      @endif
                       <hr>
-                      @if($booking->offerStatus == 'approved')
-                        @if($booking->BookingOffer)
-                          <a href="{{ route('booking.convert',['bookingId'=>$booking->id]) }}" class="btn btn-md btn-success">Convert To Holiday</a>
+                      @if($booking->ClientHoliday)
+                        <button type="button" class="button button-primary" disabled>Holiday In Progress</button>
+                      @else
+                        @if($booking->offerStatus == 'approved')
+                          @if($booking->BookingOffer)
+                            <a href="{{ route('booking.convert',['bookingId'=>$booking->id]) }}" class="btn btn-md btn-success">Convert To Holiday</a>
+                          @endif
                         @endif
                       @endif
                       <hr>
