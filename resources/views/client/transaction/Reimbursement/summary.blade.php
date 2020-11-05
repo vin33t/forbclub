@@ -25,7 +25,7 @@
           </div>
           <div class="card-body">
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addNewReimbursement" >Add new</button>
-            @if(Auth::user()->name = 'Amit Chhada')
+            @if(Auth::user()->name == 'Amit Chhada')
             <a href="{{ route('venue.expense.summary') }}"><button type="submit" class="btn btn-primary" >Venue Expense</button></a>
               @endif
           </div>

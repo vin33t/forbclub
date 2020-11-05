@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reimbursement', 'Client\TransactionController@reimbursementIndex')->name('reimbursement.index');
     Route::get('/reimbursement-summary', 'Client\TransactionController@reimbursementSummary')->name('reimbursement.summary');
     Route::post('/reimbursement/add-new', 'Client\TransactionController@reimbursementAdd')->name('reimbursement.add');
+    Route::post('/reimbursement/update', 'Client\TransactionController@reimbursementUpdate')->name('reimbursement.update');
     Route::post('/reimburse', 'Client\TransactionController@reimburse')->name('reimbursement.pay');
     Route::post('/reject', 'Client\TransactionController@reject')->name('reimbursement.reject');
 

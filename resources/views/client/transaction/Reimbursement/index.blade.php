@@ -99,7 +99,65 @@
                 @if(!$reimbursement->reimbursed and !$reimbursement->rejected)
                   @if(Auth::user()->name != 'Amit Chhada')
 
-                  <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}" class="btn btn-success btn-sm">Reimburse</a>
+                  <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimbursementEdit{{$reimbursement->id}}" class="btn btn-primary btn-sm">Edit</a>
+                    <div class="modal fade" id="reimbursementEdit{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Reimbursement</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="{{ route('reimbursement.update') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="hidden" name="id" value="{{$reimbursement->id}}">
+                                  <label for="employee">Employee</label>
+                                  <select name="employee" id="employee" class="form-control">
+                                    <option value="">--Select Employee--</option>
+                                    @foreach(\App\Employee::all() as $employee)
+                                      <option value="{{ $employee->id  }}" {{ $reimbursement->employee_id == $employee->id ? 'selected':''}}>{{ $employee->name }}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="expenseDate">Expense Date</label>
+                                  <input type="date" name="expenseDate" id="expenseDate" class="form-control" value="{{$reimbursement->expenseDate}}" required>
+                                </div>
+
+                                <div class="col-md-12">
+                                  <label for="expenseType">Expense Type</label>
+                                  <input type="text" name="expenseType" id="expenseType" class="form-control" placeholder="Food/Travel/Stay etc." value="{{$reimbursement->expenseType}}" required>
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="amount">Amount</label>
+                                  <input type="number" name="amount" id="amount" class="form-control" required value="{{$reimbursement->amount}}">
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="expenseBill">Expense Bill (PDF Only)</label>
+                                  <input type="file" name="expenseBill" id="expenseBill" class="form-control"  accept="application/pdf">
+                                </div>
+                                <div class="col-md-12">
+                                  <label for="remarks" class="pull-left">Remarks</label>
+                                  <textarea name="remarks" id="remarks" class="form-control">{{$reimbursement->remarks}}</textarea>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer ">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-info">Update</button>
+                            </div>
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <a href="javascript:void(0)"  data-toggle="modal" data-target="#reimburse{{$reimbursement->id}}" class="btn btn-success btn-sm">Reimburse</a>
                   <div class="modal fade" id="reimburse{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
@@ -132,7 +190,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reject{{$reimbursement->id}}">Reject</button>
+                  <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#reject{{$reimbursement->id}}">Reject</button>
                   <div class="modal fade" id="reject{{$reimbursement->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">

@@ -483,6 +483,35 @@ class TransactionController extends Controller
     return redirect()->back();
   }
 
+  public function reimbursementUpdate(Request $request)
+  {
+//    return $request;
+    $this->validate($request, [
+      'id' => 'required|integer',
+      'employee' => 'required|integer',
+      'expenseDate' => 'required|date',
+      'expenseType' => 'required',
+      'amount' => 'required|integer',
+      'remarks' => 'required',
+    ]);
+    $reimbursement = Reimbursement::find($request->id);
+    $reimbursement->employee_id = $request->employee;
+    $reimbursement->expenseDate = $request->expenseDate;
+    $reimbursement->expenseType = $request->expenseType;
+    $reimbursement->amount = $request->amount;
+    if($request->expenseBill) {
+      $fileName = time() . '_' . $request->expenseBill->getClientOriginalName();
+//    $request->expenseBill->move(public_path('uploads'), $fileName);
+      $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
+
+      $reimbursement->expenseBill = $fileName;
+
+    }
+    $reimbursement->remarks = $request->remarks;
+    $reimbursement->save();
+    return redirect()->back();
+  }
+
   public function reimburse(Request $request)
   {
     $reimbursement = Reimbursement::find($request->id);
