@@ -6,6 +6,7 @@
     </div>
     <div class="col-md-12">
       @foreach($client->Bookings as $booking)
+
         <div class="col-md-6">
           <div class="card card-box">
             <div class="card-head">
@@ -143,9 +144,10 @@
             </div>
           </div>
         </div>
+
       @endforeach
 
-    </div>
+
   </div>
 
 </div>

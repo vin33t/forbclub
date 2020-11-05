@@ -116,7 +116,7 @@
                       <hr>
                       @if($booking->offerStatus == 'approved')
                         @if($booking->BookingOffer)
-                          <a href="{{ route('booking.convert',['bookingId'=>$booking->id]) }}" class="btn btn-md btn-success">Convert To Holiday</a>
+                          <a href="{{ route('booking.convert.form',['bookingId'=>$booking->id]) }}" class="btn btn-md btn-success">Convert To Holiday</a>
                         @endif
                       @endif
                       <hr>

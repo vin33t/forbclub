@@ -761,23 +761,26 @@
   <script>
     function removeUnchecked(){
       var services = $('input[type="checkbox"]:checked');
-
+      // console.log(services.length);
       if(!services.length){
-        swal({
-          title: 'Oops!!',
-          text: 'You Must Have At Least 1 Service',
-          icon: 'error'
-        });
+        alert('You Must Have At Least 1 Service');
+        // swal({
+        //   title: 'Oops!!',
+        //   text: 'You Must Have At Least 1 Service',
+        //   icon: 'error'
+        // });
       }else{
         var buttons = $('input[type="checkbox"]:not(:checked)')
         for(var i= 0; i < buttons.length; i++){
           $(buttons[i]).parents('.card').remove();
         }
-        swal({
-          title: 'Converting!!....',
-          text: 'Please Wait',
-          icon: 'success'
-        });
+        alert('Converting!!.... Please Wait');
+
+        // swal({
+        //   title: 'Converting!!....',
+        //   text: 'Please Wait',
+        //   icon: 'success'
+        // });
         $('#submit').click()
       }
 

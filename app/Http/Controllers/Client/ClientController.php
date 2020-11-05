@@ -163,18 +163,18 @@ class ClientController extends Controller
         }
       }
       if ($request->hasFile('clientMaf')) {
-        $this->validate($request, [
-          'maf' => 'mimes:pdf|max:99048',
-        ]);
-        $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
-        $image = $request->file('maf');
-        $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
-        $mafURL = Storage::disk('s3')->url($mafName);
-        Document::create([
-          'client_id' => $client->id,
-          'type' => 'maf',
-          'url' => $mafURL,
-        ]);
+//        $this->validate($request, [
+//          'maf' => 'mimes:pdf|max:99048',
+//        ]);
+//        $mafName = $client->latestPackage->productFclpId . '' . $client->name . '_scannedMaf_' . time() . '.' . $request->clientMaf->getClientOriginalExtension();
+//        $image = $request->file('clientMaf');
+//        $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
+//        $mafURL = Storage::disk('s3')->url($mafName);
+//        Document::create([
+//          'client_id' => $client->id,
+//          'type' => 'maf',
+//          'url' => $mafURL,
+//        ]);
       }
       DB::commit();
       return redirect()->route('view.client', ['slug' => $client->slug]);

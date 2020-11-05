@@ -587,7 +587,6 @@ class TransactionController extends Controller
     $expense->expense_type = $request->expenseType;
     $expense->venue_id = $request->id;
     if ($request->expenseBill) {
-
       $fileName = time() . '_venue_expense_bill' . $request->expenseBill->getClientOriginalName();
       $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
       $expense->expenseBill = $fileName;
