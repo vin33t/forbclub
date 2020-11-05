@@ -351,7 +351,7 @@
                         <label for="product-cost">DP Amount</label>
                       </div>
                     </div>
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-4 col-12">
                       <div class="form-label-group">
                         <select name="productModeOfPayment" id="product_mode_of_payment" class="form-control"
                                 required="">
@@ -363,11 +363,29 @@
                           <option value="Paytm">Paytm</option>
                           <option value="Online">Online</option>
                         </select>
-                        <label for="product-product_mode_of_payment">Mode Of Oayment</label>
+                        <label for="product_mode_of_payment">Mode Of Payment </label>
                       </div>
                     </div>
-                    <div class="col-md-12 col-12" >
+                    <div class="col-md-2">
+                      <a href="javascript:void(0)" id="add_mode_of_payment" class="" style="margin-top:20px;"><i
+                          class="fa fa-plus"></i></a>
+                      <a href="javascript:void(0)" id="remove_mode_of_payment" class=""
+                         style="margin-top:20px;display:none;"><i class="fa fa-minus"></i></a>
+                    </div>
+                    <div class="col-md-12 col-12">
                       <div class="row" id="card_details_box">
+
+                      </div>
+                    </div>
+
+                    <div id="show_mode_of_payment" class="col-md-3" style="display:none;">
+
+                    </div>
+                    <div id="show_mode_of_payment_amount" class="col-md-3" style="display:none;">
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="row" id="card_details_box_two">
+
 
                       </div>
                     </div>
@@ -487,7 +505,6 @@
       </div>
 
 
-
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -544,6 +561,39 @@
   <!-- Page js files -->
   <script src="{{ asset(mix('js/scripts/forms/select/form-select2.js')) }}"></script>
   <script src="{{ asset(mix('js/scripts/extensions/dropzone.js')) }}"></script>
+  <script>
+    $(document).ready(function () {
+      $("#add_mode_of_payment").click(function () {
+        var append = '<label for="fclp_mode_of_payment"> Second Mode of Payment </label>' +
+          '<select name="productModeOfPaymentTwo" id="productModeOfPaymentTwo" class="form-control" required onChange="mode(this.value)">' +
+          '                          <option value="">---Select Mode Of Payment---</option>\n' +
+          '                          <option value="Credit Card">Credit Card</option>\n' +
+          '                          <option value="Debit Card">Debit Card</option>\n' +
+          '                          <option value="Cash">Cash</option>\n' +
+          '                          <option value="Cheque">Cheque</option>\n' +
+          '                          <option value="Paytm">Paytm</option>\n' +
+          '                          <option value="Online">Online</option>\n' +
+          '                        </select>'
+          '</select>';
+        var amount = '<label for="amount">Amount</label>' +
+          '<input type="number" name="amount_two" class="form-control" required>'
+        $("#show_mode_of_payment").html(append);
+        $("#show_mode_of_payment_amount").html(amount);
+        document.getElementById("show_mode_of_payment").style.display = "block";
+        document.getElementById("show_mode_of_payment_amount").style.display = "block";
+        document.getElementById("add_mode_of_payment").style.display = "none";
+        document.getElementById("remove_mode_of_payment").style.display = "block";
+      });
+      $("#remove_mode_of_payment").click(function () {
+        $("#show_mode_of_payment").hide();
+        $("#show_mode_of_payment").html('');
+        $("#show_mode_of_payment_amount").hide();
+        $("#show_mode_of_payment_amount").html('');
+        document.getElementById("add_mode_of_payment").style.display = "block";
+        document.getElementById("remove_mode_of_payment").style.display = "none";
+      })
+    });
+  </script>
   <script>
     function addMoreBenefit() {
       console.log('asd');
@@ -665,7 +715,7 @@
         }
 
         if (mode == "Online") {
-          var data =           '   								<div class="col-md-4">  ' +
+          var data = '   								<div class="col-md-4">  ' +
             '   								<label for="remarks">Remarks  ' +
             '   								<input type="text" name="remarks_one" value="" class="form-control" required>  ' +
             '   							</div>  ';
@@ -673,7 +723,7 @@
         }
 
         if (mode == "Paytm") {
-          var data =           '   								<div class="col-md-4">  ' +
+          var data = '   								<div class="col-md-4">  ' +
             '   								<label for="remarks">Remarks  ' +
             '   								<input type="text" name="remarks_one" value="" class="form-control" required>  ' +
             '   							</div>  ';
@@ -682,6 +732,129 @@
 
       });
     });
+    function mode(temp){
+      if(temp == "Credit Card"){
+        var data =  '   <div class="col-md-4">  '  +
+          '   								<label for="fclp_card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="fclp_card_number_two" maxlength="4" minlength="4" class="form-control" required>  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4">  '  +
+          '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  '  +
+          '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  '  +
+          '   								<input id="demo-1" type="date" name="fclp_expiry_date_two" value="" placeholder="DD/MM/YYYY" class="form-control" required/>  '  +
+          '   								  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4">  '  +
+          '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="date" name="fclp_date_two" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4" >  ' +
+          '   								<label for="fclp_card_type"> Card Type:  <span style="color:red">*</span></label>  ' +
+          '      <select name="fclp_card_type_two" id="" class="form-control" required="">' +
+          '        <option value="">--Select--</option>' +
+          '        <option value="Visa">Visa</option>' +
+          '        <option value="Masters">Masters</option>' +
+          '        <option value="Diners">Diners</option>' +
+          '        <option value="Amex">Amex</option>' +
+          '        <option value="Rupay">Rupay</option>' +
+          '        <option value="Maestro">Maestro</option>' +
+          '      </select>' +
+          '   							</div>  ' +
+          '   							<div class="col-md-4" >  '  +
+          '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  '  +
+          '   									<input type="text" name="fclp_card_issue_bank_name_two" class="form-control" required>  '  +
+          '  								</div>  ' +
+          '								<div class="col-md-4">  '  +
+          '   								<label for="remarks">Remarks '  +
+          '   								<input type="text" name="remarks_two" value="" class="form-control" remarks>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box_two").html(data);
+
+      }
+      if(temp == "Debit Card"){
+        var data =  '<div class="col-md-4">  '  +
+          '   								<label for="fclp_card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="fclp_card_number_two" maxlength="4" minlength="4" class="form-control" required>  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4">  '  +
+          '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  '  +
+          '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  '  +
+          '   								<input id="demo-1" type="date" name="fclp_expiry_date_two" value="" placeholder="DD/MM/YYYY" class="form-control" required/>  '  +
+          '   								  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4">  '  +
+          '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  '  +
+          '   								<input type="date" name="fclp_date_two" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  '  +
+          '   							</div>  '  +
+          '   							<div class="col-md-4" >  ' +
+          '   								<label for="fclp_card_type"> Card Type:  <span style="color:red">*</span></label>  ' +
+          '      <select name="fclp_card_type_two" id="" class="form-control" required="">' +
+          '        <option value="">--Select--</option>' +
+          '        <option value="Visa">Visa</option>' +
+          '        <option value="Masters">Masters</option>' +
+          '        <option value="Diners">Diners</option>' +
+          '        <option value="Amex">Amex</option>' +
+          '        <option value="Rupay">Rupay</option>' +
+          '        <option value="Maestro">Maestro</option>' +
+          '      </select>' +
+          '   							</div>  ' +
+          '   							<div class="col-md-4" >  '  +
+          '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  '  +
+          '   									<input type="text" name="fclp_card_issue_bank_name_two" class="form-control" required>  '  +
+          '  								</div>  ' +
+          '   								<div class="col-md-4">  '  +
+          '   								<label for="remarks">Remarks  '  +
+          '   								<input type="text" name="remarks_two" value="" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box_two").html(data);
+
+      }
+      if(temp == "Cheque"){
+        var data = '   <div class="col-md-4">  '  +
+          '   								<label for="cheque_no">Cheque Number:<span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="cheque_no_two" class="form-control" required>  '  +
+          '   							</div>  '  +
+          '   								<div class="col-md-4">  '  +
+          '   								<label for="paymnet_date">Date<span style="color:red">*</span></label>  '  +
+          '   								<input type="date" name="fclp_date_two" value="{{Carbon\Carbon::now()->toDateString()}}" class="form-control" required>  '  +
+          '   							</div>  ' +
+          '   								<div class="col-md-4">  '  +
+          '   								<label for="remarks">Remarks '  +
+          '   								<input type="text" name="remarks_two" value="" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box_two").html(data);
+      }
+      if(temp == "Cash"){
+        var data = '   <div class="col-md-4">  '  +
+          '   								<label for="cash_receipt_no">Cash Receipt No:<span style="color:red">*</span></label>  '  +
+          '   								<input type="text" name="cash_receipt_no_two" class="form-control" required>  '  +
+          '   							</div>  '  +
+          '   								<div class="col-md-4">  '  +
+          '   								<label for="paymnet_date">Date<span style="color:red">*</span></label>  '  +
+          '   								<input type="date" name="fclp_date_two" value="{{Carbon\Carbon::now()->toDateString()}}" class="form-control" required>  '  +
+          '   							</div>  ' +
+          '   								<div class="col-md-4">  '  +
+          '   								<label for="remarks">Remarks  '  +
+          '   								<input type="text" name="remarks_two" value="" class="form-control" required>  '  +
+          '   							</div>  ' ;
+        $("#card_details_box_two").html(data);
+      }
+      if(temp == ""){
+        var data = "";
+        $("#card_details_box_two").html(data);
+      }
+
+      if(temp =="Online" || temp == "Paytm" ){
+        var data = '   								<div class="col-md-4">  ' +
+          '   								<label for="remarks">Remarks  ' +
+          '   								<input type="text" name="remarks_two" value="" class="form-control" required>  ' +
+          '   							</div>  ';
+        $("#card_details_box_two").html(data);
+      }
+    }
+
   </script>
+
+
 @endsection
 

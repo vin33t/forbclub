@@ -162,6 +162,51 @@ class ClientController extends Controller
           $transaction->save();
         }
       }
+      if ($request->productModeOfPaymentTwo) {
+        if ($request->productModeOfPaymentTwo == 'Credit Card' or $request->productModeOfpaymentTwo == 'Debit Card') {
+          $transaction = new CardPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->cardType = $request->fclp_card_type_one;
+          $transaction->bankName = $request->fclp_card_issue_bank_name_one;
+          $transaction->cardLastFourDigits = $request->fclp_card_number_one;
+          $transaction->isDp = 1;
+          $transaction->isAddon =0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        }
+
+        elseif ($request->productModeOfPaymentTwo == 'Cash') {
+          $transaction = new CashPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_two;
+          $transaction->amount = $request->dpAmount;
+          $transaction->receiptNumber = $request->cash_receipt_no_two;
+          $transaction->isDp = 1 ;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_two;
+          $transaction->save();
+        } elseif ($request->productModeOfPaymentTwo == 'Cheque') {
+          $transaction = new ChequePayment();
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_two;
+          $transaction->amount = $request->dpAmount;
+          $transaction->chequeNumber = $request->cheque_no_two;
+          $transaction->isDp = 1 ;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_two;
+          $transaction->save();
+        } elseif ($request->productModeOfPaymentTwo == 'Paytm' or $request->productModeOfPaymentTwo == 'Online') {
+          $transaction = new OtherPayment();
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->productEnrollmentDate;
+          $transaction->amount = $request->dpAmount;
+          $transaction->modeOfPayment = $request->productModeOfPayment;
+          $transaction->remarks = $request->remarks_two;
+          $transaction->save();
+        }
+      }
       if ($request->hasFile('clientMaf')) {
 //        $this->validate($request, [
 //          'maf' => 'mimes:pdf|max:99048',
