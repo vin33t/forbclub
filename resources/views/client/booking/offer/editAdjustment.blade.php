@@ -774,7 +774,7 @@
         for(var i= 0; i < buttons.length; i++){
           $(buttons[i]).parents('.card').remove();
         }
-        alert('Converting!!.... Please Wait');
+        alert('Booking Transactions will be created. Click Okay to continue');
 
         // swal({
         //   title: 'Converting!!....',
