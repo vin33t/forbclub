@@ -151,7 +151,6 @@
 {{--  <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>--}}
   <script src="{{ asset(mix('js/scripts/modal/components-modal.js')) }}"></script>
   <script>
-    <script>
     $('.reimbursementSummary').DataTable({
       "order": []
     });
