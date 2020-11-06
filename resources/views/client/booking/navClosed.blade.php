@@ -40,6 +40,31 @@
                 ({{ \App\Client\Booking\Bookings::whereHas('ClientHoliday')->get()->count() }})</a>
             @endif
           </li>
+          <li class="nav-item">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" id="addRequestButton" data-target="#add_request"><i class="fa fa-plus-square"></i></button>
+            <a href="{{ route('booking') }}"><button class="btn btn-success btn-sm" >Active Bookings</button></a>
+            <div class="modal fade" id="add_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Search Client</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body blockThis">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="search">Client Name/FTK/Phone</label>
+                        <input type="search" name="q" class="form-control search-input" placeholder="Search" id="search" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </li>
 {{--          <li class="nav-item">--}}
 {{--            @if(Route::currentRouteName() == 'booking.holiday.progress')--}}
 {{--              <button class="btn btn-primary btn-sm">--}}

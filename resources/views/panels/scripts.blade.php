@@ -36,5 +36,45 @@
   notificationToast('{{session('notifyType')}}','{{session('notifyTitle')}}','{{session('notifyMessage')}}')
   @endif
 </script>
+<script>
+  jQuery(document).ready(function($) {
+
+    // Set the Options for "Bloodhound" suggestion engine
+    var engine = new Bloodhound({
+      remote: {
+        url: '/find?q=%QUERY%',
+        wildcard: '%QUERY%'
+      },
+      datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+    $(".search-input").typeahead({
+      hint: true,
+      highlight: true,
+      autocomplete: true,
+      minLength: 2,
+      valueKey: 'name'
+    }, {
+      source: engine.ttAdapter(),
+
+      // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
+      name: 'clientList',
+
+      // the key from the array we want to display (name,id,email,etc...)
+      templates: {
+        empty: [
+          '<div class="list-group search-results-dropdown"><div class="list-group-item">No Client found.</div></div>'
+        ],
+        header: [
+          '<div class="list-group search-results-dropdown">'
+        ],
+        suggestion: function (data) {
+          return '<a href="/booking/create/' +  data.slug + '" class="list-group-item" onclick="block()">' + data.name + ' - @' + data.phone + ' - ' + data.email +'</a>'
+        }
+      }
+    });
+  });
+</script>
+
 {{ forgetNotifyToast() }}
 {{-- page script --}}
