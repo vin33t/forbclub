@@ -48,32 +48,12 @@
       "role": "super-admin",
       "permission": "view-import-history"
     },{
-      "url": "/booking",
+      "url": "booking/all",
       "name": "Booking Requests",
       "icon": "feather icon-book",
       "i18n": "nav.app_email",
       "role": "super-admin",
-      "permission": "view-import-history",
-      "submenu": [
-        {
-      "url": "/booking/all",
-      "name": "All",
-      "icon": "feather icon-circle",
-      "i18n": "nav.dashboard_analytics"
-      },
-        {
-          "url": "/booking/",
-          "name": "Active Booking Requests",
-          "icon": "feather icon-circle",
-          "i18n": "nav.dashboard_analytics"
-        },
-        {
-          "url": "/booking/denied-by-mrd",
-          "name": "Closed Booking Requests",
-          "icon": "feather icon-circle",
-          "i18n": "nav.dashboard_analytics"
-        }
-      ]
+      "permission": "view-import-history"
     },
     {
       "url": "transaction/downlaod/axis-mis",

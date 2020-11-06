@@ -15,7 +15,12 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Booking Requests <button class="btn btn-primary btn-sm" data-toggle="modal" id="addRequestButton" data-target="#add_request"><i class="fa fa-plus-square"></i></button></h4>
+            <h4 class="card-title">Booking Requests
+              <button class="btn btn-primary btn-sm" data-toggle="modal" id="addRequestButton" data-target="#add_request"><i class="fa fa-plus-square"></i></button>
+              <a href="{{ route('booking') }}"><button class="btn btn-success btn-sm" >Active</button></a>
+              <a href="{{ route('booking.denied.mrd') }}"><button class="btn btn-danger btn-sm" >Closed</button></a>
+
+            </h4>
             <div class="modal fade" id="add_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

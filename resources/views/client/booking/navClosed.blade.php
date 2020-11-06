@@ -43,6 +43,8 @@
           <li class="nav-item">
             <button class="btn btn-primary btn-sm" data-toggle="modal" id="addRequestButton" data-target="#add_request"><i class="fa fa-plus-square"></i></button>
             <a href="{{ route('booking') }}"><button class="btn btn-success btn-sm" >Active Bookings</button></a>
+            <a href="{{ route('booking.all') }}"><button class="btn btn-primary btn-sm" >Booking Summary</button></a>
+
             <div class="modal fade" id="add_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
