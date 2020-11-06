@@ -26,7 +26,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
-
+  public function find(Request $request)
+  {
+$search  = $request->q;
+    return Client::where('name','like','%'.$request->q.'%')->get();
+  }
   public function viewClient($slug)
   {
     if (Auth::user()->client) {

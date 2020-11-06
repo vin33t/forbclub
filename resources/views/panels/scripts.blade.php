@@ -14,6 +14,8 @@
 @if($configData['blankPage'] == false)
 <script src="{{ asset(mix('js/scripts/customizer.js')) }}"></script>
 <script src="{{ asset(mix('js/scripts/footer.js')) }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js" ></script>
+
 @endif
 {{-- page script --}}
 @yield('page-script')

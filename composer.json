@@ -29,7 +29,8 @@
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.8",
         "spatie/laravel-sluggable": "^2.2",
-        "yajra/laravel-datatables": "1.5"
+        "yajra/laravel-datatables": "1.5",
+        "nicolaslopezj/searchable": "1.*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

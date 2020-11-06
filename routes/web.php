@@ -19,6 +19,7 @@ use Laravolt\Avatar\Facade as Avatar;
 */
 
 Auth::routes();
+Route::get('/find', 'Client\ClientController@find');
 
 Route::get('/agent', function () {
   $res = [

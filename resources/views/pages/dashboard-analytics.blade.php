@@ -42,7 +42,15 @@
                             <i class="feather icon-package text-warning font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Reimbursement::where('reimbursed',0)->pluck('amount')->sum() }}</h2>
+                  @php
+                    $reimbursements =  \App\Reimbursement::all();
+
+          $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
+          $reimbursementClaimRejected = $reimbursements->where('rejected',1)->pluck('amount')->sum();
+          $reimbursementClaimProcessed = $reimbursements->where('reimbursed',1)->pluck('amount')->sum();
+          $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
+                 @endphp
+                    <h2 class="text-bold-700 mt-1 mb-25">{{ $reimbursementClaimPending }}</h2>
                     <p class="mb-0">Pending Reimbursement</p>
                 </div>
             </div>

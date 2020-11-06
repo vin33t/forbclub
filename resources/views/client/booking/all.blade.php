@@ -15,7 +15,27 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Booking Requests</h4>
+            <h4 class="card-title">Booking Requests <button class="btn btn-primary btn-sm" data-toggle="modal" id="addRequestButton" data-target="#add_request"><i class="fa fa-plus-square"></i></button></h4>
+            <div class="modal fade" id="add_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Search Client</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body blockThis">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="search">Client Name/FTK/Phone</label>
+                        <input type="search" name="q" class="form-control search-input" placeholder="Search" id="search" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-content">
             <div class="card-body card-dashboard">
@@ -162,8 +182,49 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.bootstrap.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.bootstrap4.min.js')) }}"></script>
+
 @endsection
 @section('page-script')
   {{-- Page js files --}}
   <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
+  <script>
+    jQuery(document).ready(function($) {
+
+      // Set the Options for "Bloodhound" suggestion engine
+      var engine = new Bloodhound({
+        remote: {
+          url: '/find?q=%QUERY%',
+          wildcard: '%QUERY%'
+        },
+        datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace
+      });
+      $(".search-input").typeahead({
+        hint: true,
+        highlight: true,
+        autocomplete: true,
+        minLength: 2,
+        valueKey: 'name'
+      }, {
+        source: engine.ttAdapter(),
+
+        // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
+        name: 'clientList',
+
+        // the key from the array we want to display (name,id,email,etc...)
+        templates: {
+          empty: [
+            '<div class="list-group search-results-dropdown"><div class="list-group-item">No Client found.</div></div>'
+          ],
+          header: [
+            '<div class="list-group search-results-dropdown">'
+          ],
+          suggestion: function (data) {
+            return '<a href="/booking/create/' +  data.slug + '" class="list-group-item" onclick="block()">' + data.name + ' - @' + data.phone + ' - ' + data.email +'</a>'
+          }
+        }
+      });
+    });
+  </script>
+
 @endsection
