@@ -21,6 +21,9 @@
                 <a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}" target="_blank"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i></a>
               </div>
               <div class="col-md-4 center"><h4 class="font-weight-bold"><b>{{ $booking->client->name }}</b></h4></div>
+              <div class="col-md-4">
+                <a href="{{ route('create.edit.booking',['id'=>$booking->id]) }}" target="_blank"><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+              </div>
 
             </div>
             <div class="row text-center">

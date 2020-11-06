@@ -72,6 +72,39 @@ class BookingController extends Controller
       }
       return redirect()->route('view.client',['slug'=>$client->slug]);
     }
+    public function updateBooking(Request $request,$id)
+    {
+      $b = Bookings::find($id);
+      try {
+      DB::beginTransaction();
+      $b->bookingRequestDate = $request->booking_request_date;
+      $b->travelDate = $request->travel_date;
+      $b->totalNights = $request->total_nights;
+      $b->holidayType = $request->holiday_type;
+      $b->eligible = 1;
+      $b->breakfast = $request->breakfast;
+      $b->remarks = $request->remarks;
+      $b->save();
+      foreach($b->bookingInfo as $bin){
+        $bin->delete();
+      }
+      foreach($request->destination as $index => $d){
+        $bi = new BookingInfo();
+        $bi->bookings_id = $b->id;
+        $bi->destination = $request->destination[$index];
+        $bi->nights = $request->nights[$index];
+        $bi->adults = $request->adults[$index];
+        $bi->kids = $request->kids[$index];
+        $bi->check_in = $request->check_in[$index];
+        $bi->check_out = $request->check_out[$index];
+        $bi->save();
+        DB::commit();
+      }
+      } catch(\Exception $e){
+        DB::rollBack();
+      }
+      return redirect()->route('booking');
+    }
 
     public function updateStatus(Request $request,$bookingId){
       $booking =  Bookings::find($bookingId);
@@ -743,4 +776,9 @@ class BookingController extends Controller
     return view('client.booking.deniedByManager')->with('bookings',$bookings);
   }
 
+
+  public function editBooking(Request $request, $id){
+    $booking = Bookings::find($id);
+    return view('client.booking.edit')->with('booking',$booking);
+  }
 }

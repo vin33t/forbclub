@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/offer/{bookingId}', 'Client\BookingController@bookingOffer')->name('booking.offer');
     Route::post('/offer/{bookingId}/store', 'Client\BookingController@storeBookingOffer')->name('store.booking.offer');
   });
+    Route::get('edit/{id}', 'Client\BookingController@editBooking')->name('create.edit.booking');
+    Route::post('update/{id}', 'Client\BookingController@updateBooking')->name('update.client.booking');
     Route::post('/offer/{bookingId}/update', 'Client\BookingController@updateBookingOffer')->name('update.booking.offer');
 
     Route::get('/', 'Client\BookingController@index')->name('booking');
