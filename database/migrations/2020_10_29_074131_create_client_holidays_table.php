@@ -21,6 +21,9 @@ class CreateClientHolidaysTable extends Migration
           $table->string('holiday_type');
           $table->string('destination');
           $table->date('date_of_travel');
+          $table->boolean('cancelled')->default(0);
+          $table->date('cancelled_on')->nullable();
+          $table->integer('cancelled_by')->nullable();
             $table->timestamps();
         });
     }

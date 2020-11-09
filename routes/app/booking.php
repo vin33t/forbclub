@@ -38,7 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/status/update/{bookingId}', 'Client\BookingController@updateStatus')->name('update.booking.status');
 
 
-    Route::post('/approve/offer/{bookingId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
+  Route::post('/holidays/cancel', 'Client\BookingController@CancelClientHolidays')->name('cancel.holiday');
+
+
+  Route::post('/approve/offer/{bookingId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
   // Booking Route Ends //
 
 });

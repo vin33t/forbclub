@@ -151,7 +151,7 @@
               <div class="modal fade" id="cancelHoliday" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
-                    <form action="" method="post">
+                    <form action="{{ route('cancel.holiday') }}" method="post">
                       @csrf
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Cancel Holiday</h5>
@@ -160,7 +160,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <input type="hidden" name="id" id="myId">
+                        <input type="hidden" name="id" id="myId" value="{{ $ch->id }}" >
                         <textarea class="form-control" name="remarks" placeholder="Cancel Remarks"></textarea>
                       </div>
                       <div class="modal-footer">

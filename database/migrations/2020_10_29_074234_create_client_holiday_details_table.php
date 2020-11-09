@@ -39,6 +39,9 @@ class CreateClientHolidayDetailsTable extends Migration
 
           $table->integer('add_on_service_price')->nullable();
           $table->integer('amount_paid_by_client')->nullable();
+          $table->boolean('cancelled')->default(0);
+          $table->date('cancelled_on')->nullable();
+          $table->integer('cancelled_by')->nullable();
 
           $table->timestamps();
         });

@@ -789,4 +789,26 @@ class BookingController extends Controller
     $booking = Bookings::find($id);
     return view('client.booking.edit')->with('booking',$booking);
   }
+
+
+  public function cancelClientHolidays(Request $request){
+    $holiday = ClientHoliday::find($request->id);
+    foreach ($holiday->clientHolidayDetails as $details){
+      foreach ($details->ClientHolidayTransactions as $transaction){
+        $transaction->cancelled = 1;
+        $transaction->cancelled_on = Carbon::now();
+        $transaction->cancelled_by = Auth::user()->id;
+        $transaction->save();
+      }
+      $details->cancelled = 1;
+      $details->cancelled_on = Carbon::now();
+      $details->cancelled_by = Auth::user()->id;
+      $details->save();
+    }
+    $holiday->cancelled = 1;
+    $holiday->cancelled_on = Carbon::now();
+    $holiday->cancelled_by = Auth::user()->id;
+    $holiday->save();
+    return redirect()->back();
+  }
 }

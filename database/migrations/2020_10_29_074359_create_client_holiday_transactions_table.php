@@ -30,7 +30,9 @@ class CreateClientHolidayTransactionsTable extends Migration
           $table->string('bank_name')->nullable();
 
           $table->string('cheque_number')->nullable();
-
+          $table->boolean('cancelled')->default(0);
+          $table->date('cancelled_on')->nullable();
+          $table->integer('cancelled_by')->nullable();
           $table->boolean('add_on');
             $table->timestamps();
         });
