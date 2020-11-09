@@ -46,6 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/disable/nach', 'Client\TransactionController@disableNach')->name('disable.nach');
 
 
+
+    Route::post('/add/refund/request/{slug}', 'Client\Transaction\RefundController@refund')->name('add.refund.request');
+  Route::get('/client/refund-requests', 'Client\Transaction\RefundController@refundRequests')->name('refund.requests');
+  Route::post('/client/refund-request-accept', 'Client\Transaction\RefundController@acceptRefundRequest')->name('accept.refund.request');
+  Route::post('/client/refund-request-deny', 'Client\Transaction\RefundController@denyRefundRequest')->name('deny.refund.request');
+  Route::post('/client/refund-request-approve', 'Client\Transaction\RefundController@approveRefundRequest')->name('approve.refund.request');
+  Route::post('/client/refund-request-reject', 'Client\Transaction\RefundController@rejectRefundRequest')->name('reject.refund.request');
+  Route::post('/client/refund-request-approve-accounts', 'Client\Transaction\RefundController@approveAccountsRefundRequest')->name('approve.accounts.refund.request');
+
+
+
     Route::post('/add/pdc', 'Client\TransactionController@addPdc')->name('add.pdc');
     Route::post('/update/pdc', 'Client\TransactionController@updatePdc')->name('update.pdc');
     Route::post('/update/pdc/status/{id}', 'Client\TransactionController@updatePdcStatus')->name('update.pdc.status');

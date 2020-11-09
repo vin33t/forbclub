@@ -221,4 +221,8 @@ class Client extends Model
     return $this->hasMany('App\Client\Holiday\ClientHoliday');
   }
 
+  public function RefundRequest(){
+    return $this->hasOne('App\RefundRequests');
+  }
+
 }

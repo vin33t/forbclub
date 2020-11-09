@@ -110,6 +110,7 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#disableNach">Disable Nach</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addPdc">Add PDC</a>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
           </div>
         </div>
       </div>
@@ -152,6 +153,7 @@
     @include('client.transaction.add.cheque',['client'=>$client])
     @include('client.transaction.add.addTransaction',['client'=>$client])
     @include('client.transaction.addPdc',['client'=>$client])
+    @include('client.components.addRefundRequest',['client'=>$client])
     @include('client.transaction.add.otherTransaction',['client'=>$client])
     @include('client.transaction.disableNach',['client'=>$client])
 
