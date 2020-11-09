@@ -119,6 +119,14 @@
           </div>
         </div>
       </div>
+      @if($client->refundRequest)
+      <div class="col-md-4">
+        <div class="alert-danger">
+        Refund Request Added On: {{ $client->refundRequest->refund_date }}
+{{--        {{ $client->refundRequest }}--}}
+        </div>
+      </div>
+        @endif
     </div>
     @endif
     <section id="profile-info">
