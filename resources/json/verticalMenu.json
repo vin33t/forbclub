@@ -54,6 +54,13 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },{
+      "url": "transaction/client/refund-requests",
+      "name": "Refund Requests",
+      "icon": "feather icon-book",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },
     {
       "url": "transaction/downlaod/axis-mis",

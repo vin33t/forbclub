@@ -68,6 +68,8 @@
                   <li class="nav-item px-sm-0">
                     <a href="{{ route('view.client',['slug'=>$client->slug]) }}" class="nav-link font-small-3">Home</a>
                   </li>
+                  @if($user->employee)
+
                   <li class="nav-item px-sm-0">
                     <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'payments']) }}"
                        class="nav-link font-small-3" id="client-payment-page">Payments</a>
@@ -77,6 +79,7 @@
                     <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'holidays']) }}"
                        class="nav-link font-small-3">Holidays</a>
                   </li>
+                    @endif
                 </ul>
               </div>
             </nav>
@@ -84,6 +87,8 @@
         </div>
       </div>
     </div>
+    @if($user->employee)
+
     <div class="row">
       <div class="col-md-2">
         <div class="dropdown">
@@ -115,6 +120,7 @@
         </div>
       </div>
     </div>
+    @endif
     <section id="profile-info">
       <div class="row">
         @if($client->latestPackage->status == 'Cancelled')

@@ -45,16 +45,21 @@ class RefundController extends Controller
     $rr->save();
 
     if($request->change_client_status == 'on'){
+      $package = $rr->latestPackage;
       if($request->status == 'cancel'){
-        $rr->client->cancelled = 1;
-        $rr->client->remarks = $request->approval_accounts_remarks;
-        $rr->client->save();
+        $package->status = 'Cancelled';
+        $package->remarks = $request->approval_accounts_remarks;
+        $package->save();
+//        $rr->client->save();
         $rr->accepted_denied_client_status_changed = 'Cancelled';
         $rr->save();
       }elseif($request->status == 'forfiet'){
-        $rr->client->forfieted = 1;
-        $rr->client->remarks = $request->approval_accounts_remarks;
-        $rr->client->save();
+//        $rr->client->forfieted = 1;
+//        $rr->client->remarks = $request->approval_accounts_remarks;
+        $package->status = 'Forfieted';
+        $package->remarks = $request->approval_accounts_remarks;
+        $package->save();
+//        $rr->client->save();
         $rr->accepted_denied_client_status_changed = 'Forfieted';
         $rr->save();
       }
@@ -83,14 +88,21 @@ class RefundController extends Controller
     $rr->save();
 
     if($request->change_client_status == 'on'){
+      $package = $rr->latestPackage;
       if($request->status == 'cancel'){
-        $rr->client->cancelled = 1;
-        $rr->client->save();
+//        $rr->client->cancelled = 1;
+//        $rr->client->save();
+        $package->status = 'Cancelled';
+//        $package->remarks = $request->approval_accounts_remarks;
+        $package->save();
         $rr->approved_rejected_client_status_changed = 'Cancelled';
         $rr->save();
       }elseif($request->status == 'forfiet'){
-        $rr->client->forfieted = 1;
-        $rr->client->save();
+//        $rr->client->forfieted = 1;
+//        $rr->client->save();
+        $package->status = 'Forfieted';
+//        $package->remarks = $request->approval_accounts_remarks;
+        $package->save();
         $rr->approved_rejected_client_status_changed = 'Forfieted';
         $rr->save();
       }

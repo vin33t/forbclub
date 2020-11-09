@@ -156,9 +156,7 @@
                   <th>Accepted By</th>
                   <th>Accepted Remarks</th>
                   <th>Accepted On</th>
-                  @if(Auth::user()->admin)
                     <th>Approve/Reject</th>
-                  @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -172,7 +170,6 @@
                     <td>{{ App\User::find($rr->accepted_denied_by)->name }}</td>
                     <td>{{ $rr->accepted_denied_remarks }}</td>
                     <td>{{ $rr->accepted_denied_datetime }}</td>
-                    @if(Auth::user()->admin)
                       <td>
                         @if(!$rr->approved_rejected)
                           <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#approve"
@@ -187,7 +184,6 @@
                           @endif
                         @endif
                       </td>
-                    @endif
                   </tr>
                 @empty
                   <tr>
