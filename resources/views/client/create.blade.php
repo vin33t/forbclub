@@ -646,10 +646,10 @@
             '   								<label for="fclp_card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  ' +
             '   								<input type="text" name="fclp_card_number_one" maxlength="4" minlength="4" class="form-control" required>  ' +
             '   							</div>  ' +
-            '   							<div class="col-md-4">  ' +
+            '   							<div class="col-md-4" style="display: none">  ' +
             '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  ' +
             '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  ' +
-            '   								<input id="demo-1" type="date" name="fclp_expiry_date_one" value="" placeholder="DD/MM/YYYY" class="form-control" required/>  ' +
+            '   								<input id="demo-1" type="date" name="fclp_expiry_date_one" value="" placeholder="DD/MM/YYYY" class="form-control" value="{{  Carbon\Carbon::now()->toDateString()  }}" required/>  ' +
             '   								  ' +
             '   							</div>  ' +
             '   							<div class="col-md-4">  ' +
@@ -668,9 +668,9 @@
             '        <option value="Maestro">Maestro</option>' +
             '      </select>' +
             '   							</div>  ' +
-            '   							<div class="col-md-4" >  ' +
+            '   							<div class="col-md-4" style="display: none">  ' +
             '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  ' +
-            '   									<input type="text" name="fclp_card_issue_bank_name_one" class="form-control" required>  ' +
+            '   									<input type="text" name="fclp_card_issue_bank_name_one" class="form-control" value="na" required>  ' +
             '  								</div>  ' +
             '   								<div class="col-md-4">  ' +
             '   								<label for="remarks">Remarks  ' +
