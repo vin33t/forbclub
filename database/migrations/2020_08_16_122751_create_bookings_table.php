@@ -41,6 +41,7 @@ class CreateBookingsTable extends Migration
             $table->integer('offerStatusUpdatedBy')->nullable();
             $table->dateTime('offerStatusUpdatedOn')->nullable();
             $table->string('addedBy')->nullable();
+            $table->boolean('cancelled_booking')->default(0);
             $table->timestamps();
         });
     }

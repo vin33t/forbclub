@@ -13,7 +13,7 @@
         <div class="user-page-info">
           <h6 class="mb-0">{{ $booking->holidayType }}</h6>
         </div>
-        <button type="button" class="btn btn-primary btn-icon ml-auto"  data-toggle="modal" data-target="#pacakgeBenefit{{$booking->id}}"><i class="feather icon-eye"></i>
+{{--        <button type="button" class="btn btn-primary btn-icon ml-auto"  data-toggle="modal" data-target="#pacakgeBenefit{{$booking->id}}"><i class="feather icon-eye"></i>--}}
         </button>
 
       </div>
@@ -93,7 +93,11 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="chart" aria-labelledby="chart-tab" role="tabpanel">
-            Down Payment: {{ $client->downPayment }}
+            <strong>
+            Down Payment: {{ $client->downPayment }} <br>
+            Total Paid Amount(incl. DP): {{ $client->paidAmount }}
+            Pending Amount: {{ $client->latestPackage->productCost - $client->paidAmount }}
+            </strong>
             @if(count($client->transactionSummaryChart))
             <div id="transaction-summary-pie-chart" class="height-400"></div>
             @else

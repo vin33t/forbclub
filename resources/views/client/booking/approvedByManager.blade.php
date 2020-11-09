@@ -21,7 +21,12 @@
                   <a href="{{ route('view.client',['slug'=>$booking->client->slug]) }}" target="_blank"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-md-4 center"><h4 class="font-weight-bold"><b>{{ $booking->client->name }}</b></h4></div>
-
+                <div class="col-md-4 pull-right">
+                  <form action="{{ route('cancel.booking',['id'=>$booking->id]) }}" onsubmit="return confirm('{{ $booking->client->name }}\'s Booking Will be Cancelled ');" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-2x fa-trash-o" aria-hidden="true"></i></button>
+                  </form>
+                </div>
               </div>
 
               <div class="row text-center">

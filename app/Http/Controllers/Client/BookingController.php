@@ -19,6 +19,14 @@ use App\Client\Holiday\ClientHolidayTransactions;
 class BookingController extends Controller
 {
 
+  public function cancelBooking($id){
+    $booking =  Bookings::find($id);
+    $booking->cancelled_booking = 1;
+    $booking->save();
+    return redirect()->back();
+
+  }
+
   public function index(){
     $bookings = Bookings::where('status',NULL)->get();
     return view('client.booking.index')->with('bookings',$bookings);
@@ -129,12 +137,12 @@ class BookingController extends Controller
 
 
     public function inProcessingByMrd(){
-    $bookings = Bookings::where('status','approved')->where('offerStatus',NULL)->get();
+    $bookings = Bookings::where('status','approved')->where('cancelled_booking',0)->where('offerStatus',NULL)->get();
         return view('client.booking.inProcessingByMrd')->with('bookings',$bookings);
     }
 
     public function approvedByManager(){
-    $bookings = Bookings::where('status','approved')->where('offerStatus','approved')->doesntHave('ClientHoliday')->get();
+    $bookings = Bookings::where('status','approved')->where('cancelled_booking',0)->where('offerStatus','approved')->doesntHave('ClientHoliday')->get();
         return view('client.booking.approvedByManager')->with('bookings',$bookings);
     }
 
