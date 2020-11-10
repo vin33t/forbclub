@@ -811,4 +811,41 @@ class BookingController extends Controller
     $holiday->save();
     return redirect()->back();
   }
+
+
+  public function addPartialPayment(Request $request){
+    ClientHolidayTransactions::create([
+      'client_holiday_details_id' => $request->holidayDetailsId,
+      'add_on' => $request->addonPartial,
+      'paid' => $request->paid,
+      'amount' => $request->amount,
+      'date_of_payment' => $request->date_of_payment,
+      'client_id' => $request->client_id,
+    ]);
+    return redirect()->back();
+  }
+
+  public function  makePartialPayment(Request $request){
+//        return $request;
+    $payment = ClientHolidayTransactions::findOrFail($request->paymentId);
+    $payment->date_of_payment = $request->dateOfPayment;
+    $payment->amount = $request->paymentAmount;
+    $payment->mode_of_payment = $request->modeOfPayment;
+    if($request->mode_of_payment == 'Card'){
+      $payment->bank_name = $request->cardBankName;
+      $payment->last_four_card_digits = $request->cardLastFourDigits;
+      $payment->card_description = $request->cardDescription;
+    }
+    if($request->mode_of_payment == 'Online' || $request->mode_of_payment == 'Bank Transfer'){
+      $payment->bank_name = $request->bankName;
+    }
+    if($request->mode_of_payment == 'Cheque'){
+      $payment->cheque_number = $request->chequeNumber;
+    }
+    $payment->paid = 1;
+    $payment->save();
+    return redirect()->back();
+  }
+
+
 }

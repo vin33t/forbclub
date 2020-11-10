@@ -349,7 +349,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" method="post">
+      <form action="{{ route('partialPayment') }}" method="post">
         @csrf
         <div class="modal-body">
           <input type="hidden" name="holidayDetailsId" id="holidayDetailsId">
@@ -380,7 +380,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="#" method="post">
+      <form action="{{ route('make.partialPayment') }}" method="post">
         @csrf
         <input type="hidden" name="paymentId" id="paymentId" >
         <div class="modal-body">

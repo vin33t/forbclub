@@ -42,6 +42,12 @@ Route::middleware('auth')->group(function () {
 
 
   Route::post('/approve/offer/{bookingId}', 'Client\BookingController@approveOffer')->name('approve.booking.offer');
+
+
+  Route::post('/addPartialPayment', 'Client\BookingController@addPartialPayment')->name('partialPayment');
+  Route::post('/makePartialPayment', 'Client\BookingController@makePartialPayment')->name('make.partialPayment');
+
+
   // Booking Route Ends //
 
 });
