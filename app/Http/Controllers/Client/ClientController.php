@@ -243,6 +243,7 @@ class ClientController extends Controller
           $transaction->client_id = $client->id;
           $transaction->paymentDate = $request->productEnrollmentDate;
           $transaction->amount = $request->dpAmount;
+          $transaction->isDp = 1;
           $transaction->modeOfPayment = $request->productModeOfPayment;
           $transaction->remarks = $request->remarks_two;
           $transaction->save();
