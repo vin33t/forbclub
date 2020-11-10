@@ -121,18 +121,19 @@ $search  = $request->q;
 //        'modeOfPayment'=>$request->productModeOfPayment,
       ]);
       $i = 0;
-      foreach ($request->benefitName as $cb) {
-        $packageSold = $client->latestPackage;
-        $benefit = new SoldPackageBenefits;
-        $benefit->soldPackageId = $packageSold->id;
-        $benefit->clientId = $packageSold->clientId;
-        $benefit->benefitName = $cb;
-        $benefit->benefitDescription = $request->benefitDescription[$i];
-        $benefit->benefitConditions = '-';
-        $benefit->benefitValidity = Carbon::now()->format('Y-m-d');
-        $benefit->save();
-        $i++;
-
+      if($request->benefitName) {
+        foreach ($request->benefitName as $cb) {
+          $packageSold = $client->latestPackage;
+          $benefit = new SoldPackageBenefits;
+          $benefit->soldPackageId = $packageSold->id;
+          $benefit->clientId = $packageSold->clientId;
+          $benefit->benefitName = $cb;
+          $benefit->benefitDescription = $request->benefitDescription[$i];
+          $benefit->benefitConditions = '-';
+          $benefit->benefitValidity = Carbon::now()->format('Y-m-d');
+          $benefit->save();
+          $i++;
+        }
       }
       if ($request->productModeOfPayment) {
         if ($request->productModeOfPayment == 'Credit Card' or $request->productModeOfpayment == 'Debit Card') {
@@ -15609,7 +15610,6 @@ $search  = $request->q;
         'url' => $mafURL,
       ]);
     }
-    notification('Client Updated', 'MAF UPLOADED', 'success', 'okay');
     return redirect()->back();
   }
 
