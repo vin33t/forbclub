@@ -265,13 +265,13 @@
                       <div class="form-group">
                         <label for="product-name">Relationship With Client</label>
                         <input type="text" id="product-name" class="form-control" placeholder="Relationship With Client"
-                               name="relationShipWithClient" required>
+                               name="relationShipWithClient">
                       </div>
                     </div>
                     <div class="col-md-6 col-12">
                       <div class="form-label-group">
                         <input type="text" id="product-tenure" class="form-control" placeholder="Co Applicant Name"
-                               name="coApplicantName" required>
+                               name="coApplicantName">
                         <label for="product-tenure">Co Applicant Name</label>
                       </div>
                     </div>
