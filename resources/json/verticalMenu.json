@@ -41,7 +41,7 @@
       "permission": "view-import-history"
     },
     {
-      "url": "/booking/upcoming-transactions",
+      "url": "upcoming-transactions",
       "name": "Upcoming Transactions",
       "icon": "feather icon-chevrons-up",
       "i18n": "nav.app_email",

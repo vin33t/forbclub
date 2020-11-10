@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Client\Client;
+use App\Client\Holiday\ClientHolidayTransactions;
 use App\Client\Package\SoldPackageBenefits;
 use App\Client\TimelineActivity;
 use App\Client\Transaction\CardPayment;
@@ -13,6 +14,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Client\Package\SoldPackages;
 use App\Jobs\SendEkitJob;
+use App\RefundRequests;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,6 +28,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
+
+  public function upcomingTransactions(){
+      $new_transactions = ClientHolidayTransactions::where('paid',0)->where('cancelled',0)->get();
+      $refund_transactions = RefundRequests::where('approval_accounts_datetime','!=',null)->where('mode_of_payment',null)->get();
+
+    return view('client.upcomingTransactions')
+      ->with('refund_transactions',$refund_transactions)
+      ->with('new_transactions',$new_transactions);
+  }
+
   public function find(Request $request)
   {
 $search  = $request->q;
