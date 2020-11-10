@@ -29,20 +29,22 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
 
-  public function upcomingTransactions(){
-      $new_transactions = ClientHolidayTransactions::where('paid',0)->where('cancelled',0)->get();
-      $refund_transactions = RefundRequests::where('approval_accounts_datetime','!=',null)->where('mode_of_payment',null)->get();
+  public function upcomingTransactions()
+  {
+    $new_transactions = ClientHolidayTransactions::where('paid', 0)->where('cancelled', 0)->get();
+    $refund_transactions = RefundRequests::where('approval_accounts_datetime', '!=', null)->where('mode_of_payment', null)->get();
 
     return view('client.upcomingTransactions')
-      ->with('refund_transactions',$refund_transactions)
-      ->with('new_transactions',$new_transactions);
+      ->with('refund_transactions', $refund_transactions)
+      ->with('new_transactions', $new_transactions);
   }
 
   public function find(Request $request)
   {
-$search  = $request->q;
-    return Client::where('name','like','%'.$request->q.'%')->get();
+    $search = $request->q;
+    return Client::where('name', 'like', '%' . $request->q . '%')->get();
   }
+
   public function viewClient($slug)
   {
     if (Auth::user()->client) {
@@ -77,7 +79,8 @@ $search  = $request->q;
 
   public function storeClient(Request $request)
   {
-//      return $request;
+
+
     $this->validate($request, [
       'productMafNo' => 'required|unique:sold_packages,mafNo',
       'productFclpId' => 'required|unique:sold_packages,fclpId',
@@ -121,7 +124,7 @@ $search  = $request->q;
 //        'modeOfPayment'=>$request->productModeOfPayment,
       ]);
       $i = 0;
-      if($request->benefitName) {
+      if ($request->benefitName) {
         foreach ($request->benefitName as $cb) {
           $packageSold = $client->latestPackage;
           $benefit = new SoldPackageBenefits;
@@ -136,7 +139,7 @@ $search  = $request->q;
         }
       }
       if ($request->productModeOfPayment) {
-        if ($request->productModeOfPayment == 'Credit Card' or $request->productModeOfpayment == 'Debit Card') {
+        if ($request->productModeOfPayment == 'Credit Card') {
           $transaction = new CardPayment;
           $transaction->client_id = $client->id;
           $transaction->paymentDate = $request->fclp_date_one;
@@ -145,18 +148,28 @@ $search  = $request->q;
           $transaction->bankName = 'na';
           $transaction->cardLastFourDigits = 0000;
           $transaction->isDp = 1;
-          $transaction->isAddon =0;
+          $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
           $transaction->save();
-        }
-
-        elseif ($request->productModeOfPayment == 'Cash') {
+        } elseif ($request->productModeOfPayment == 'Debit Card') {
+          $transaction = new CardPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->cardType = $request->fclp_card_type_one;
+          $transaction->bankName = 'na';
+          $transaction->cardLastFourDigits = 0000;
+          $transaction->isDp = 1;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        } elseif ($request->productModeOfPayment == 'Cash') {
           $transaction = new CashPayment;
           $transaction->client_id = $client->id;
           $transaction->paymentDate = $request->fclp_date_one;
           $transaction->amount = $request->dpAmount;
           $transaction->receiptNumber = $request->cash_receipt_no_one;
-          $transaction->isDp = 1 ;
+          $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
           $transaction->save();
@@ -166,7 +179,7 @@ $search  = $request->q;
           $transaction->paymentDate = $request->fclp_date_one;
           $transaction->amount = $request->dpAmount;
           $transaction->chequeNumber = $request->cheque_no_one;
-          $transaction->isDp = 1 ;
+          $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
           $transaction->save();
@@ -181,7 +194,7 @@ $search  = $request->q;
         }
       }
       if ($request->productModeOfPaymentTwo) {
-        if ($request->productModeOfPaymentTwo == 'Credit Card' or $request->productModeOfpaymentTwo == 'Debit Card') {
+        if ($request->productModeOfPaymentTwo == 'Credit Card') {
           $transaction = new CardPayment;
           $transaction->client_id = $client->id;
           $transaction->paymentDate = $request->fclp_date_one;
@@ -190,18 +203,28 @@ $search  = $request->q;
           $transaction->bankName = 'na';
           $transaction->cardLastFourDigits = 0000;
           $transaction->isDp = 1;
-          $transaction->isAddon =0;
+          $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
           $transaction->save();
-        }
-
-        elseif ($request->productModeOfPaymentTwo == 'Cash') {
+        } elseif ($request->productModeOfPaymentTwo == 'Debit Card') {
+          $transaction = new CardPayment;
+          $transaction->client_id = $client->id;
+          $transaction->paymentDate = $request->fclp_date_one;
+          $transaction->amount = $request->dpAmount;
+          $transaction->cardType = $request->fclp_card_type_one;
+          $transaction->bankName = 'na';
+          $transaction->cardLastFourDigits = 0000;
+          $transaction->isDp = 1;
+          $transaction->isAddon = 0;
+          $transaction->remarks = $request->remarks_one;
+          $transaction->save();
+        } elseif ($request->productModeOfPaymentTwo == 'Cash') {
           $transaction = new CashPayment;
           $transaction->client_id = $client->id;
           $transaction->paymentDate = $request->fclp_date_two;
           $transaction->amount = $request->dpAmount;
           $transaction->receiptNumber = $request->cash_receipt_no_two;
-          $transaction->isDp = 1 ;
+          $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_two;
           $transaction->save();
@@ -211,7 +234,7 @@ $search  = $request->q;
           $transaction->paymentDate = $request->fclp_date_two;
           $transaction->amount = $request->amount_two;
           $transaction->chequeNumber = $request->cheque_no_two;
-          $transaction->isDp = 1 ;
+          $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_two;
           $transaction->save();
