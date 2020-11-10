@@ -139,7 +139,7 @@
           <div class="card card-box">
             <div class="card-body ">
               <div class="table-responsive">
-                <table class="table custom-table table-hover datatable">
+                <table class="table custom-table table-hover datatable zero-configuration">
                   <thead>
                   <tr>
                     <th>Sr. No.</th>
