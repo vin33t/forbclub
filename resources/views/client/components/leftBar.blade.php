@@ -91,8 +91,12 @@
         <h6 class="mb-0">MAF</h6>
         <p>
           @if($client->document)
+            @if($client->document->url[0] == '_')
+          <a href="{{ asset('/storage/uploads/'.$client->document->url) }}" target="_blank"><button class="btn btn-primary btn-sm">View Maf</button></a>
+              @else
           <a href="{{ $client->document->url }}" target="_blank"><button class="btn btn-primary btn-sm">View Maf</button></a>
-          @else
+            @endif
+              @else
             @if($user->employee)
               <button data-toggle="modal" data-target="#uploadMaf" class="btn btn-warning">Upload MAF Now</button>
              <div class="modal fade" id="uploadMaf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

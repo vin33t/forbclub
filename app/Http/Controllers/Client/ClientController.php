@@ -226,6 +226,17 @@ $search  = $request->q;
         }
       }
       if ($request->hasFile('clientMaf')) {
+        $mafName = $client->ftkId . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->clientMaf->getClientOriginalExtension();
+        $request->clientMaf->move(storage_path('app/public/uploads'), $mafName);
+
+//      $image = $request->file('maf');
+//      $t = Storage::disk('s3')->put($mafName, file_get_contents($request->maf), 'public');
+//      $mafURL = Storage::disk('s3')->url($mafName);
+        Document::create([
+          'client_id' => $client->id,
+          'type' => 'maf',
+          'url' => $mafName,
+        ]);
 //        $this->validate($request, [
 //          'maf' => 'mimes:pdf|max:99048',
 //        ]);
@@ -15596,8 +15607,8 @@ $search  = $request->q;
 //      $this->validate($request, [
 //        'maf' => 'mimes:pdf|max:99048',
 //      ]);
-      $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
-      $request->expenseBill->move(storage_path('app/public/uploads'), $mafName);
+      $mafName = $client->ftkId . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
+      $request->maf->move(storage_path('app/public/uploads'), $mafName);
 
 //      $image = $request->file('maf');
 //      $t = Storage::disk('s3')->put($mafName, file_get_contents($request->maf), 'public');
@@ -15605,7 +15616,7 @@ $search  = $request->q;
       Document::create([
         'client_id' => $client->id,
         'type' => 'maf',
-        'url' => 'publicUploads',
+        'url' => $mafName,
       ]);
     }
     return redirect()->back();
