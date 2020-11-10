@@ -410,8 +410,12 @@
                 <div class="row">
                   <div class="col-md-6  col-sm-12">
                     <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control">
-                      <label>Benefit Name</label>
+                      <select name="benefitName[]" id="" class="form-control">
+                        <option value="Flight">Flight</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Land Package">Land Package</option>
+                        <option value="Others">Others</option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-6 col-sm-12">
@@ -608,12 +612,6 @@
             '   								<label for="fclp_card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  ' +
             '   								<input type="text" name="fclp_card_number_one" maxlength="4" minlength="4" class="form-control" required>  ' +
             '   							</div>  ' +
-            '   							<div class="col-md-4" style="display:none">  ' +
-            '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  ' +
-            '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  ' +
-            '   								<input id="demo-1" type="date" name="fclp_expiry_date_one" value="" placeholder="DD/MM/YYYY" class="form-control" value="{{ Carbon\Carbon::now()->toDateString() }}" required/>  ' +
-            '   								  ' +
-            '   							</div>  ' +
             '   							<div class="col-md-4">  ' +
             '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  ' +
             '   								<input type="date" name="fclp_date_one" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  ' +
@@ -646,12 +644,6 @@
             '   								<label for="fclp_card_number">Last Four Digits of Card:  <span style="color:red">*</span></label>  ' +
             '   								<input type="text" name="fclp_card_number_one" maxlength="4" minlength="4" class="form-control" required>  ' +
             '   							</div>  ' +
-            '   							<div class="col-md-4" style="display: none">  ' +
-            '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  ' +
-            '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  ' +
-            '   								<input id="demo-1" type="date" name="fclp_expiry_date_one" value="" placeholder="DD/MM/YYYY" class="form-control" value="{{  Carbon\Carbon::now()->toDateString()  }}" required/>  ' +
-            '   								  ' +
-            '   							</div>  ' +
             '   							<div class="col-md-4">  ' +
             '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  ' +
             '   								<input type="date" name="fclp_date_one" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  ' +
@@ -668,10 +660,6 @@
             '        <option value="Maestro">Maestro</option>' +
             '      </select>' +
             '   							</div>  ' +
-            '   							<div class="col-md-4" style="display: none">  ' +
-            '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  ' +
-            '   									<input type="text" name="fclp_card_issue_bank_name_one" class="form-control" value="na" required>  ' +
-            '  								</div>  ' +
             '   								<div class="col-md-4">  ' +
             '   								<label for="remarks">Remarks  ' +
             '   								<input type="text" name="remarks_one" value="" class="form-control" required>  ' +
@@ -739,12 +727,6 @@
           '   								<input type="text" name="fclp_card_number_two" maxlength="4" minlength="4" class="form-control" required>  '  +
           '   							</div>  '  +
           '   							<div class="col-md-4">  '  +
-          '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  '  +
-          '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  '  +
-          '   								<input id="demo-1" type="date" name="fclp_expiry_date_two" value="" placeholder="DD/MM/YYYY" class="form-control" required/>  '  +
-          '   								  '  +
-          '   							</div>  '  +
-          '   							<div class="col-md-4">  '  +
           '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  '  +
           '   								<input type="date" name="fclp_date_two" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  '  +
           '   							</div>  '  +
@@ -760,10 +742,6 @@
           '        <option value="Maestro">Maestro</option>' +
           '      </select>' +
           '   							</div>  ' +
-          '   							<div class="col-md-4" >  '  +
-          '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  '  +
-          '   									<input type="text" name="fclp_card_issue_bank_name_two" class="form-control" required>  '  +
-          '  								</div>  ' +
           '								<div class="col-md-4">  '  +
           '   								<label for="remarks">Remarks '  +
           '   								<input type="text" name="remarks_two" value="" class="form-control" remarks>  '  +
@@ -777,12 +755,6 @@
           '   								<input type="text" name="fclp_card_number_two" maxlength="4" minlength="4" class="form-control" required>  '  +
           '   							</div>  '  +
           '   							<div class="col-md-4">  '  +
-          '   								<label for="fclp_expiry_date"> Expiry date:  <span style="color:red">*</span></label>  '  +
-          '   								{{-- <input type="date" name="fclp_expiry_date" value="" placeholder="DD/MM/YYYY" class="form-control" > --}}  '  +
-          '   								<input id="demo-1" type="date" name="fclp_expiry_date_two" value="" placeholder="DD/MM/YYYY" class="form-control" required/>  '  +
-          '   								  '  +
-          '   							</div>  '  +
-          '   							<div class="col-md-4">  '  +
           '   								<label for="fclp_date"> Date of Payment:  <span style="color:red">*</span></label>  '  +
           '   								<input type="date" name="fclp_date_two" value="" placeholder="DD/MM/YYYY" class="form-control"  id="datepicker2" required>  '  +
           '   							</div>  '  +
@@ -798,10 +770,6 @@
           '        <option value="Maestro">Maestro</option>' +
           '      </select>' +
           '   							</div>  ' +
-          '   							<div class="col-md-4" >  '  +
-          '   									<label for="fclp_card_issue_bank_name">Card Issue Bank Name:  <span style="color:red">*</span></label>  '  +
-          '   									<input type="text" name="fclp_card_issue_bank_name_two" class="form-control" required>  '  +
-          '  								</div>  ' +
           '   								<div class="col-md-4">  '  +
           '   								<label for="remarks">Remarks  '  +
           '   								<input type="text" name="remarks_two" value="" class="form-control" required>  '  +
