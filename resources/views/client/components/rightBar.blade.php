@@ -95,7 +95,7 @@
           <div class="tab-pane active" id="chart" aria-labelledby="chart-tab" role="tabpanel">
             <strong>
             Down Payment: {{ $client->downPayment }} <br>
-            Total Paid Amount(incl. DP): {{ $client->paidAmount }}
+            Total Paid Amount(incl. DP): {{ $client->paidAmount }} <br>
             Pending Amount: {{ $client->latestPackage->productCost - $client->paidAmount }}
             </strong>
             @if(count($client->transactionSummaryChart))
