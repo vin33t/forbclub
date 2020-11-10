@@ -350,6 +350,12 @@
                                placeholder="DP Amount" required>
                         <label for="product-cost">DP Amount</label>
                       </div>
+                    </div>       <div class="col-md-6 col-12">
+                      <div class="form-label-group">
+                        <input type="number" id="product-cost" class="form-control" name="asc"
+                               placeholder="Annual Service Charges(ASC)">
+                        <label for="product-cost">Annual Service Charges</label>
+                      </div>
                     </div>
                     <div class="col-md-4 col-12">
                       <div class="form-label-group">
