@@ -403,65 +403,16 @@
           <div class="card">
             <div class="card-header">
               {{--            <h4 class="card-title">Package Benefits <button class="btn btn-primary btn-sm" onclick="addMoreBenefit()" type="button">Add More</button></h4>--}}
-              <h4 class="card-title">Package Benefits </h4>
+              <h4 class="card-title">Package Benefits  <button type="button" class="btn btn-success btn-sm" onclick="addMoreBenefit()"><i class="fa fa-plus"></i></button></h4>
             </div>
             <div class="card-content">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6  col-sm-12">
-                    <div class="form-label-group">
-                      <select name="benefitName[]" id="" class="form-control">
-                        <option value="Flight">Flight</option>
-                        <option value="Hotel">Hotel</option>
-                        <option value="Land Package">Land Package</option>
-                        <option value="Others">Others</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Description" class="form-control"
-                             name="benefitDescription[]">
-                      <label>Benefit Description </label>
-                    </div>
-                  </div>
 
+                <div id="moreBenefits">
 
                 </div>
-                <div class="row">
-                  <div class="col-md-6  col-sm-12">
-                    <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control">
-                      <label>Benefit Name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Description" class="form-control"
-                             name="benefitDescription[]">
-                      <label>Benefit Description </label>
-                    </div>
-                  </div>
 
 
-                </div>
-                <div class="row">
-                  <div class="col-md-6  col-sm-12">
-                    <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Name" name="benefitName[]" class="form-control">
-                      <label>Benefit Name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-label-group">
-                      <input type="text" placeholder="Benefit Description" class="form-control"
-                             name="benefitDescription[]">
-                      <label>Benefit Description </label>
-                    </div>
-                  </div>
-
-
-                </div>
               </div>
             </div>
           </div>
@@ -821,6 +772,36 @@
       }
     }
 
+
+    function addMoreBenefit(){
+      var data = '<div class="row remove">\n' +
+        '                  <div class="col-md-5  col-sm-12">\n' +
+        '                    <div class="form-label-group">\n' +
+        '                      <select name="benefitName[]" id="" class="form-control">\n' +
+        '                        <option value="Flight">Flight</option>\n' +
+        '                        <option value="Hotel">Hotel</option>\n' +
+        '                        <option value="Land Package">Land Package</option>\n' +
+        '                        <option value="Others">Others</option>\n' +
+        '                      </select>\n' +
+        '                    </div>\n' +
+        '                  </div>\n' +
+        '                  <div class="col-md-5 col-sm-12">\n' +
+        '                    <div class="form-label-group">\n' +
+        '                      <input type="text" placeholder="Benefit Description" class="form-control"\n' +
+        '                             name="benefitDescription[]">\n' +
+        '                      <label>Benefit Description </label>\n' +
+        '                    </div>\n' +
+        '                  </div>\n' +
+        '                  <div class="col-md-2">\n' +
+        '                    <button type="button" class="btn btn-danger btn-sm" onclick="remove(this)"><i class="fa fa-minus"></i></button>\n' +
+        '                  </div>\n' +
+        '\n' +
+        '                </div>';
+      $('#moreBenefits').append(data);
+    }
+    function remove(foo){
+      $(foo).parents(".remove").remove();
+    }
   </script>
 
 
