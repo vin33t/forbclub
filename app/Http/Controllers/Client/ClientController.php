@@ -284,16 +284,12 @@ $search  = $request->q;
     $input = $request->validate([
       'benefitName' => 'required|string',
       'benefitDescription' => 'required|string',
-      'benefitConditions' => 'required|string',
-      'benefitValidity' => 'required|date',
     ]);
     $benefit = new SoldPackageBenefits;
     $benefit->soldPackageId = $clientId;
     $benefit->clientId = $packageId;
     $benefit->benefitName = $input['benefitName'];
     $benefit->benefitDescription = $input['benefitDescription'];
-    $benefit->benefitConditions = $input['benefitConditions'];
-    $benefit->benefitValidity = $input['benefitValidity'];
     $benefit->save();
 
 //    (new TimelineActivity)->create([
@@ -15595,19 +15591,21 @@ $search  = $request->q;
   public function uploadMaf(Request $request)
   {
     $client = Client::findOrFail($request->id);
-    $client->verified = 1;
-    if ($request->hasFile('maf')) {
-      $this->validate($request, [
-        'maf' => 'mimes:pdf|max:99048',
-      ]);
+//    $client->verified = 1;
+    if ($request->maf) {
+//      $this->validate($request, [
+//        'maf' => 'mimes:pdf|max:99048',
+//      ]);
       $mafName = $client->application_no . '_' . $client->name . '_scannedMaf_' . time() . '.' . $request->maf->getClientOriginalExtension();
-      $image = $request->file('maf');
-      $t = Storage::disk('s3')->put($mafName, file_get_contents($image), 'public');
-      $mafURL = Storage::disk('s3')->url($mafName);
+      $request->expenseBill->move(storage_path('app/public/uploads'), $mafName);
+
+//      $image = $request->file('maf');
+//      $t = Storage::disk('s3')->put($mafName, file_get_contents($request->maf), 'public');
+//      $mafURL = Storage::disk('s3')->url($mafName);
       Document::create([
         'client_id' => $client->id,
         'type' => 'maf',
-        'url' => $mafURL,
+        'url' => 'publicUploads',
       ]);
     }
     return redirect()->back();
