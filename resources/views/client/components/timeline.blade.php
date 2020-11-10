@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                   <th scope="row">Number of EMI's</th>
-                  <th scope="row">{{ $client->emiRegularPlan }}</th>
+                  <th scope="row">@if($client->emiRegularPlan){{ $client->emiRegularPlan }} @else {{ $client->latestPackage->noOfEmi }} @endif</th>
                 </tr>
               <tr>
                   <th scope="row">Fully Paid Holiday</th>
