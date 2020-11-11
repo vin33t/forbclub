@@ -333,7 +333,7 @@ class BookingController extends Controller
         }
 
       }
-      return redirect()->back();
+      return redirect()->route('booking.processing.mrd');
     }
 
 
@@ -492,7 +492,9 @@ class BookingController extends Controller
       }
 
     }
-    return redirect()->back();
+    return redirect()->route('booking.processing.mrd');
+
+//    return redirect()->back();
   }
 
   public function ConvertBooking($bookingId){
