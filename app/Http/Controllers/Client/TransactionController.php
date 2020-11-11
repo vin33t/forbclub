@@ -369,6 +369,20 @@ class TransactionController extends Controller
     $pdc->micr_number = $request->micr_number;
     $pdc->remarks = $request->remarks;
     $pdc->status = $request->status;
+    if ($request->status == 'CLEARED') {
+      $transaction = new ChequePayment();
+      $transaction->client_id = $pdc->client_id;
+      $transaction->paymentDate = $pdc->date_of_execution;
+      $transaction->amount = $pdc->amount;
+      $transaction->chequeNumber = $pdc->cheque_no;
+      $transaction->isDp = 0;
+      $transaction->isAddon = 0;
+      $transaction->remarks = $pdc->remarks;
+      $transaction->chequeIssuer = $pdc->branch_name;
+      $transaction->chequeClearingBank = '';
+      $transaction->save();
+      $pdc->transaction_id = $transaction->id;
+    }
     $pdc->save();
 
     return redirect()->back()->withSuccess('PDC Added');
