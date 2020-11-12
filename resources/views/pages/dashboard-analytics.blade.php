@@ -19,7 +19,22 @@
 @section('content')
   {{-- Dashboard Analytics Start --}}
   <section id="dashboard-analytics">
+    @if(!request()->type)
     <div class="row">
+      <div class="col-lg-3 col-md-6 col-12">
+        <div class="card">
+          <div class="card-header d-flex flex-column align-items-start pb-0">
+            <div class="avatar bg-rgba-warning p-50 m-0">
+              <div class="avatar-content">
+                <i class="feather icon-user text-danger font-medium-5"></i>
+              </div>
+            </div>
+            <a href="{{ route('dashboard',['type'=>'clients']) }}">
+              <h2 class="text-bold-700 mt-1 mb-25">{{ __('Clients') }}</h2>
+            </a>
+          </div>
+        </div>
+      </div>
       <div class="col-lg-3 col-md-6 col-12">
         <div class="card">
           <div class="card-header d-flex flex-column align-items-start pb-0">
@@ -55,35 +70,41 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <div class="card">
-          <div class="card-header"><h3>Clients</h3></div>
+    @endif
+    @if(request()->type == 'clients')
+
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="card">
+            <div class="card-header"><h3>Clients</h3></div>
+          </div>
         </div>
       </div>
-    </div>
+    @endif
     @php
       $status = ['ACTIVE', 'CANCELLED', 'BREATHER', 'INCOMPLETE', 'ON HOLD'];
     @endphp
     <div class="row">
-      @foreach($status as $clientStatus)
-        <div class="col-lg-3 col-md-6 col-12">
-          <div class="card">
-            <div class="card-header d-flex flex-column align-items-start pb-0">
-              <div class="avatar bg-rgba-warning p-50 m-0">
-                <div class="avatar-content">
-                  <i class="feather icon-user text-danger font-medium-5"></i>
+      @if(request()->type == 'clients')
+          @foreach($status as $clientStatus)
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card">
+                <div class="card-header d-flex flex-column align-items-start pb-0">
+                  <div class="avatar bg-rgba-warning p-50 m-0">
+                    <div class="avatar-content">
+                      <i class="feather icon-user text-danger font-medium-5"></i>
+                    </div>
+                  </div>
+                  <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
+                    <h2
+                      class="text-bold-700 mt-1 mb-25">{{ \App\Client\Package\SoldPackages::where('status',$clientStatus)->count() }}</h2>
+                    <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
+                  </a>
                 </div>
               </div>
-              <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
-                <h2
-                  class="text-bold-700 mt-1 mb-25">{{ \App\Client\Package\SoldPackages::where('status',$clientStatus)->count() }}</h2>
-                <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
-              </a>
             </div>
-          </div>
-        </div>
-      @endforeach
+          @endforeach
+        @endif
     </div>
   </section>
   <!-- Dashboard Analytics end -->
