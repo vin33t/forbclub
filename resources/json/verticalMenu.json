@@ -1,20 +1,14 @@
 {
   "menu": [
     {
-      "url": "/",
+      "url": "dashboard",
       "name": "Dashboard",
-      "slug": "dashboard",
-      "badgeClass": "badge badge-warning badge-pill float-right mr-2",
       "icon": "feather icon-home",
-      "submenu": [
-        {
-          "url": "/",
-          "name": "Dashboard",
-          "icon": "feather icon-circle",
-          "i18n": "nav.dashboard_analytics"
-        }
-      ]
-    },{
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
+    },
+    {
       "url": "",
       "name": "Client",
       "slug": "client",
