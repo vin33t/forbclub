@@ -3,6 +3,7 @@
 return [
     "Dashboard" => "Dashboard",
     "Client" => "Client",
+    "Create Client" => "Create Client",
     "Import History" => "Import History",
     "Download Axis MIS" => "Download Axis MIS",
     "Upload Axis MIS" => "Upload Axis MIS",
