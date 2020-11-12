@@ -88,6 +88,7 @@
         </div>
 @endif
       </div>
+      @if($user->employee)
 
       <div class="mt-1">
         <h6 class="mb-0">MAF</h6>
@@ -130,6 +131,7 @@
           @endif
         </p>
       </div>
+      @endif
       {{--              <div class="mt-1">--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-facebook"></i></button>--}}
       {{--                <button type="button" class="btn btn-sm btn-icon btn-primary mr-25 p-25"><i class="feather icon-twitter"></i></button>--}}
