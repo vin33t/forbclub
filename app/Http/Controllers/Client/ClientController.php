@@ -29,6 +29,11 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
 
+  public function listClients($status){
+    $packages = SoldPackages::where('status',strtoupper($status))->get();
+    return view('client.list')->with('status',$status)->with('packages',$packages);
+  }
+
   public function upcomingTransactions()
   {
     $new_transactions = ClientHolidayTransactions::where('paid', 0)->where('cancelled', 0)->get();
@@ -121,6 +126,7 @@ class ClientController extends Controller
         'noOfEmi' => $request->noOfEmi,
         'emiAmount' => $request->emiAmount,
         'asc' => $request->asc,
+        'status' => 'ACTIVE',
 //        'modeOfPayment'=>$request->productModeOfPayment,
       ]);
       $i = 0;
@@ -15650,7 +15656,7 @@ class ClientController extends Controller
   {
     $package = SoldPackages::find($id);
     if ($package) {
-      $package->status = $request->status;
+      $package->status = strtoupper($request->status);
       $package->remarks = $request->remarks;
       $package->save();
     }
