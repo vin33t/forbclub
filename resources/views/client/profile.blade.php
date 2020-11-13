@@ -118,10 +118,10 @@
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
           </div>
           <span class="dropdown">
-                            <button class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown" style="padding: 10px 20px !important;margin-right:5px;border-radius: 80px;">
+                            <button class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown" >
                                 Mails
                             </button>
-                            <div class="dropdown-menu" style="border-radius:5px !important;padding:10px;">
+                            <div class="dropdown-menu" >
 
                                 <form method="post" action="{{ route('mail.getMail') }}" class="d-inline">
                                         @csrf
