@@ -117,6 +117,33 @@
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addPdc">Add PDC</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
           </div>
+          <span class="dropdown">
+                            <button class="btn-sm btn-warning dropdown-toggle" data-toggle="dropdown" style="padding: 10px 20px !important;margin-right:5px;border-radius: 80px;">
+                                Mails
+                            </button>
+                            <div class="dropdown-menu" style="border-radius:5px !important;padding:10px;">
+
+                                <form method="post" action="{{ route('mail.getMail') }}" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" value="{{ $client->id }}" name="id">
+                                        <input type="hidden" value="mrd" name='type'>
+                                        <button type="submit" class="btn-sm btn-warning mt-3" style="padding: 10px 20px !important;border-radius: 80px;"><i class="fa fa-envelope"></i> MRD</button>
+                                    </form>
+                                <form method="post" action="{{ route('mail.getMail') }}" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" value="{{ $client->id }}" name="id">
+                                        <input type="hidden" value="accounts" name='type'>
+                                        <button type="submit" class="btn-sm btn-danger mt-2" style="padding: 10px 20px !important;border-radius: 80px;"><i class="fa fa-envelope"></i> Accounts</button>
+                                    </form>
+                                <form method="post" action="{{ route('mail.getMail') }}" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" value="{{ $client->id }}" name="id">
+                                        <input type="hidden" value="booking" name='type'>
+                                        <button type="submit" class="btn-sm btn-primary mt-2" style="padding: 10px 20px !important;border-radius: 80px;"><i class="fa fa-envelope"></i> Booking</button>
+                                    </form>
+
+                            </div>
+                        </span>
         </div>
       </div>
       @if($client->refundRequest)

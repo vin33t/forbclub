@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
   Route::post('upload/maf','Client\ClientController@uploadMaf')->name('upload.maf');
 
   Route::get('migrate','Client\ClientController@migrate');
+
+
+  Route::post('/mail','Client\EmailFetcherController@getMail')->name('mail.getMail');
+
+
   Route::get('mTxn',function(){
 //    foreach (\App\Client\Transaction\CardPayment::all() as $card){
 //      if($card->maf != 0){

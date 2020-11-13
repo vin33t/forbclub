@@ -23,14 +23,15 @@
         "laravel/ui": "^2.1",
         "laravolt/avatar": "^3.2",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "nicolaslopezj/searchable": "1.*",
         "rap2hpoutre/fast-excel": "^2.1",
         "realrashid/sweet-alert": "^3.1",
         "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.8",
         "spatie/laravel-sluggable": "^2.2",
-        "yajra/laravel-datatables": "1.5",
-        "nicolaslopezj/searchable": "1.*"
+        "webklex/laravel-imap": "^2.2",
+        "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
