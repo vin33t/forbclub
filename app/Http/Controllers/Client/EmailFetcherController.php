@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client\Client;
-use Webklex\IMAP\Client as mailClient;
-
+//use Webklex\IMAP\Client as mailClient;
+use Webklex\PHPIMAP\Client as mailClient;
 
 class EmailFetcherController extends Controller
 {
