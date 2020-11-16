@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Client\Client;
 use App\Client\Mis\AxisMis;
+use App\Client\Package\SoldPackages;
 use App\Client\TimelineActivity;
 use App\Client\Transaction\AxisNachPayment;
 use App\Client\Transaction\AxisNachPaymentMeta;
@@ -315,13 +316,27 @@ class TransactionController extends Controller
     $meta->success_amount = 0;
     $meta->failure = 0;
     $meta->failure_amount = 0;
-    $meta->upload_date = Carbon::parse($data[0]['Date of Txn']);
+    $meta->upload_date = Carbon::parse($data[0]['Date of Txn'])->format('Y-m-d');
     $meta->save();
     foreach ($data as $tran){
+
+      $prefix = array("F","T","K","-","f","t","k","l","p","L","P","c","C","@"," ");
+//        dd($row);
+      $id =  $tran['Transaction ID/REF'];
+      $onlyId = str_replace($prefix, "", $id);
+      if($onlyId == 552286){
+        $package =  SoldPackages::where('fclp','552226')->get();
+//        $package = Client::query()->where('application_no','552226')->get();
+      }
+      else{
+        $package =  SoldPackages::where('fclp',$onlyId)->get();
+//        $package = Client::query()->where('application_no', 'like', '%'.$onlyId.'%')->get();
+      }
 //      return $tran;
       $transaction = new AxisNachPayment;
       Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
       $transaction->meta_id = $meta->id;
+      $transaction->client_id = $package->clientId;
       $transaction->corporate_user_no = $tran['Corporate User No'];
       $transaction->corporate_name = $tran['Corporate Name'];
       $transaction->umrn = $tran['UMRN'];
@@ -330,7 +345,7 @@ class TransactionController extends Controller
       $transaction->customer_debit_ac = $tran['Customer Debit AC'];
       $transaction->transaction_id_ref = $tran['Transaction ID/REF'];
       $transaction->amount = $tran['Amount (Rs)'];
-      $transaction->date_of_transaction = Carbon::parse($tran['Date of Txn']);
+      $transaction->date_of_transaction = Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
       $transaction->status_description = $tran['Status'];
       $transaction->reason_description = $tran['Reason Description'];
       $transaction->save();
