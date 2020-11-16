@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <form action="{{ route('upload.transaction.file') }}" method="POST">
+          <form action="{{ route('upload.transaction.file') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
               <h4>Upload Client Transction File</h4>

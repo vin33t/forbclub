@@ -6,6 +6,7 @@ use App\Client\Client;
 use App\Client\Mis\AxisMis;
 use App\Client\TimelineActivity;
 use App\Client\Transaction\AxisNachPayment;
+use App\Client\Transaction\AxisNachPaymentMeta;
 use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
 use App\Client\Transaction\ChequePayment;
@@ -300,6 +301,55 @@ class TransactionController extends Controller
 
   public function uploadTransactionFile(Request $request)
   {
+    $data = (new FastExcel)->import($request->transactionFile);
+    $success = 0;
+    $transactions_count = 0;
+    $success_amount = 0;
+    $failure = 0;
+    $failure_amount = 0;
+    $meta = new AxisNachPaymentMeta;
+    $meta->file_name = $request->transactionFile->getClientOriginalName();
+    $meta->amount = $data->pluck('Amount (Rs)')->sum();
+    $meta->success = 0;
+    $meta->transactions = $transactions_count;
+    $meta->success_amount = 0;
+    $meta->failure = 0;
+    $meta->failure_amount = 0;
+    $meta->upload_date = Carbon::parse($data[0]['Date of Txn']);
+    $meta->save();
+    foreach ($data as $tran){
+//      return $tran;
+      $transaction = new AxisNachPayment;
+      Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
+      $transaction->meta_id = $meta->id;
+      $transaction->corporate_user_no = $tran['Corporate User No'];
+      $transaction->corporate_name = $tran['Corporate Name'];
+      $transaction->umrn = $tran['UMRN'];
+      $transaction->customer_to_be_debited = $tran['Customer to be debited'];
+      $transaction->customer_ifsc = $tran['Customer IFSC'];
+      $transaction->customer_debit_ac = $tran['Customer Debit AC'];
+      $transaction->transaction_id_ref = $tran['Transaction ID/REF'];
+      $transaction->amount = $tran['Amount (Rs)'];
+      $transaction->date_of_transaction = Carbon::parse($tran['Date of Txn']);
+      $transaction->status_description = $tran['Status'];
+      $transaction->reason_description = $tran['Reason Description'];
+      $transaction->save();
+      if($tran['Status'] == 'SUCCESS'){
+        $success += 1;
+        $success_amount += $tran['Amount (Rs)'];
+      } elseif($tran['Status'] == 'FAILURE'){
+        $failure += 1;
+        $failure_amount += $tran['Amount (Rs)'];
+      }
+    }
+    $meta->success = $success;
+    $meta->success_amount = $success_amount;
+    $meta->failure = $failure;
+    $meta->failure_amount = $failure_amount;
+    $meta->transactions = $transactions_count;
+    $meta->save();
+
+//    return $request;
     return \redirect()->back();
   }
 

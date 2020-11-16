@@ -12,6 +12,7 @@ class EmailFetcherController extends Controller
 {
   public function getMail(Request $request){
     $client = Client::find($request->id);
+//    return $client;
     $type = $request->type;
     if($type == 'accounts'){
       $oClient = new mailClient([
