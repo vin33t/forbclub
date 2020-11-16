@@ -325,11 +325,11 @@ class TransactionController extends Controller
       $id =  $tran['Transaction ID/REF'];
       $onlyId = str_replace($prefix, "", $id);
       if($onlyId == 552286){
-        $package =  SoldPackages::where('fclp','552226')->get();
+        $package =  SoldPackages::where('fclpId','552226')->get();
 //        $package = Client::query()->where('application_no','552226')->get();
       }
       else{
-        $package =  SoldPackages::where('fclp',$onlyId)->get();
+        $package =  SoldPackages::where('fclpId',$onlyId)->get();
 //        $package = Client::query()->where('application_no', 'like', '%'.$onlyId.'%')->get();
       }
 //      return $tran;
