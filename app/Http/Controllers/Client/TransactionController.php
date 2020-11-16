@@ -303,6 +303,7 @@ class TransactionController extends Controller
   public function uploadTransactionFile(Request $request)
   {
     $data = (new FastExcel)->import($request->transactionFile);
+
     $success = 0;
     $transactions_count = 0;
     $success_amount = 0;
@@ -316,7 +317,7 @@ class TransactionController extends Controller
     $meta->success_amount = 0;
     $meta->failure = 0;
     $meta->failure_amount = 0;
-    $meta->upload_date = Carbon::parse($data[0]['Date of Txn'])->format('Y-m-d');
+    $meta->upload_date = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
     $meta->save();
     foreach ($data as $tran){
 
@@ -345,7 +346,7 @@ class TransactionController extends Controller
       $transaction->customer_debit_ac = $tran['Customer Debit AC'];
       $transaction->transaction_id_ref = $tran['Transaction ID/REF'];
       $transaction->amount = $tran['Amount (Rs)'];
-      $transaction->date_of_transaction = Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
+      $transaction->date_of_transaction = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
       $transaction->status_description = $tran['Status'];
       $transaction->reason_description = $tran['Reason Description'];
       $transaction->save();
