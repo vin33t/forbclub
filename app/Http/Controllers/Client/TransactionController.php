@@ -337,7 +337,9 @@ class TransactionController extends Controller
       $transaction = new AxisNachPayment;
       Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
       $transaction->meta_id = $meta->id;
+      if($package){
       $transaction->client_id = $package->clientId;
+      }
       $transaction->corporate_user_no = $tran['Corporate User No'];
       $transaction->corporate_name = $tran['Corporate Name'];
       $transaction->umrn = $tran['UMRN'];
