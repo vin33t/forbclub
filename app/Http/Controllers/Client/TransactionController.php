@@ -356,6 +356,7 @@ class TransactionController extends Controller
         $failure += 1;
         $failure_amount += $tran['Amount (Rs)'];
       }
+      $transactions_count += 1;
     }
     $meta->success = $success;
     $meta->success_amount = $success_amount;
