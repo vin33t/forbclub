@@ -16,7 +16,7 @@ class EmailController extends Controller
 {
   public function emails()
   {
-    $emails = Emails::paginate(10);
+    $emails = Emails::orderByDesc('date')->paginate(10);
 //    return $emails;
     {
       $pageConfigs = [
@@ -31,7 +31,7 @@ class EmailController extends Controller
   }
   public function emailsAccounts()
   {
-    $emails = Emails::where('account','accounts')->paginate(10);
+    $emails = Emails::where('account','accounts')->orderByDesc('date')->paginate(10);
 //    return $emails;
     {
       $pageConfigs = [
@@ -46,7 +46,7 @@ class EmailController extends Controller
   }
   public function emailsMrd()
   {
-    $emails = Emails::where('account','mrd')->paginate(10);
+    $emails = Emails::where('account','mrd')->orderByDesc('date')->paginate(10);
 //    return $emails;
     {
       $pageConfigs = [
@@ -62,7 +62,7 @@ class EmailController extends Controller
 
   public function emailsNoreply()
   {
-    $emails = Emails::where('account','noreply')->paginate(10);
+    $emails = Emails::where('account','noreply')->orderByDesc('date')->paginate(10);
 //    return $emails;
     {
       $pageConfigs = [
@@ -77,7 +77,7 @@ class EmailController extends Controller
   }
   public function emailsBookings()
   {
-    $emails = Emails::where('account','bookings')->paginate(10);
+    $emails = Emails::where('account','bookings')->orderByDesc('date')->paginate(10);
 //    return $emails;
     {
       $pageConfigs = [
