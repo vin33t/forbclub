@@ -103,6 +103,7 @@ class EmailController extends Controller
       'avatar'=> '<img src="'. avatar(unserialize($email->sender)[0]->personal == false ?  unserialize($email->sender)[0]->mailbox : strtoupper(unserialize($email->sender)[0]->personal)).'" alt="avtar img holder" width="61" height="61">',
       'to'=>$email->to,
       'body'=>$email->html_body,
+      'client'=>'<a href="'. route('view.client',['slug'=>$email->client ? $email->client->slug : '']).'"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
       'date'=>Carbon::parse($email->date)->format('F d,Y'),
       'time'=>Carbon::parse($email->time)->format('h:i A'),
     ];

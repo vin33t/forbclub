@@ -108,6 +108,9 @@
                                           @if($email->reply->count())
                                           <span class="mr-1"><i class="fa fa-envelope"></i></span>
                                         @endif
+                                            @if($email->client)
+                                              <a href="{{ route('view.client',['slug'=>$email->client->slug]) }}"><span class="mr-1"><i class="fa fa-user-circle"></i></span></a>
+                                        @endif
                                         <strong>{{ strtoupper($email->account) }}</strong>
                                         <span class="mail-date">{{ \Carbon\Carbon::parse($email->date)->format('F d,Y') }}</span>
                                       </span>
@@ -134,9 +137,11 @@
           <span class="go-back mr-1"><i class="feather icon-arrow-left font-medium-4"></i></span>
           <h3 class="mailSubject"></h3>
         </div>
-{{--        <div class="email-header-right mb-1 ml-2 pl-1">--}}
-{{--          <ul class="list-inline m-0">--}}
-{{--            <li class="list-inline-item"><span class="action-icon favorite"><i class="feather icon-star font-medium-5"></i></span></li>--}}
+        <div class="email-header-right mb-1 ml-2 pl-1">
+          <ul class="list-inline m-0">
+            <li class="list-inline-item emailClient">
+
+            </li>
 {{--            <li class="list-inline-item">--}}
 {{--              <div class="dropdown no-arrow">--}}
 {{--                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
@@ -166,8 +171,8 @@
 {{--            <li class="list-inline-item"><span class="action-icon"><i class="feather icon-trash font-medium-5"></i></span></li>--}}
 {{--            <li class="list-inline-item email-prev"><span class="action-icon"><i class="feather icon-chevrons-left font-medium-5"></i></span></li>--}}
 {{--            <li class="list-inline-item email-next"><span class="action-icon"><i class="feather icon-chevrons-right font-medium-5"></i></span></li>--}}
-{{--          </ul>--}}
-{{--        </div>--}}
+          </ul>
+        </div>
       </div>
       <div class="email-scroll-area">
         <div class="row">
@@ -255,6 +260,7 @@
       // console.log(id);
       axios.get('/email/'+id)
       .then((response)=>{
+        console.log(response)
         $('.mailName').html(response.data.name)
         $('.mailFrom').html(response.data.from)
         $('.mailTo').html(response.data.to)
@@ -263,6 +269,7 @@
         $('.mail-message').html(response.data.body)
         $('.avatar').html(response.data.avatar)
         $('.mailSubject').html(response.data.subject)
+        $('.emailClient').html(response.data.client)
       });
     }
     $(function () {
