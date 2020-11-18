@@ -101,7 +101,7 @@ class TransactionController extends Controller
       'paymentAmount' => 'required|integer',
       'paymentCardType' => 'required|string',
       'paymentCardProvider' => 'required|string',
-      'paymentCardLastFourDigits' => 'required|integer',
+      'paymentCardLastFourDigits' => 'required',
       'paymentCardRemarks' => 'required|string',
     ]);
     if ($request->has('paymentDownPayment') and $request->has('paymentAddon')) {

@@ -260,7 +260,6 @@
       // console.log(id);
       axios.get('/email/'+id)
       .then((response)=>{
-        console.log(response)
         $('.mailName').html(response.data.name)
         $('.mailFrom').html(response.data.from)
         $('.mailTo').html(response.data.to)
