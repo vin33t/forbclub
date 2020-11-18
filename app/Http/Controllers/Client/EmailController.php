@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Emails;
+use App\EmailSent;
 use App\Http\Controllers\Controller;
 use App\Client\Client;
 use App\EmailAttachments;
@@ -14,7 +15,21 @@ use Obiefy\API\Facades\API;
 
 class EmailController extends Controller
 {
-  public function emails()
+  public function emailsSent()
+  {
+    $emails = EmailSent::orderByDesc('created_at')->paginate(10);
+//    return $emails;
+    {
+      $pageConfigs = [
+        'pageHeader' => false,
+        'contentLayout' => "content-left-sidebar",
+        'bodyClass' => 'email-application',
+      ];
+
+      return view('client.emails.sent', ['pageConfigs' => $pageConfigs])
+        ->with('emails',$emails);
+    }
+  } public function emails()
   {
     $emails = Emails::orderByDesc('date')->paginate(10);
 //    return $emails;
@@ -109,6 +124,29 @@ class EmailController extends Controller
     ];
     return $data;
   }
+
+  public function emailsSentContent($id){
+    $email = EmailSent::find($id);
+    if($email->unread == 1){
+      $email->unread = 0;
+      $email->save();
+    }
+    $data = [
+      'name' => str_replace(['[',']'],'',$email->to),
+      'subject' => $email->subject,
+      'from' => $email->from,
+      'avatar'=> '<img src="'. avatar(str_replace(['[',']'],'',$email->to)).'" alt="avtar img holder" width="61" height="61">',
+      'to'=>$email->to,
+      'body'=>$email->mail,
+      'client'=>'<a href="'. route('view.client',['slug'=>$email->client ? $email->client->slug : 'na']).'"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
+      'date'=>Carbon::parse($email->created_at)->format('F d,Y'),
+      'time'=>Carbon::parse($email->created_at)->format('h:i A'),
+    ];
+    return $data;
+  }
+
+
+
   public function fetchMails($account)
   {
     DB::beginTransaction();
