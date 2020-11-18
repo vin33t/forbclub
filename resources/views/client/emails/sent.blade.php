@@ -109,7 +109,7 @@
                                           <a href="{{ route('view.client',['slug'=>$email->client->slug]) }}"><span class="mr-1"><i class="fa fa-user-circle"></i></span></a>
                                         @endif
                                         <strong>{{ strtoupper($email->account) }}</strong>
-                                        <span class="mail-date">{{ \Carbon\Carbon::parse($email->date)->format('F d,Y') }}</span>
+                                        <span class="mail-date">{{ \Carbon\Carbon::parse($email->created_at)->format('F d,Y') }}</span>
                                       </span>
                     </div>
                   </div>
