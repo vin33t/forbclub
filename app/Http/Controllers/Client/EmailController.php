@@ -158,10 +158,13 @@ class EmailController extends Controller
         }
       }
       DB::commit();
-      return API::response(200, 'Mails Fetched', '');
+      return redirect()->back();
+//      return API::response(200, 'Mails Fetched', '');
+//      return API::response(200, 'Mails Fetched', '');
     } catch (\Exception $e) {
       DB::rollBack();
-      return API::response(500, 'Something Went Wrong While fetching the Mails', $e);
+      return redirect()->back();
+//      return API::response(500, 'Something Went Wrong While fetching the Mails', $e);
     }
   }
 
