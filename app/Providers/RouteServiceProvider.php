@@ -53,6 +53,8 @@ class RouteServiceProvider extends ServiceProvider
 
       $this->mapBookingRoutes();
 
+      $this->mapEmailRoutes();
+
 
         //
     }
@@ -123,6 +125,15 @@ class RouteServiceProvider extends ServiceProvider
       ->namespace($this->namespace)
       ->prefix('booking')
       ->group(base_path('routes/app/booking.php'));
+  }
+
+
+  protected function mapEmailRoutes()
+  {
+    Route::middleware('web')
+      ->namespace($this->namespace)
+      ->prefix('email')
+      ->group(base_path('routes/app/emails.php'));
   }
 
     /**

@@ -14,25 +14,15 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
-    },
-    {
-      "url": "",
-      "name": "Client",
-      "slug": "client",
-      "icon": "feather icon-briefcase",
+    },{
+      "url": "email",
+      "name": "Email",
+      "icon": "feather icon-mail",
+      "i18n": "nav.app_email",
       "role": "super-admin",
-      "permission": "view-client",
-      "submenu": [
-        {
-          "url": "/client/create",
-          "name": "Create",
-          "icon": "feather icon-user-plus",
-          "i18n": "nav.create_client",
-          "role": "super-admin",
-          "permission": "create-client"
-        }
-      ]
+      "permission": "view-import-history"
     },
+
     {
       "url": "transaction/import-history",
       "name": "Import History",

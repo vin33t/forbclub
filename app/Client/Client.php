@@ -225,4 +225,8 @@ class Client extends Model
     return $this->hasOne('App\RefundRequests');
   }
 
+  public function emails(){
+    return $this->hasMany('App\Model\Emails\Emails');
+  }
+
 }

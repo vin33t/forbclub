@@ -85,3 +85,18 @@ function IND_money_format($number){
 }
 
 
+function connectEmail($account){
+  $username = env('GOOGLE_'. strtoupper($account) .'_EMAIL', false);
+  $password =  env('GOOGLE_'. strtoupper($account) .'_PASSWORD', false);
+  $mailbox = new mailClient([
+    'host' => env('GOOGLE_INCOMING_HOST', false),
+    'port' => env('GOOGLE_EMAIL_PORT', false),
+    'encryption' => env('GOOGLE_EMAIL_ENCRYPTION', false),
+    'validate_cert' => env('EMAIL_VALIDATE_CERT', true),
+    'username' => $username,
+    'password' => $password,
+    'protocol' => env('GOOGLE_EMAIL_PROTOCOL', 'imap')
+  ]);
+  return $mailbox;
+}
+

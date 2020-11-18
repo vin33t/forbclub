@@ -23,7 +23,6 @@ $(function () {
     if ($('.email-scroll-area').length > 0) {
       var users_list = new PerfectScrollbar(".email-scroll-area");
     }
-
     // Modal dialog scroll
     if ($('.modal-dialog-scrollable .modal-body').length > 0) {
       var sidebar_menu_list = new PerfectScrollbar(".modal-dialog-scrollable .modal-body");
@@ -75,6 +74,7 @@ $(function () {
 
   // Email Right sidebar toggle
   $('.email-app-list .email-user-list li').on('click', function (e) {
+    console.log('asd');
     $('.app-content .email-app-details').toggleClass('show');
   });
 
@@ -165,12 +165,12 @@ $(function () {
           {
             'header': '1'
           }, {
-            'header': '2'
-          }, {
-            'list': 'ordered'
-          }, {
-            'list': 'bullet'
-          }],
+          'header': '2'
+        }, {
+          'list': 'ordered'
+        }, {
+          'list': 'bullet'
+        }],
         [{
           'font': []
         }]
