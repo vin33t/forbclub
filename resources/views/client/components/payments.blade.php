@@ -52,8 +52,10 @@
             Pending Payment: {{ $client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum()  }}
             <br>
             @if($user->employee)
+              @if($client->refundRequest)
               @if($client->refundRequest->approval_accounts_by)
               Refunded Amount: {{ $client->refundRequest->approval_accounts_amount }}
+              @endif
               @endif
             <br>
             <hr>
