@@ -47,11 +47,11 @@
           <div class="action-right">
             <ul class="list-inline m-0">
                 <li class="list->inline-item">
-                  @if(!$search)
+                  @if(isset($search))
                   {{ $emails->links() }}
                     @endif
                 </li>
-                  @if($search)
+                  @if(isset($search))
               <li class="list->inline-item">
 {{--                  {{ dd($search) }}--}}
                 @if($search['mailDate'] != null )
