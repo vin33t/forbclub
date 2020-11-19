@@ -17,7 +17,7 @@ class EmailController extends Controller
 {
   public function emailsSent()
   {
-    $emails = EmailSent::orderByDesc('created_at')->paginate(10);
+    $emails = EmailSent::orderByDesc('created_at')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -27,11 +27,13 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.sent', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
-  } public function emails()
+  }
+
+  public function emails()
   {
-    $emails = Emails::orderByDesc('date')->paginate(10);
+    $emails = Emails::orderByDesc('date')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -41,12 +43,13 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
   }
+
   public function emailsAccounts()
   {
-    $emails = Emails::where('account','accounts')->orderByDesc('date')->paginate(10);
+    $emails = Emails::where('account', 'accounts')->orderByDesc('date')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -56,12 +59,13 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
   }
+
   public function emailsMrd()
   {
-    $emails = Emails::where('account','mrd')->orderByDesc('date')->paginate(10);
+    $emails = Emails::where('account', 'mrd')->orderByDesc('date')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -71,13 +75,13 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
   }
 
   public function emailsNoreply()
   {
-    $emails = Emails::where('account','noreply')->orderByDesc('date')->paginate(10);
+    $emails = Emails::where('account', 'noreply')->orderByDesc('date')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -87,12 +91,13 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
   }
+
   public function emailsBookings()
   {
-    $emails = Emails::where('account','bookings')->orderByDesc('date')->paginate(10);
+    $emails = Emails::where('account', 'bookings')->orderByDesc('date')->paginate(20);
 //    return $emails;
     {
       $pageConfigs = [
@@ -102,49 +107,51 @@ class EmailController extends Controller
       ];
 
       return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails',$emails);
+        ->with('emails', $emails);
     }
   }
-  public function emailsContent($id){
+
+  public function emailsContent($id)
+  {
     $email = Emails::find($id);
-    if($email->read == 0){
+    if ($email->read == 0) {
       $email->read = 1;
       $email->save();
     }
     $data = [
-      'name' => unserialize($email->sender)[0]->personal == false ?  unserialize($email->sender)[0]->mailbox : strtoupper(unserialize($email->sender)[0]->personal),
+      'name' => unserialize($email->sender)[0]->personal == false ? unserialize($email->sender)[0]->mailbox : strtoupper(unserialize($email->sender)[0]->personal),
       'subject' => $email->subject,
       'from' => $email->from,
-      'avatar'=> '<img src="'. avatar(unserialize($email->sender)[0]->personal == false ?  unserialize($email->sender)[0]->mailbox : strtoupper(unserialize($email->sender)[0]->personal)).'" alt="avtar img holder" width="61" height="61">',
-      'to'=>$email->to,
-      'body'=>$email->html_body,
-      'client'=>'<a href="'. route('view.client',['slug'=>$email->client ? $email->client->slug : 'na']).'"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
-      'date'=>Carbon::parse($email->date)->format('F d,Y'),
-      'time'=>Carbon::parse($email->time)->format('h:i A'),
+      'avatar' => '<img src="' . avatar(unserialize($email->sender)[0]->personal == false ? unserialize($email->sender)[0]->mailbox : strtoupper(unserialize($email->sender)[0]->personal)) . '" alt="avtar img holder" width="61" height="61">',
+      'to' => $email->to,
+      'body' => $email->html_body,
+      'client' => '<a href="' . route('view.client', ['slug' => $email->client ? $email->client->slug : 'na']) . '"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
+      'date' => Carbon::parse($email->date)->format('F d,Y'),
+      'time' => Carbon::parse($email->time)->format('h:i A'),
     ];
     return $data;
   }
 
-  public function emailsSentContent($id){
+  public function emailsSentContent($id)
+  {
     $email = EmailSent::find($id);
-    if($email->unread == 1){
+    if ($email->unread == 1) {
       $email->unread = 0;
       $email->save();
     }
     $data = [
-      'name' => str_replace(['[',']'],'',$email->to),
+      'name' => str_replace(['[', ']'], '', $email->to),
       'subject' => $email->subject,
       'from' => $email->from,
-      'avatar'=> '<img src="'. avatar(str_replace(['[',']'],'',$email->to)).'" alt="avtar img holder" width="61" height="61">',
-      'to'=>$email->to,
-      'body'=>$email->mail,
-      'client'=>'<a href="'. route('view.client',['slug'=>$email->client ? $email->client->slug : 'na']).'"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
-      'date'=>Carbon::parse($email->created_at)->format('F d,Y'),
-      'time'=>Carbon::parse($email->created_at)->format('h:i A'),
+      'avatar' => '<img src="' . avatar(str_replace(['[', ']'], '', $email->to)) . '" alt="avtar img holder" width="61" height="61">',
+      'to' => $email->to,
+      'body' => $email->mail,
+      'client' => '<a href="' . route('view.client', ['slug' => $email->client ? $email->client->slug : 'na']) . '"><span class="action-icon profile-card-1"><i class="feather icon-user font-medium-5 "></i></span></a>',
+      'date' => Carbon::parse($email->created_at)->format('F d,Y'),
+      'time' => Carbon::parse($email->created_at)->format('h:i A'),
     ];
     return $data;
   }
-
 
 
   public function fetchMails($account)
@@ -207,6 +214,46 @@ class EmailController extends Controller
     }
   }
 
+
+  public function searchMail(Request $request)
+  {
+
+
+    if ($request->mailDate) {
+      $emails = Emails::where('date', $request->mailDate);
+      if ($request->mailSubject) {
+        $emails->where('subject', 'like', '%' . $request->mailSubject . '%');
+      }
+      if ($request->mailFrom) {
+        $emails->where('from', 'like', '%' . $request->mailFrom . '%');
+      }
+    } elseif($request->mailSubject) {
+        $emails = Emails::where('subject', 'like', '%' . $request->mailSubject . '%');
+        if ($request->mailFrom) {
+          $emails->where('from', 'like', '%' . $request->mailFrom . '%');
+        }
+    }
+    elseif ($request->mailFrom) {
+      $emails = Emails::where('from', 'like', '%' . $request->mailFrom . '%');
+    }
+//    if ($request->mailDate) {
+//      $emails->where('date', $request->mailDate);
+//    }
+//    if($request->mailContains){
+//      $emails->where('text_body','like','%'.$request->mailContains.'%');
+//    }
+//    return $emails;
+    $emails = $emails->get();
+    $pageConfigs = [
+      'pageHeader' => false,
+      'contentLayout' => "content-left-sidebar",
+      'bodyClass' => 'email-application',
+    ];
+
+    return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
+      ->with('emails', $emails)
+      ->with('search', $request->all());
+  }
 
 
 }

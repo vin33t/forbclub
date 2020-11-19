@@ -14,8 +14,10 @@
   <link rel="stylesheet" href="{{ asset(mix('css/pages/app-email.css')) }}">
 @endsection
 <!-- Sidebar Area -->
+
 @include('client.emails.emailSidebar')
 @section('content')
+
   <div class="app-content-overlay"></div>
   <div class="email-app-area">
     <!-- Email list Area -->
@@ -45,8 +47,18 @@
           <div class="action-right">
             <ul class="list-inline m-0">
                 <li class="list->inline-item">
+                  @if(!$search)
                   {{ $emails->links() }}
+                    @endif
                 </li>
+                  @if($search)
+              <li class="list->inline-item">
+{{--                  {{ dd($search) }}--}}
+                @if($search['mailDate'] != null )
+                  Found {{ $emails->count() }} Received on {{ $search['mailDate'] }}
+                  @endif
+                </li>
+                    @endif
 {{--              <li class="list-inline-item">--}}
 {{--                <div class="dropdown">--}}
 {{--                  <a href="#" class="dropdown-toggle" id="folder" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
@@ -79,7 +91,7 @@
         </div>
         <div class="email-user-list list-group">
           <ul class="users-list-wrapper media-list">
-            @foreach($emails as $email)
+            @forelse($emails as $email)
               <li class="media @if($email->read) mail-read @endif" onclick="getMailContent('{{ $email->id }}')">
               <div class="media-left pr-50">
                 <div class="avatar">
@@ -121,7 +133,9 @@
                 </div>
               </div>
             </li>
-            @endforeach
+            @empty
+
+            @endforelse
           </ul>
           <div class="no-results">
             <h5>No Items Found</h5>
@@ -178,7 +192,7 @@
         <div class="row">
           <div class="col-12">
             <div class="email-label ml-2 my-2 pl-1">
-              <span class="mr-1 bullet bullet-primary bullet-sm"></span><small class="mail-label">{{ strtoupper($email->account) }}</small>
+              <span class="mr-1 bullet bullet-primary bullet-sm"></span><small class="mail-label"></small>
             </div>
           </div>
         </div>

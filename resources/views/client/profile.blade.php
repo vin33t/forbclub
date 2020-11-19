@@ -124,6 +124,9 @@
       <div class="col-md-4">
         <div class="alert-danger">
         Refund Request Added On: {{ $client->refundRequest->refund_date }}
+          @if($client->refundRequest->approval_accounts_by)
+          (Approved By Accounts | Amount: {{ $client->refundRequest->approval_accounts_amount }} | Remarks: {{ $client->refundRequest->approval_accounts_remarks }})
+            @endif
 {{--        {{ $client->refundRequest }}--}}
         </div>
       </div>

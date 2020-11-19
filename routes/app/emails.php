@@ -10,4 +10,8 @@
   Route::get('/sent/{id}','Client\EmailController@emailsSentContent')->name('email.sent.content');
 
 
+
+  Route::post('/search','Client\EmailController@searchMail')->name('email.search');
+
+
 ?>

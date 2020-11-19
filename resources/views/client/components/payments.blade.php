@@ -50,6 +50,28 @@
             Downpayment: {{ $client->downPayment }} <br>
             Total Payment Done(Including DP): {{ $totalTransactions->pluck('amount')->sum() }} <br>
             Pending Payment: {{ $client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum()  }}
+            <br>
+            @if($user->employee)
+              @if($client->refundRequest->approval_accounts_by)
+              Refunded Amount: {{ $client->refundRequest->approval_accounts_amount }}
+              @endif
+            <br>
+            <hr>
+            <strong>
+              @if($client->refundRequest)
+                    Refund Request Added On: {{ $client->refundRequest->refund_date }}
+                  @if($client->refundRequest->approved_rejected == 2)
+                    (Denied By Manager | Remarks: {{ $client->refundRequest->approved_rejected_remarks }})
+                    @elseif($client->refundRequest->accepted_denied == 2)
+                    (Denied By MRD | Remarks: {{ $client->refundRequest->accepted_denied_remarks }})
+                    @elseif($client->refundRequest->approval_accounts_by)
+                      (Approved By Accounts | Amount: {{ $client->refundRequest->approval_accounts_amount }} | Remarks: {{ $client->refundRequest->approval_accounts_remarks }})
+                    @endif
+                    {{--        {{ $client->refundRequest }}--}}
+              @endif
+
+              @endif
+            </strong>
           </div>
         </div>
       </div>

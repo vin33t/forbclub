@@ -1,5 +1,6 @@
 
 @section('content-sidebar')
+  @include('client.emails.search')
   <div class="sidebar-content email-app-sidebar d-flex">
         <span class="sidebar-close-icon">
             <i class="feather icon-x"></i>
@@ -29,6 +30,8 @@
           </a>
           <a href="{{ route('emails.sent') }}" class="list-group-item list-group-item-action border-0 @if(Route::currentRouteName() == 'emails.sent') active @endif"><i
               class="font-medium-5 fa fa-paper-plane-o mr-50"></i> Sent</a>
+          <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0" data-toggle="modal" data-target="#searchMail"><i
+              class="font-medium-5 fa fa-search mr-50"></i> Search</a>
 {{--          <a href="#" class="list-group-item list-group-item-action border-0"><i--}}
 {{--              class="font-medium-5 feather icon-edit-2 mr-50"></i> Draft <span--}}
 {{--              class="badge badge-warning badge-pill float-right">4</span> </a>--}}
