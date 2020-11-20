@@ -87,6 +87,7 @@
     <div class="row">
       @if(request()->type == 'clients')
           @foreach($status as $clientStatus)
+          <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
             <div class="col-lg-3 col-md-6 col-12">
               <div class="card">
                 <div class="card-header d-flex flex-column align-items-start pb-0">
@@ -95,15 +96,16 @@
                       <i class="feather icon-user text-danger font-medium-5"></i>
                     </div>
                   </div>
-                  <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
+
                     <h2
                       class="text-bold-700 mt-1 mb-25">{{ \App\Client\Package\SoldPackages::where('status',$clientStatus)->count() }}</h2>
                     <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
-                  </a>
                 </div>
               </div>
             </div>
-          @endforeach
+          </a>
+
+        @endforeach
         @endif
     </div>
   </section>

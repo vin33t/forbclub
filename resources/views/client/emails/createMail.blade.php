@@ -46,6 +46,7 @@
           </select>
         </div>
           <div class="col-md-12">
+            <br>
             <div id="email-container">
           <div class="editor" data-placeholder="Message">
           </div>
@@ -88,6 +89,11 @@
 
     $(function () {
       "use strict";
+      const fontSizeArr = ['8px','9px','10px','12px','14px','16px','20px','24px','32px','42px','54px','68px','84px','98px'];
+
+      var Size = Quill.import('attributors/style/size');
+      Size.whitelist = fontSizeArr;
+      Quill.register(Size, true);
 
       var Font = Quill.import('formats/font');
       Font.whitelist = ['sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'];
@@ -115,7 +121,8 @@
             }],
             [{
               'font': []
-            }]
+            }],
+            [{ 'size': fontSizeArr }]
           ],
         },
         placeholder: 'Message',
