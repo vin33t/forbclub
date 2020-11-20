@@ -25,6 +25,8 @@
                   <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Maf No</th>
+                    <th>FCLP Id</th>
                     <th>Enrollment Date</th>
                     <th>Valid Till</th>
                     <th>Phone</th>
@@ -38,6 +40,8 @@
                     <tr>
                       <td>{{ $loop->index + 1 }}</td>
                       <td><a href="{{ route('view.client',['slug'=>$package->client->slug]) }}" target="_blank">{{ $package->client->name }}</a></td>
+                      <td>{{ $package->mafNo }}</td>
+                      <td>{{ $package->fclpId }}</td>
                       <td>{{ $package->enrollmentDate }}</td>
                       <td>{{  \Carbon\Carbon::parse($package->enrollmentDate)->addYears($package->productTenure)->format('d M, Y') }}</td>
                       <td>{{ $package->client->phone }}</td>
@@ -51,6 +55,8 @@
                   <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Maf No</th>
+                    <th>FCLP Id</th>
                     <th>Enrollment Date</th>
                     <th>Valid Till</th>
                     <th>Phone</th>

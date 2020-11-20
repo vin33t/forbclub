@@ -87,8 +87,9 @@
     <div class="row">
       @if(request()->type == 'clients')
           @foreach($status as $clientStatus)
-          <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
             <div class="col-lg-3 col-md-6 col-12">
+              <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
+
               <div class="card">
                 <div class="card-header d-flex flex-column align-items-start pb-0">
                   <div class="avatar bg-rgba-warning p-50 m-0">
@@ -102,8 +103,8 @@
                     <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
                 </div>
               </div>
+              </a>
             </div>
-          </a>
 
         @endforeach
         @endif
