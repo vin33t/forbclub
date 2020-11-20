@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/editors/quill/monokai-sublime.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/editors/quill/quill.snow.css')) }}">
 @endsection
-
+@section('page-style')
+  <!-- Page css files -->
+  <link rel="stylesheet" href="{{ asset(mix('css/pages/app-email.css')) }}">
+@endsection
 @section('content')
 
   <!-- Zero configuration table -->
@@ -151,12 +154,15 @@
         theme: 'snow'
       });
 
-      var editors = [emailEditor];
+      // var editors = [emailEditor];
 
     });
   </script>
   <script>
     function viewTemplate(id){
+      $('.activeTemplateName').html('')
+      $('.activeTemplateSubject').html('')
+      $('.activeTemplateContent').html('')
       $('#viewTemplate').modal()
       axios.get('/email/templates/view/'+id)
       .then((response)=>{
@@ -165,5 +171,10 @@
         $('.activeTemplateContent').html(response.data.mail_template)
       })
     }
+    $('#createNewTemplate').submit(function() {
+      // var html = editor.root.innerHTML;
+      $('#templateContent').html($('.ql-editor').html());
+      // return false;
+    });
   </script>
 @endsection

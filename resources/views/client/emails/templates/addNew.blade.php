@@ -7,6 +7,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="{{ route('email.templates.create') }}" method="POST" id="createNewTemplate">
+        @csrf
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
@@ -14,12 +16,12 @@
             <input type="text" name="templateName" class="form-control" required>
           </div>
           <div class="col-md-12">
-            <hr>
-
             <label for="templateSubject">Template Subject</label>
             <input type="text" name="templateSubject" class="form-control" required>
           </div>
           <div class="col-md-12">
+            <hr>
+            <textarea name="templateContent" id="templateContent" style="display: none"></textarea>
             <div id="email-container">
               <div class="editor" data-placeholder="Message">
               </div>
@@ -29,8 +31,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Add</button>
       </div>
+      </form>
     </div>
   </div>
 </div>

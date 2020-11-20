@@ -265,9 +265,10 @@ class EmailController extends Controller
 
 
   public function storeTemplate(Request $request){
+//    return $request;
     $template = new Templates;
-    $template->email_template_name = $request->templateName;
-    $template->mail_template  =$request->templateData;
+    $template->mail_template_name = $request->templateName;
+    $template->mail_template  =$request->templateContent;
     $template->mail_subject = $request->templateSubject;
     $template->save();
     return redirect()->back();
