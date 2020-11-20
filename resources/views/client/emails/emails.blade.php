@@ -486,7 +486,10 @@
         var data = $('#emailTemplate').val();
       axios.get('/email/templates/view/'+data)
         .then((response)=>{
+          // console.log(response.data);
           $('.ql-editor').html(response.data.mail_template);
+          $('#emailSubject').html(response.data.mail_subject);
+
         });
     });
   </script>

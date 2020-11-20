@@ -278,4 +278,8 @@ class EmailController extends Controller
     return Templates::find($id);
   }
 
+  public function compose(){
+    return view('client.emails.createMail');
+  }
+
 }
