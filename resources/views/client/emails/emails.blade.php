@@ -481,6 +481,14 @@
       }
     });
 
+
+    $( "#emailTemplate" ).change(function() {
+        var data = $('#emailTemplate').val();
+      axios.get('/email/templates/view/'+data)
+        .then((response)=>{
+          $('.ql-editor').html(response.data.mail_template);
+        });
+    });
   </script>
 
 

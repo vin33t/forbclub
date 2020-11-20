@@ -84,6 +84,17 @@
             <input type="text" id="emailBCC" class="form-control" placeholder="BCC" name="fname-floating">
             <label for="emailBCC">BCC</label>
           </div>
+            <br>
+          <div class="form-label-group">
+            <input type="text" id="emailBCC" class="form-control" placeholder="BCC" name="fname-floating">
+            <select id="emailTemplate" class="form-control">
+              <option value="">--SELECT--</option>
+              @foreach(\App\Templates::all() as $template)
+              <option value="{{ $template->id }}" onclick="alert('{{$template->id}}')">{{ $template->mail_template_name }}</option>
+              @endforeach
+            </select>
+            <label for="emailTemplate">Template</label>
+          </div>
           <div id="email-container">
             <div class="editor" data-placeholder="Message">
             </div>
