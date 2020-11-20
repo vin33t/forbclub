@@ -10,6 +10,8 @@
   Route::get('/sent/{id}','Client\EmailController@emailsSentContent')->name('email.sent.content');
 
   Route::get('/templates/view','Client\EmailController@templates')->name('email.templates');
+  Route::get('/templates/create','Client\EmailController@storeTemplate')->name('email.templates.create');
+  Route::get('/templates/view/{id}','Client\EmailController@viewTemplate')->name('email.templates.view');
 
 
 

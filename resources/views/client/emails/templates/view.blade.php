@@ -34,7 +34,7 @@
                   </thead>
                   <tbody>
                   @foreach($templates as $template)
-                    <tr>
+                    <tr onclick="viewTemplate('{{ $template->id }}')">
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $template->mail_subject }}</td>
                       <td>{{ $template->mail_template_name }}</td>
@@ -56,6 +56,35 @@
       </div>
     </div>
   </section>
+  <div class="modal fade" id="viewTemplate" tabindex="-1" role="dialog" aria-labelledby="viewTemplate" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Template</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              Name: <span class="activeTemplateName"></span>
+            </div>
+            <div class="col-md-12">
+              Subject: <span class="activeTemplateSubject"></span>
+            </div>
+            <div class="col-md-12">
+              <span class="activeTemplateContent"></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   @include('client.emails.templates.addNew')
 @endsection
 
@@ -119,5 +148,16 @@
       var editors = [emailEditor];
 
     });
+  </script>
+  <script>
+    function viewTemplate(id){
+      $('#viewTemplate').modal()
+      axios.get('/email/templates/view/'+id)
+      .then((response)=>{
+        $('.activeTemplateName').html(response.data.mail_template_name)
+        $('.activeTemplateSubject').html(response.data.mail_subject)
+        $('.activeTemplateContent').html(response.data.mail_template)
+      })
+    }
   </script>
 @endsection

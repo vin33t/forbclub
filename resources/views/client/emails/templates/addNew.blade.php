@@ -14,6 +14,8 @@
             <input type="text" name="templateName" class="form-control" required>
           </div>
           <div class="col-md-12">
+            <hr>
+
             <label for="templateSubject">Template Subject</label>
             <input type="text" name="templateSubject" class="form-control" required>
           </div>

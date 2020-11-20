@@ -273,4 +273,8 @@ class EmailController extends Controller
     return redirect()->back();
   }
 
+  public function viewTemplate($id){
+    return Templates::find($id);
+  }
+
 }

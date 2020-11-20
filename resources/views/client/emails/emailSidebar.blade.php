@@ -9,8 +9,7 @@
       <div class="form-group form-group-compose text-center compose-btn">
         <button type="button" class="btn btn-primary btn-block my-2" data-toggle="modal"
                 data-target="#composeForm"><i class="feather icon-edit"></i> Compose</button>
-      </div>
-      <div class="sidebar-menu-list">
+      </div>      <div class="sidebar-menu-list">
         <div class="list-group list-group-messages font-medium-1">
           <a href="{{ route('emails') }}" class="list-group-item list-group-item-action border-0 pt-0 @if(Route::currentRouteName() == 'emails') active @endif">
             <i class="font-medium-5 feather icon-mail mr-50"></i> Inbox
@@ -60,7 +59,7 @@
   <!-- Modal -->
   <div class="modal fade text-left" id="composeForm" tabindex="-1" role="dialog" aria-labelledby="emailCompose"
        aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title text-text-bold-600" id="emailCompose">New Message</h3>
