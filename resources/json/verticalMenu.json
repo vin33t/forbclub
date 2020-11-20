@@ -21,6 +21,13 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },{
+      "url": "email/templates/view",
+      "name": "Email Templates",
+      "icon": "feather icon-mail",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },
 
     {

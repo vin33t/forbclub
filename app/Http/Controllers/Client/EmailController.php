@@ -7,6 +7,7 @@ use App\EmailSent;
 use App\Http\Controllers\Controller;
 use App\Client\Client;
 use App\EmailAttachments;
+use App\Templates;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -255,5 +256,21 @@ class EmailController extends Controller
       ->with('search', $request->all());
   }
 
+
+  public function templates(){
+    $templates = Templates::all();
+      return view('client.emails.templates.view')
+        ->with('templates',$templates);
+  }
+
+
+  public function storeTemplate(Request $request){
+    $template = new Templates;
+    $template->email_template_name = $request->templateName;
+    $template->mail_template  =$request->templateData;
+    $template->mail_subject = $request->templateSubject;
+    $template->save();
+    return redirect()->back();
+  }
 
 }

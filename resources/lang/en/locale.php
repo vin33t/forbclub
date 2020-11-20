@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "Email Templates" => "Email Templates",
     "Dashboard" => "Dashboard",
     "Client" => "Client",
     "Create Client" => "Create Client",

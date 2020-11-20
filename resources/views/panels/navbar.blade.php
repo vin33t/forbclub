@@ -74,7 +74,7 @@
 
                   <div class="search-input" id="navSearchClientDiv">
                     <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
-                    <input class="input" type="text" placeholder="Search Client...." id="navSearchClientInput"
+                    <input class="input" type="text" placeholder="" id="navSearchClientInput"
                            tabindex="-1"
                            data-search="laravel-search-list"/>
                     <div class="search-input-close"><i class="feather icon-x"></i></div>

@@ -9,6 +9,8 @@
   Route::get('/{id}','Client\EmailController@emailsContent')->name('email.content');
   Route::get('/sent/{id}','Client\EmailController@emailsSentContent')->name('email.sent.content');
 
+  Route::get('/templates/view','Client\EmailController@templates')->name('email.templates');
+
 
 
   Route::post('/search','Client\EmailController@searchMail')->name('email.search');
