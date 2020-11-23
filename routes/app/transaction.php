@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/import-history/{importId}/{bank}', 'Client\TransactionController@importHistoryDetails')->name('display.transaction.nach.import.history.details');
 
 
+    Route::post('/import-delete/{importId}/{bank}', 'Client\TransactionController@importHistoryDelete');
+
+
     Route::get('/downlaod/axis-mis', 'Client\TransactionController@downloadAxisMis')->name('download.axis.mis');
     Route::post('/downlaod/axis-mis-file', 'Client\TransactionController@downloadAxisMisFile')->name('download.axis.mis.file');
 

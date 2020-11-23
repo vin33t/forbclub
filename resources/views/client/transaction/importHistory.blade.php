@@ -32,6 +32,7 @@
                     <th>Failure Amount</th>
                     <th>Transactions</th>
                     <th>Failed</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -46,6 +47,11 @@
                       <td>{{ $meta->failure_amount }}</td>
                       <td>{{ $meta->transactions }}</td>
                       <td>{{ $meta->failure }}</td>
+                      <td>
+                        <button class="btn btn-danger btn-sm" onclick=deleteAxisNach('{{ $meta->id }}','axis') >
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -59,6 +65,7 @@
                     <th>Failure Amount</th>
                     <th>Transactions</th>
                     <th>Failed</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -144,4 +151,25 @@
 @section('page-script')
   {{-- Page js files --}}
   <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
+  <script>
+    function deleteAxisNach(id, bank){
+      var confirmation = prompt("Please Type \"CONFIRM\" to delete this File");
+      if (confirmation != null) {
+        if(confirmation === 'CONFIRM'){
+          axios.post('/transaction/import-delete/'+id+'/'+bank)
+          .then((response=>{
+            if(response.data === 200){
+              alert('Transaction Deleted')
+              window.location.reload();
+            } else {
+              alert('OOPS!! Unable to Delete,. Something went wrong.')
+            }
+          }))
+        }
+        else{
+          alert('Incorrect Phrase. Try Again!')
+        }
+      }
+    }
+  </script>
 @endsection

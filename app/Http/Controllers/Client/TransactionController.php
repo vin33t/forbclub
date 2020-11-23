@@ -920,11 +920,29 @@ class TransactionController extends Controller
     }
     if ($request->asfWaveOff) {
       $asf->waved_off = 1;
-    }else {
+    } else {
       $asf->waved_off = 0;
     }
     $asf->save();
     return \redirect()->back();
+  }
+
+
+  public function importHistoryDelete($importId, $bank)
+  {
+//      return $bank;
+    if ($bank == 'axis') {
+      try {
+        $meta = AxisNachPaymentMeta::find($importId);
+        foreach ($meta->payments as $payment) {
+          $payment->delete();
+          $meta->delete();
+        }
+          return '200';
+      } catch (\Exception $e){
+        return '500';
+      }
+    }
   }
 
 }
