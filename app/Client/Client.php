@@ -20,6 +20,15 @@ class Client extends Model
     return $this->Packages->first();
   }
 
+  public function getAddOnPaymentAttribute()
+  {
+    $cardPayments = $this->CardPayments->where('isAddon',1)->pluck('amount')->sum();
+    $cashPayments = $this->CashPayments->where('isAddon',1)->pluck('amount')->sum();
+    $chequePayments = $this->ChequePayments->where('isAddon',1)->pluck('amount')->sum();
+    $otherPayments = $this->OtherPayments->where('isAddon',1)->pluck('amount')->sum();
+    $payments = $cardPayments + $cashPayments + $chequePayments + $otherPayments;
+    return $payments;
+  }
   public function getDownPaymentAttribute()
   {
     $cardPayments = $this->CardPayments->where('isDp',1)->pluck('amount')->sum();
@@ -227,6 +236,10 @@ class Client extends Model
 
   public function emails(){
     return $this->hasMany('App\Emails');
+  }
+
+  public function AsfPayments(){
+    return $this->hasMany('App\AsfPayments','client_id');
   }
 
 }

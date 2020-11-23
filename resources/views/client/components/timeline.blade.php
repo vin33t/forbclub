@@ -1,7 +1,6 @@
 <div class="col-lg-6 col-12">
   <div class="row">
 
-
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
@@ -231,6 +230,10 @@
                 <input type="hidden" name="id" value="{{ $client->id }}">
                 <label for="followUpDate">Follow Up Date</label>
                 <input type="date" name="followUpDate" class="form-control" placeholder="Follow Up Date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+              </div>
+              <div class="col-md-12">
+                <label for="followUpReminder">Follow Up Reminder(Optional)</label>
+                <input type="date" name="followUpReminder" class="form-control" placeholder="Follow Up Reminder" >
               </div>
               <div class="col-md-12">
 {{--                <label for="followUpType">Added By</label>--}}

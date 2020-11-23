@@ -17,7 +17,7 @@ class CreateFollowUpsTable extends Migration
             $table->id();
             $table->integer('client_id');
             $table->date('follow_up_on');
-            $table->dateTime('reminder')->nullable();
+            $table->date('reminder')->nullable();
             $table->string('type')->nullable();
             $table->longText('subject')->nullable();
             $table->longText('details')->nullable();

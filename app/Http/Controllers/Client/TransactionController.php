@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\AsfPayments;
 use App\Client\Client;
 use App\Client\Mis\AxisMis;
 use App\Client\Package\SoldPackages;
@@ -319,26 +320,25 @@ class TransactionController extends Controller
     $meta->failure_amount = 0;
     $meta->upload_date = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
     $meta->save();
-    foreach ($data as $tran){
+    foreach ($data as $tran) {
 
-      $prefix = array("F","T","K","-","f","t","k","l","p","L","P","c","C","@"," ");
+      $prefix = array("F", "T", "K", "-", "f", "t", "k", "l", "p", "L", "P", "c", "C", "@", " ");
 //        dd($row);
-      $id =  $tran['Transaction ID/REF'];
+      $id = $tran['Transaction ID/REF'];
       $onlyId = str_replace($prefix, "", $id);
-      if($onlyId == 552286){
-        $package =  SoldPackages::where('fclpId','552226')->get();
+      if ($onlyId == 552286) {
+        $package = SoldPackages::where('fclpId', '552226')->get();
 //        $package = Client::query()->where('application_no','552226')->get();
-      }
-      else{
-        $package =  SoldPackages::where('fclpId',$onlyId)->get();
+      } else {
+        $package = SoldPackages::where('fclpId', $onlyId)->get();
 //        $package = Client::query()->where('application_no', 'like', '%'.$onlyId.'%')->get();
       }
 //      return $tran;
       $transaction = new AxisNachPayment;
       Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
       $transaction->meta_id = $meta->id;
-      if($package){
-      $transaction->client_id = $package->first()->clientId;
+      if ($package) {
+        $transaction->client_id = $package->first()->clientId;
       }
       $transaction->corporate_user_no = $tran['Corporate User No'];
       $transaction->corporate_name = $tran['Corporate Name'];
@@ -352,10 +352,10 @@ class TransactionController extends Controller
       $transaction->status_description = $tran['Status'];
       $transaction->reason_description = $tran['Reason Description'];
       $transaction->save();
-      if($tran['Status'] == 'SUCCESS'){
+      if ($tran['Status'] == 'SUCCESS') {
         $success += 1;
         $success_amount += $tran['Amount (Rs)'];
-      } elseif($tran['Status'] == 'FAILURE'){
+      } elseif ($tran['Status'] == 'FAILURE') {
         $failure += 1;
         $failure_amount += $tran['Amount (Rs)'];
       }
@@ -484,21 +484,21 @@ class TransactionController extends Controller
 
   public function reimbursementIndex()
   {
-    if(\request()->month | \request()->year){
+    if (\request()->month | \request()->year) {
       $year = \request()->year;
       $month = \request()->month;
       $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
       $end = Carbon::createFromDate($year, $month)->endOfMonth();
-      $reimbursements = Reimbursement::whereBetween('expenseDate',[$start,$end])->get();
-    } else{
+      $reimbursements = Reimbursement::whereBetween('expenseDate', [$start, $end])->get();
+    } else {
       $reimbursements = \App\Reimbursement::all()->sortByDesc('expenseDate');
     }
-    return view('client.transaction.Reimbursement.index')->with('reimbursements',$reimbursements);
+    return view('client.transaction.Reimbursement.index')->with('reimbursements', $reimbursements);
   }
 
   public function reimbursementSummary()
   {
-    if(Reimbursement::all()->count()) {
+    if (Reimbursement::all()->count()) {
       $start = \Carbon\Carbon::parse(Reimbursement::all()->sortByDesc('expenseDate')->first()->expenseDate)->startOfYear();
       $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('expenseDate')->last()->expenseDate)->endOfYear();
 
@@ -517,10 +517,10 @@ class TransactionController extends Controller
         $end = Carbon::createFromDate($year, $month)->endOfMonth();
         $reimbursements = Reimbursement::whereBetween('expenseDate', [$start, $end])->get();
 
-          $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
-          $reimbursementClaimRejected = $reimbursements->where('rejected',1)->pluck('amount')->sum();
-          $reimbursementClaimProcessed = $reimbursements->where('reimbursed',1)->pluck('amount')->sum();
-          $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
+        $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
+        $reimbursementClaimRejected = $reimbursements->where('rejected', 1)->pluck('amount')->sum();
+        $reimbursementClaimProcessed = $reimbursements->where('reimbursed', 1)->pluck('amount')->sum();
+        $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
         $data = [
           'month' => Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1)->format('F Y'),
           'rawMonth' => $month,
@@ -535,7 +535,7 @@ class TransactionController extends Controller
     } else {
       $summary = collect();
     }
-    return view('client.transaction.Reimbursement.summary')->with('reimbursements',$summary);
+    return view('client.transaction.Reimbursement.summary')->with('reimbursements', $summary);
   }
 
   public function reimbursementAdd(Request $request)
@@ -582,7 +582,7 @@ class TransactionController extends Controller
     $reimbursement->expenseDate = $request->expenseDate;
     $reimbursement->expenseType = $request->expenseType;
     $reimbursement->amount = $request->amount;
-    if($request->expenseBill) {
+    if ($request->expenseBill) {
       $fileName = time() . '_' . $request->expenseBill->getClientOriginalName();
 //    $request->expenseBill->move(public_path('uploads'), $fileName);
       $request->expenseBill->move(storage_path('app/public/uploads'), $fileName);
@@ -604,6 +604,7 @@ class TransactionController extends Controller
     $reimbursement->save();
     return redirect()->back();
   }
+
   public function reject(Request $request)
   {
     $reimbursement = Reimbursement::find($request->id);
@@ -615,23 +616,23 @@ class TransactionController extends Controller
 
   public function venueExpense()
   {
-    if(\request()->month | \request()->year){
+    if (\request()->month | \request()->year) {
       $year = \request()->year;
       $month = \request()->month;
       $start = Carbon::createFromDate($year, $month)->startOfMonth()->addDays(1);
       $end = Carbon::createFromDate($year, $month)->endOfMonth();
-      $venues = Venue::whereBetween('venue_date',[$start,$end])->get();
-    } else{
+      $venues = Venue::whereBetween('venue_date', [$start, $end])->get();
+    } else {
       $venues = \App\Venue::all()->sortByDesc('venue_date');
     }
-    return view('client.transaction.venueexpense.index')->with('venues',$venues);
+    return view('client.transaction.venueexpense.index')->with('venues', $venues);
   }
 
 
   public function venueExpenseSummary()
   {
 
-    if(Venue::all()->count()) {
+    if (Venue::all()->count()) {
       $start = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->first()->venue_date)->startOfYear();
       $end = \Carbon\Carbon::parse(Venue::all()->sortByDesc('venue_date')->last()->venue_date)->endOfYear();
 
@@ -677,7 +678,7 @@ class TransactionController extends Controller
     } else {
       $summary = collect();
     }
-    return view('client.transaction.venueexpense.summary')->with('venues',$summary);
+    return view('client.transaction.venueexpense.summary')->with('venues', $summary);
   }
 
   public function venueAdd(Request $request)
@@ -707,6 +708,7 @@ class TransactionController extends Controller
     $expense->save();
     return \redirect()->back();
   }
+
   public function venueExpenseEdit(Request $request)
   {
     $expense = VenueExpenses::find($request->id);
@@ -865,7 +867,8 @@ class TransactionController extends Controller
 
   }
 
-  public function venueCancel(Request $request){
+  public function venueCancel(Request $request)
+  {
     $venue = Venue::find($request->id);
     $venue->cancelled = 1;
     $venue->cancellationReason = $request->remarks;
@@ -874,7 +877,8 @@ class TransactionController extends Controller
     return \redirect()->back();
   }
 
-  public function venueEdit(Request $request){
+  public function venueEdit(Request $request)
+  {
     $venue = Venue::find($request->id);
     $venue->venue_name = $request->Venue_Name;
     $venue->venue_location = $request->venueLocation;
@@ -883,7 +887,46 @@ class TransactionController extends Controller
     return \redirect()->back();
   }
 
+  public function createAsf(Request $request, $clientId)
+  {
+    $asf = new AsfPayments;
+    $asf->client_id = $clientId;
+    if ($request->asfPaymentDate) {
+      $asf->paymentDate = $request->asfPaymentDate;
+    }
+    $asf->amount = $request->asfAmount;
+    $asf->year = $request->asfYear;
+    if ($request->asfRemarks) {
+      $asf->remarks = $request->asfRemarks;
+    }
+    if ($request->asfWaveOff) {
+      $asf->waved_off = 1;
+    }
+    $asf->save();
+    return \redirect()->back();
+  }
 
+  public function editAsf(Request $request, $clientId)
+  {
+//  return $request;
+    $asf = AsfPayments::find($request->id);
+//    $asf->client_id = $clientId;
+    if ($request->asfPaymentDate) {
+      $asf->paymentDate = $request->asfPaymentDate;
+    }
+    $asf->amount = $request->asfAmount;
+    $asf->year = $request->asfYear;
+    if ($request->asfRemarks) {
+      $asf->remarks = $request->asfRemarks;
+    }
+    if ($request->asfWaveOff) {
+      $asf->waved_off = 1;
+    }else {
+      $asf->waved_off = 0;
+    }
+    $asf->save();
+    return \redirect()->back();
+  }
 
 }
 

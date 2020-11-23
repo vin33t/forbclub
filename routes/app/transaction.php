@@ -10,6 +10,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/cash/{clientId}', 'Client\TransactionController@createCash')->name('create.transaction.cash');
     Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
     Route::post('/other/{clientId}', 'Client\TransactionController@createOther')->name('create.transaction.other');
+    Route::post('/asf/{clientId}', 'Client\TransactionController@createAsf')->name('create.transaction.asf');
   });
 
 
@@ -18,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cheque/{transactionId}', 'Client\TransactionController@editCheque')->name('edit.transaction.cheque');
     Route::post('/cash/{transactionId}', 'Client\TransactionController@editCash')->name('edit.transaction.cash');
     Route::post('/others/{transactionId}', 'Client\TransactionController@editOthers')->name('edit.transaction.others');
+    Route::post('/asf/{clientId}', 'Client\TransactionController@editAsf')->name('edit.transaction.asf');
+
 //    Route::post('/cash/{clientId}', 'Client\TransactionController@createCash')->name('create.transaction.cash');
 //    Route::post('/cheque/{clientId}', 'Client\TransactionController@createCheque')->name('create.transaction.cheque');
   });
