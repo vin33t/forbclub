@@ -930,7 +930,6 @@ class TransactionController extends Controller
 
   public function importHistoryDelete($importId, $bank)
   {
-//      return $bank;
     if ($bank == 'axis') {
       try {
         $meta = AxisNachPaymentMeta::find($importId);
