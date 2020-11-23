@@ -303,8 +303,8 @@ class TransactionController extends Controller
 
   public function uploadTransactionFile(Request $request)
   {
-    $data = (new FastExcel)->import($request->transactionFile);
 
+    $data = (new FastExcel)->import($request->transactionFile);
     $success = 0;
     $transactions_count = 0;
     $success_amount = 0;
@@ -335,7 +335,6 @@ class TransactionController extends Controller
       }
 //      return $tran;
       $transaction = new AxisNachPayment;
-      Carbon::parse($tran['Date of Txn'])->format('Y-m-d');
       $transaction->meta_id = $meta->id;
       if ($package) {
         $transaction->client_id = $package->first()->clientId;
