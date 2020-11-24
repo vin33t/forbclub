@@ -15,7 +15,6 @@ class AddSoftdeletesToAxisPayments extends Migration
     {
         Schema::table('axis_nach_payments', function (Blueprint $table) {
           $table->softDeletes();
-
         });
     }
 

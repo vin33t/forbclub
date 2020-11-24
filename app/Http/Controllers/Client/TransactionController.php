@@ -15,6 +15,7 @@ use App\Client\Transaction\ChequePayment;
 use App\Client\Transaction\OtherPayment;
 use App\Client\Transaction\TransactionMonth;
 use App\Client\Transaction\YesNachPayment;
+use App\Client\Transaction\YesNachPaymentMeta;
 use App\DisableNach;
 use App\Http\Controllers\Controller;
 use App\PDC;
@@ -940,6 +941,29 @@ class TransactionController extends Controller
           return '200';
       } catch (\Exception $e){
         return '500';
+      }
+    }
+  }
+
+  public function importHistoryDownload($importId, $bank)
+  {
+    if ($bank == 'axis') {
+      try {
+        $meta = AxisNachPaymentMeta::find($importId);
+        $file_name = $meta->file_name;
+        $transactions = $meta->payments;
+        return (new FastExcel($transactions))->download($file_name . '.xlsx');
+      } catch (\Exception $e){
+        return \redirect()->back();
+      }
+    }    elseif ($bank == 'yes') {
+      try {
+        $meta = YesNachPaymentMeta::find($importId);
+        $file_name = $meta->file_name;
+        $transactions = $meta->payments;
+        return (new FastExcel($transactions))->download($file_name . '.xlsx');
+      } catch (\Exception $e){
+        return \redirect()->back();
       }
     }
   }

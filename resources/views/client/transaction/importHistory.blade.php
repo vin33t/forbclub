@@ -51,6 +51,11 @@
                         <button class="btn btn-danger btn-sm" onclick=deleteAxisNach('{{ $meta->id }}','axis') >
                           <i class="fa fa-trash"></i>
                         </button>
+                        <a href="{{ route('download.import.file',['importId'=>$meta->id,'bank'=>'axis']) }}">
+                        <button class="btn btn-success btn-sm" >
+                          <i class="fa fa-download"></i>
+                        </button>
+                        </a>
                       </td>
                     </tr>
                   @endforeach
@@ -97,6 +102,7 @@
                     <th>Failure Amount</th>
                     <th>Transactions</th>
                     <th>Failed</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -112,6 +118,13 @@
                       <td>{{ $meta->failure_amount }}</td>
                       <td>{{ $meta->transactions }}</td>
                       <td>{{ $meta->failure }}</td>
+                      <td>
+                        <a href="{{ route('download.import.file',['importId'=>$meta->id,'bank'=>'yes']) }}">
+                          <button class="btn btn-success btn-sm" >
+                            <i class="fa fa-download"></i>
+                          </button>
+                        </a>
+                      </td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -125,6 +138,7 @@
                     <th>Failure Amount</th>
                     <th>Transactions</th>
                     <th>Failed</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
