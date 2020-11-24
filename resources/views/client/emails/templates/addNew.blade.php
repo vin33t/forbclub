@@ -12,10 +12,6 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <label for="templateName">Template Name</label>
-            <input type="text" name="templateName" class="form-control" required>
-          </div>
-          <div class="col-md-12">
             <label for="templateSubject">Template Subject</label>
             <input type="text" name="templateSubject" class="form-control" required>
           </div>
