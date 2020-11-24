@@ -69,10 +69,10 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3" style="display:none;">
-                <label for="eligibility">Eligibile</label><br>
-                <input type="radio" name="eligible" value="1" id="">Yes
-                <input type="radio" name="eligible" value="0" id="">No
+              <div class="col-md-3" >
+                <label for="exception">Exception</label><br>
+                <input type="radio" name="exception" value="1" id="">Yes
+                <input type="radio" name="exception" value="0" checked id="">No
               </div>
               <div class="col-md-3">
                 <label for="breakfast">Breakfast</label><br>

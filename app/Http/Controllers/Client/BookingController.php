@@ -59,6 +59,7 @@ class BookingController extends Controller
       $b->totalNights = $request->total_nights;
       $b->holidayType = $request->holiday_type;
       $b->eligible = 1;
+      $b->exception = $request->exception;
       $b->breakfast = $request->breakfast;
       $b->remarks = $request->remarks;
       $b->addedBy =Auth::user()->id;
