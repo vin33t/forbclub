@@ -304,4 +304,10 @@ class EmailController extends Controller
     }
   }
 
+  public function deleteTemplate($id){
+      $template = Templates::find($id);
+      $template->delete();
+      return redirect()->back();
+  }
+
 }

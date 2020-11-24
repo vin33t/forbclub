@@ -37,12 +37,14 @@
                   </thead>
                   <tbody>
                   @foreach($templates as $template)
-                    <tr onclick="viewTemplate('{{ $template->id }}')">
-                      <td>{{ $loop->index + 1 }}</td>
-                      <td>{{ $template->mail_subject }}</td>
+                    <tr>
+                      <td  onclick="viewTemplate('{{ $template->id }}')">{{ $loop->index + 1 }}</td>
+                      <td  onclick="viewTemplate('{{ $template->id }}')">{{ $template->mail_subject }}</td>
                       <td>
                         <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        <a href="{{ route('email.templates.delete',['id'=>$template->id]) }}">
+                          <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        </a>
                       </td>
                     </tr>
                   @endforeach

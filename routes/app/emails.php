@@ -13,6 +13,7 @@
 
   Route::get('/templates/view','Client\EmailController@templates')->name('email.templates');
   Route::post('/templates/create','Client\EmailController@storeTemplate')->name('email.templates.create');
+  Route::get('/templates/delete/{id}','Client\EmailController@deleteTemplate')->name('email.templates.delete');
   Route::get('/templates/view/{id}','Client\EmailController@viewTemplate')->name('email.templates.view');
 
   Route::post('/search','Client\EmailController@searchMail')->name('email.search');
