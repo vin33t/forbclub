@@ -15,6 +15,8 @@ class CreateEkitLogsTable extends Migration
     {
         Schema::create('ekit_logs', function (Blueprint $table) {
             $table->id();
+          $table->integer('client_id');
+          $table->Date('sent_on');
             $table->timestamps();
         });
     }
