@@ -215,6 +215,20 @@
         </div>
       </div>
     </div>
+      @if($client->ekitLogs)
+    <div class="row">
+      <div class="col-md-12">
+        <strong>
+          Ekit Sent On:
+        </strong>
+        <ul>
+          @foreach($client->ekitLogs as $log)
+             <li>{{ \Carbon\Carbon::parse($log->create_at)->format('d-m-y h:i A') }}</li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+        @endif
   </div>
 
   @if($user->employee)

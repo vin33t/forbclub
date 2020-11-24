@@ -242,4 +242,8 @@ class Client extends Model
     return $this->hasMany('App\AsfPayments','client_id');
   }
 
+  public function ekitLogs(){
+    return $this->hasMany('App\EkitLog','client_id');
+  }
+
 }
