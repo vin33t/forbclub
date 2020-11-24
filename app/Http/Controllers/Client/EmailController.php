@@ -310,4 +310,9 @@ class EmailController extends Controller
       return redirect()->back();
   }
 
+  public function editTemplate($id){
+      $template = Templates::find($id);
+      return view('client.emails.templates.edit')->with('template',$template);
+  }
+
 }

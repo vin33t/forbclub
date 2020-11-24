@@ -17,83 +17,31 @@
 @section('content')
 
   <!-- Zero configuration table -->
-  <section id="basic-datatable">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">{{ $templates->count() }} Mail Templates <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewTemplate"><i class="fa fa-plus"></i> Add New</button></h4>
-          </div>
-          <div class="card-content">
-            <div class="card-body card-dashboard">
-              <div class="table-responsive">
-                <table class="table zero-configuration">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Subject</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  @foreach($templates as $template)
-                    <tr>
-                      <td  onclick="viewTemplate('{{ $template->id }}')">{{ $loop->index + 1 }}</td>
-                      <td  onclick="viewTemplate('{{ $template->id }}')">{{ $template->mail_subject }}</td>
-                      <td>
-                        <a href="{{ route('email.templates.edit',['id'=>$template->id]) }}">
-                           <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                        </a>
-                        <a href="{{ route('email.templates.delete',['id'=>$template->id]) }}">
-                          <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                        </a>
-                      </td>
-                    </tr>
-                  @endforeach
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>#</th>
-                    <th>Subject</th>
-                    <th>Action</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
+  <form action="{{ route('email.templates.create') }}" method="POST" id="createNewTemplate">
+    @csrf
+    <input type="hidden" name="id" value="{{ $template->id }}">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <label for="templateSubject">Template Subject</label>
+          <input type="text" name="templateSubject" class="form-control" required value="{{ $template->mail_subject }}">
+        </div>
+        <div class="col-md-12">
+          <hr>
+          <textarea name="templateContent" id="templateContent" style="display: none"></textarea>
+          <div id="email-container">
+            <div class="editor" data-placeholder="Message">
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <div class="modal fade" id="viewTemplate" tabindex="-1" role="dialog" aria-labelledby="viewTemplate" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Template</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              Name: <span class="activeTemplateName"></span>
-            </div>
-            <div class="col-md-12">
-              Subject: <span class="activeTemplateSubject"></span>
-            </div>
-            <div class="col-md-12">
-              <span class="activeTemplateContent"></span>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Add</button>
     </div>
-  </div>
+  </form>
+
 
   @include('client.emails.templates.addNew')
 @endsection
@@ -166,11 +114,11 @@
       $('.activeTemplateContent').html('')
       $('#viewTemplate').modal()
       axios.get('/email/templates/view/'+id)
-      .then((response)=>{
-        $('.activeTemplateName').html(response.data.mail_template_name)
-        $('.activeTemplateSubject').html(response.data.mail_subject)
-        $('.activeTemplateContent').html(response.data.mail_template)
-      })
+        .then((response)=>{
+          $('.activeTemplateName').html(response.data.mail_template_name)
+          $('.activeTemplateSubject').html(response.data.mail_subject)
+          $('.activeTemplateContent').html(response.data.mail_template)
+        })
     }
     $('#createNewTemplate').submit(function() {
       // var html = editor.root.innerHTML;
