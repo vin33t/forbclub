@@ -45,6 +45,14 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },
+    {
+      "url": "upcoming-holidays",
+      "name": "Upcoming Holidays",
+      "icon": "feather icon-chevrons-up",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },{
       "url": "booking/all",
       "name": "Booking Requests",

@@ -9,6 +9,8 @@ return [
     "Download Axis MIS" => "Download Axis MIS",
     "Upload Axis MIS" => "Upload Axis MIS",
     "Upload Transactions" => "Upload Transactions",
+    "Upcoming Holidays" => "Upcoming Holidays",
+
     "Cheques" => "Cheques",
     "Booking Requests" => "Booking Requests",
     "Refund Requests" => "Refund Requests",

@@ -23,17 +23,10 @@
     <!-- Email list Area -->
     <div class="email-app-list-wrapper">
       <div class="email-app-list">
-        <div class="app-fixed-search">
-          <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i></div>
-          <fieldset class="form-group position-relative has-icon-left m-0">
-            <input type="text" class="form-control" id="email-search" placeholder="Search email">
-            <div class="form-control-position">
-              <i class="feather icon-search"></i>
-            </div>
-          </fieldset>
-        </div>
+
         <div class="app-action">
-          <div class="action-left">
+{{--          <div class="action-left">--}}
+{{--            <i class="fa fa-search"></i>--}}
 {{--            <div class="vs-checkbox-con selectAll">--}}
 {{--              <input type="checkbox" >--}}
 {{--              <span class="vs-checkbox">--}}
@@ -43,11 +36,11 @@
 {{--                          </span>--}}
 {{--              <span>Select All</span>--}}
 {{--            </div>--}}
-          </div>
+{{--          </div>--}}
           <div class="action-right">
             <ul class="list-inline m-0">
                 <li class="list->inline-item">
-                  @if(isset($search))
+                  @if(!isset($search))
                   {{ $emails->links() }}
                     @endif
                 </li>

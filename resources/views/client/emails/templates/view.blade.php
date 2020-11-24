@@ -32,7 +32,6 @@
                   <tr>
                     <th>#</th>
                     <th>Subject</th>
-                    <th>Template Name</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -41,7 +40,6 @@
                     <tr onclick="viewTemplate('{{ $template->id }}')">
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $template->mail_subject }}</td>
-                      <td>{{ $template->mail_template_name }}</td>
                       <td>
                         <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -53,7 +51,6 @@
                   <tr>
                     <th>#</th>
                     <th>Subject</th>
-                    <th>Template Name</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

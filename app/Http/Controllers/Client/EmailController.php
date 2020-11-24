@@ -220,7 +220,7 @@ class EmailController extends Controller
   public function searchMail(Request $request)
   {
 
-
+//    return $request;
     if ($request->mailDate) {
       $emails = Emails::where('date', $request->mailDate);
       if ($request->mailSubject) {

@@ -20,7 +20,7 @@
 {{--            <input type="text" name="mailTo" class="form-control">--}}
 {{--          </div>--}}
           <div class="col-md-6">
-            <label for="mailFrom">From</label>
+            <label for="mailFrom">From Email</label>
             <input type="text" name="mailFrom" class="form-control">
           </div>
         </div>
