@@ -48,6 +48,28 @@ class EmailController extends Controller
     }
   }
 
+  public function emailsSearch($slug)
+  {
+    $client = Client::where('slug',$slug);
+    if($client){
+    $emails = Emails::where('client_id',$client->first()->id)->orderByDesc('date')->paginate(20);
+//    return $emails;
+    {
+      $pageConfigs = [
+        'pageHeader' => false,
+        'contentLayout' => "content-left-sidebar",
+        'bodyClass' => 'email-application',
+      ];
+
+      return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
+        ->with('emails', $emails);
+    }
+    }
+    else{
+      return redirect()->route('dashboard');
+    }
+  }
+
   public function emailsAccounts()
   {
     $emails = Emails::where('account', 'accounts')->orderByDesc('date')->paginate(20);

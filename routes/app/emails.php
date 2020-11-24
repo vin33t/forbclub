@@ -1,6 +1,7 @@
 <?php
 
   Route::get('/','Client\EmailController@emails')->name('emails');
+  Route::get('/{slug}','Client\EmailController@emailsSearch')->name('emails.search');
   Route::get('/compose','Client\EmailController@compose')->name('email.compose');
   Route::get('/sent','Client\EmailController@emailsSent')->name('emails.sent');
   Route::get('/mrd','Client\EmailController@emailsMrd')->name('emails.mrd');
@@ -13,8 +14,6 @@
   Route::get('/templates/view','Client\EmailController@templates')->name('email.templates');
   Route::post('/templates/create','Client\EmailController@storeTemplate')->name('email.templates.create');
   Route::get('/templates/view/{id}','Client\EmailController@viewTemplate')->name('email.templates.view');
-
-
 
   Route::post('/search','Client\EmailController@searchMail')->name('email.search');
 

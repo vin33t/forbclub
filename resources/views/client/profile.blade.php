@@ -117,7 +117,9 @@
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addPdc">Add PDC</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
           </div>
-       <button class="btn btn-primary">{{ $client->emails->count() }} Mails</button>
+          <a href="{{ $client->emails->count() ? route('emails.search',['slug'=>$client->slug ]) : 'javascript:viod(0)'  }}">
+            <button class="btn btn-primary">{{ $client->emails->count() }} Mails</button>
+          </a>
         </div>
       </div>
       @if($client->refundRequest)
