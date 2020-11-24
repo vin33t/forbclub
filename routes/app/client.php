@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports', 'Client\ClientController@reports')->name('client.reports');
 
     Route::get('/{status}','Client\ClientController@listClients')->name('view.client.status');
+    Route::get('/view/{branch}','Client\ClientController@listClientBranch')->name('view.client.branch');
 
     Route::get('/e-maf/{slug}', 'Client\ClientController@eMaf')->name('client.emaf');
     Route::get('/certificate/{slug}', 'Client\ClientController@certificate')->name('client.certificate');

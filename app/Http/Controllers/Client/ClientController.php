@@ -33,6 +33,11 @@ class ClientController extends Controller
     $packages = SoldPackages::where('status',strtoupper($status))->get();
     return view('client.list')->with('status',$status)->with('packages',$packages);
   }
+  public function listClientBranch($branch){
+//    return $branch;
+    $packages = SoldPackages::where('branch',strtoupper($branch))->get();
+    return view('client.list')->with('status',strtoupper($branch))->with('packages',$packages);
+  }
 
   public function upcomingTransactions()
   {
