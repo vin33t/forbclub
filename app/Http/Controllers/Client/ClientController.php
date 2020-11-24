@@ -15712,6 +15712,7 @@ class ClientController extends Controller
     $details['id'] = $details->id;
     $ekitLog = new EkitLog;
     $ekitLog->client_id = $details->id;
+    $ekitLog->sent_on = Carbon::now()->format('Y-m-d');
     $ekitLog->save();
     dispatch(new SendEkitJob($details, Carbon::now()->toDateString(), Auth::id()));
     $message = 'Sent to ' . $contactName;
