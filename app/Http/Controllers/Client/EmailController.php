@@ -48,27 +48,6 @@ class EmailController extends Controller
     }
   }
 
-  public function emailsSearch($slug)
-  {
-    $client = Client::where('slug',$slug);
-    if($client){
-    $emails = Emails::where('client_id',$client->first()->id)->orderByDesc('date')->paginate(20);
-//    return $emails;
-    {
-      $pageConfigs = [
-        'pageHeader' => false,
-        'contentLayout' => "content-left-sidebar",
-        'bodyClass' => 'email-application',
-      ];
-
-      return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
-        ->with('emails', $emails);
-    }
-    }
-    else{
-      return redirect()->route('dashboard');
-    }
-  }
 
   public function emailsAccounts()
   {
@@ -302,6 +281,27 @@ class EmailController extends Controller
 
   public function compose(){
     return view('client.emails.createMail');
+  }
+
+  public function emailsSearchClient($slug){
+    $client = Client::where('slug',$slug);
+    if($client->count()) {
+      $emails = Emails::where('client_id',$client->first()->id)->orderByDesc('date')->paginate(20);
+//    return $emails;
+      {
+        $pageConfigs = [
+          'pageHeader' => false,
+          'contentLayout' => "content-left-sidebar",
+          'bodyClass' => 'email-application',
+        ];
+
+        return view('client.emails.emails', ['pageConfigs' => $pageConfigs])
+          ->with('emails', $emails);
+      }
+    }
+    else{
+      return redirect()->route('dashboard');
+    }
   }
 
 }

@@ -10,6 +10,7 @@ use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
 use App\Client\Transaction\ChequePayment;
 use App\Client\Transaction\OtherPayment;
+use App\EkitLog;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Client\Package\SoldPackages;
@@ -15709,7 +15710,9 @@ class ClientController extends Controller
 
     $details['email'] = $contactEmail;
     $details['id'] = $details->id;
-
+    $ekitLog = new EkitLog;
+    $ekitLog->client_id = $details->id;
+    $ekitLog->save();
     dispatch(new SendEkitJob($details, Carbon::now()->toDateString(), Auth::id()));
     $message = 'Sent to ' . $contactName;
     if (!User::where('email', $details->email)->count()) {

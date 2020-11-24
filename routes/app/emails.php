@@ -1,7 +1,7 @@
 <?php
 
   Route::get('/','Client\EmailController@emails')->name('emails');
-  Route::get('/{slug}','Client\EmailController@emailsSearch')->name('emails.search');
+  Route::get('/client/{slug}','Client\EmailController@emailsSearchClient')->name('emails.search.client');
   Route::get('/compose','Client\EmailController@compose')->name('email.compose');
   Route::get('/sent','Client\EmailController@emailsSent')->name('emails.sent');
   Route::get('/mrd','Client\EmailController@emailsMrd')->name('emails.mrd');
