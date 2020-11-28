@@ -246,4 +246,9 @@ class Client extends Model
     return $this->hasMany('App\EkitLog','client_id');
   }
 
+
+  public function LegalNotice(){
+    return $this->hasMany('App\Client\LegalNotice','client_id');
+  }
+
 }

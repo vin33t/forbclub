@@ -79,6 +79,12 @@
                     <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'holidays']) }}"
                        class="nav-link font-small-3">Holidays</a>
                   </li>
+                  @if($client->legalNotice->count())
+                    <li class="nav-item px-sm-0">
+                    <a href="{{ route('view.client',['slug'=>$client->slug,'show'=>'legal']) }}"
+                       class="nav-link font-small-3">Legal Notice</a>
+                  </li>
+                    @endif
                     @endif
                 </ul>
               </div>
@@ -116,6 +122,8 @@
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#disableNach">Disable Nach</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addPdc">Add PDC</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addLegalNotice">Legal Notice</a>
           </div>
           <a href="{{ $client->emails->count() ? route('emails.search.client',['slug'=>$client->slug ]) : 'javascript:viod(0)'  }}">
             <button class="btn btn-primary">{{ $client->emails->count() }} Mails</button>
@@ -151,6 +159,8 @@
           @include('client.components.payments',['client'=>$client])
         @elseif(request()->show == 'holidays')
           @include('client.components.holidays',['client'=>$client])
+          @elseif(request()->show == 'legal')
+          @include('client.components.legal',['client'=>$client])
         @else
           @include('client.components.leftBar',['client'=>$client])
           @include('client.components.timeline',['client'=>$client])
@@ -177,7 +187,9 @@
     @include('client.transaction.add.otherTransaction',['client'=>$client])
     @include('client.transaction.disableNach',['client'=>$client])
 
+
     @include('client.components.editBasic',['client'=>$client])
+    @include('client.components.addLegalNotice',['client'=>$client])
 
   @endif
 @endsection

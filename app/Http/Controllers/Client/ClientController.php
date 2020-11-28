@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Client\Client;
 use App\Client\Holiday\ClientHolidayTransactions;
+use App\Client\LegalNotice;
 use App\Client\Package\SoldPackageBenefits;
 use App\Client\TimelineActivity;
 use App\Client\Transaction\CardPayment;
@@ -29,6 +30,29 @@ use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
+
+  public function addLegalNotice(Request $request,$clientId){
+//    return $request;
+    $notice = new LegalNotice();
+    $notice->client_id = $clientId;
+    $notice->noticeReason = $request->noticeReason;
+    $notice->noticeDate = $request->noticeDate;
+    $notice->hearingDate = $request->hearingDate;
+    $notice->noticeDescription = $request->noticeDescription;
+    $notice->save();
+    return redirect()->back();
+  }
+
+  public function editLegalNotice(Request $request,$noticeId){
+//    return $request;
+    $notice = LegalNotice::find($noticeId);
+    $notice->noticeReason = $request->noticeReason;
+    $notice->noticeDate = $request->noticeDate;
+    $notice->hearingDate = $request->hearingDate;
+    $notice->noticeDescription = $request->noticeDescription;
+    $notice->save();
+    return redirect()->back();
+  }
 
   public function listClients($status){
     $packages = SoldPackages::where('status',strtoupper($status))->get();

@@ -50,6 +50,14 @@ Route::middleware('auth')->group(function () {
   Route::post('update/client-basic-details/{clientId}','Client\ClientController@updateBasicDetails')->name('update.basicDetails');
 
 
+  Route::post('add/legalNotice/{clientId}','Client\ClientController@addLegalNotice')->name('add.legal.notice');
+  Route::post('edit/legalNotice/{noticeId}','Client\ClientController@editLegalNotice')->name('edit.legal.notice');
+
+
+
+
+
+
   Route::post('add/asc','Client\ClientController@addAsc')->name('add.asc');
   Route::post('add/followUp','Client\ClientController@addFollowUp')->name('add.followUp');
   Route::post('delete/followUp/{id}','Client\ClientController@deleteFollowUp')->name('delete.followUp');
