@@ -59,7 +59,6 @@
             $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
           }
       }
-
       if($client->AxisPayments->count()){
           foreach($client->AxisPayments as $axp){
             if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
@@ -80,22 +79,22 @@
   $addOnTransactions = collect();
 if($client->cashPayments->count()){
 foreach($client->CashPayments->where('isAddon', 1) as $ca){
-$totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
+$addOnTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
 }
 }
 if($client->cardPayments->count()){
 foreach($client->CardPayments->where('isAddon', 1) as $cad){
-$totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
+$addOnTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
 }
 }
 if($client->chequePayments->count()){
 foreach($client->chequePayments->where('isAddon', 1) as $che){
-$totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
+$addOnTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
 }
 }
 if($client->otherPayments->count()){
 foreach($client->otherPayments->where('isAddon', 1) as $oth){
-$totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
+$addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
 }
 }
   @endphp
