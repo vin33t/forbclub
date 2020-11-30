@@ -30,7 +30,9 @@
               </div>
             </div>
             <a href="{{ route('dashboard',['type'=>'clients']) }}">
-              <h2 class="text-bold-700 mt-1 mb-25">{{ __('Clients') }}</h2>
+              <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Client\Client::all()->count() }}</h2>
+              <p class="mb-0">{{ __('Clients') }}</p>
+
             </a>
           </div>
         </div>
