@@ -24,6 +24,9 @@ Route::get('/upcoming-transactions', 'Client\ClientController@upcomingTransactio
 Route::get('/requests', function (){
   return view('client.requestsIndex');
 });
+Route::get('/transaction/index', function (){
+  return view('client.transactionIndex');
+});
 
 Route::get('/agent', function () {
   $res = [

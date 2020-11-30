@@ -62,32 +62,9 @@
       "permission": "view-import-history"
     },
     {
-      "url": "transaction/downlaod/axis-mis",
-      "name": "Download Axis MIS",
-      "icon": "feather icon-download-cloud",
-      "i18n": "nav.app_email",
-      "role": "super-admin",
-      "permission": "view-import-history"
-    },{
-      "url": "transaction/download/cheques",
-      "name": "Cheques",
-      "icon": "feather icon-download-cloud",
-      "i18n": "nav.app_email",
-      "role": "super-admin",
-      "permission": "view-import-history"
-    },
-    {
-      "url": "transaction/upload/axis-mis",
-      "name": "Upload Axis MIS",
-      "icon": "feather icon-upload-cloud",
-      "i18n": "nav.app_email",
-      "role": "super-admin",
-      "permission": "view-import-history"
-    },
-    {
-      "url": "transaction/upload",
-      "name": "Upload Transactions",
-      "icon": "feather icon-upload-cloud",
+      "url": "transaction/index",
+      "name": "Transactions",
+      "icon": "feather icon-save",
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"

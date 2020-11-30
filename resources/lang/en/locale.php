@@ -16,6 +16,7 @@ return [
     "Refund Requests" => "Refund Requests",
     "Active Booking Requests" => "Active Booking Requests",
     "All" => "All",
+    "Transactions" => "Transactions",
     "Closed Booking Requests" => "Closed Booking Requests",
     "Upcoming Transactions" => "Upcoming Transactions",
     "Reimbursement" => "Reimbursement",
