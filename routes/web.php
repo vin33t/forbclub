@@ -21,6 +21,9 @@ use Laravolt\Avatar\Facade as Avatar;
 Auth::routes();
 Route::get('/find', 'Client\ClientController@find');
 Route::get('/upcoming-transactions', 'Client\ClientController@upcomingTransactions');
+Route::get('/requests', function (){
+  return view('client.requestsIndex');
+});
 
 Route::get('/agent', function () {
   $res = [

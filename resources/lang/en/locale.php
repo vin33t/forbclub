@@ -10,7 +10,7 @@ return [
     "Upload Axis MIS" => "Upload Axis MIS",
     "Upload Transactions" => "Upload Transactions",
     "Upcoming Holidays" => "Upcoming Holidays",
-
+    "Requests" => "Requests",
     "Cheques" => "Cheques",
     "Booking Requests" => "Booking Requests",
     "Refund Requests" => "Refund Requests",

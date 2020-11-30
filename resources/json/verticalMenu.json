@@ -54,15 +54,8 @@
       "role": "super-admin",
       "permission": "view-import-history"
     },{
-      "url": "booking/all",
-      "name": "Booking Requests",
-      "icon": "feather icon-book",
-      "i18n": "nav.app_email",
-      "role": "super-admin",
-      "permission": "view-import-history"
-    },{
-      "url": "transaction/client/refund-requests",
-      "name": "Refund Requests",
+      "url": "requests",
+      "name": "Requests",
       "icon": "feather icon-book",
       "i18n": "nav.app_email",
       "role": "super-admin",
