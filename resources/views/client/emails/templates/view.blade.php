@@ -32,6 +32,7 @@
                   <tr>
                     <th>#</th>
                     <th>Subject</th>
+                    <th>Added By</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -40,6 +41,7 @@
                     <tr>
                       <td  onclick="viewTemplate('{{ $template->id }}')">{{ $loop->index + 1 }}</td>
                       <td  onclick="viewTemplate('{{ $template->id }}')">{{ $template->mail_subject }}</td>
+                      <td >{{ $template->added_by ? \App\User::find($template->added_by)->name : 'N/A' }}</td>
                       <td>
                         <a href="{{ route('email.templates.edit',['id'=>$template->id]) }}">
                            <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
@@ -55,6 +57,7 @@
                   <tr>
                     <th>#</th>
                     <th>Subject</th>
+                    <th>Added By</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

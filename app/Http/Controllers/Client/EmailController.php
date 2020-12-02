@@ -10,6 +10,7 @@ use App\EmailAttachments;
 use App\Templates;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Obiefy\API\Facades\API;
@@ -271,6 +272,7 @@ class EmailController extends Controller
     $template->mail_template_name = $request->templateSubject;
     $template->mail_template  =$request->templateContent;
     $template->mail_subject = $request->templateSubject;
+    $template->added_by = Auth::user()->id;
     $template->save();
     return redirect()->back();
   }
