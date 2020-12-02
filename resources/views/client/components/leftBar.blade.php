@@ -23,6 +23,21 @@
         <p>{{  \Carbon\Carbon::parse($package->enrollmentDate)->addYears($package->productTenure)->format('d M, Y') }}</p>
       </div>
       <div class="mt-1">
+        <h6 class="mb-0">EMI Start Date - EMI End Date</h6>
+        <p>
+          {{  \Carbon\Carbon::parse($package->enrollmentDate)->addMonths(1)->startOfMonth()->addDays(4)->format('d M, Y') }} -
+          @php
+            if($client->emiRegularPlan) {
+                    $emiNo = $client->emiRegularPlan;
+                }
+             else{
+               $emiNo = $client->latestPackage->noOfEmi;
+             }
+          @endphp
+          {{  \Carbon\Carbon::parse($package->enrollmentDate)->addMonths($emiNo)->startOfMonth()->addDays(4)->format('d M, Y') }}
+        </p>
+      </div>
+      <div class="mt-1">
         <h6 class="mb-0">Address:</h6>
         <p>{{ $client->address }}</p>
       </div>
