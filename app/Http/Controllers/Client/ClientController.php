@@ -115,7 +115,7 @@ class ClientController extends Controller
   public function storeClient(Request $request)
   {
 
-
+//return $request;
     $this->validate($request, [
       'productMafNo' => 'required|unique:sold_packages,mafNo',
       'productFclpId' => 'required|unique:sold_packages,fclpId',
@@ -194,7 +194,7 @@ class ClientController extends Controller
           $transaction->amount = $request->dpAmount;
           $transaction->cardType = $request->fclp_card_type_one;
           $transaction->bankName = 'na';
-          $transaction->cardLastFourDigits = 0000;
+          $transaction->cardLastFourDigits = $request->fclp_card_number_one;
           $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
@@ -237,7 +237,9 @@ class ClientController extends Controller
           $transaction->amount = $request->dpAmount;
           $transaction->cardType = $request->fclp_card_type_one;
           $transaction->bankName = 'na';
-          $transaction->cardLastFourDigits = 0000;
+//          $transaction->cardLastFourDigits = 0000;
+          $transaction->cardLastFourDigits = $request->fclp_card_number_two;
+
           $transaction->isDp = 1;
           $transaction->isAddon = 0;
           $transaction->remarks = $request->remarks_one;
