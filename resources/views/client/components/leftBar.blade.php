@@ -57,6 +57,7 @@
         <h6 class="mb-0">Status:</h6>
         <p>{{ $package->status }}
           @if($user->employee)
+            <span>{{ $package->remarks }}</span>
             <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#updateStatus" >Update</button>
           @endif
         </p>
