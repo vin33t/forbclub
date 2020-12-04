@@ -55,10 +55,12 @@
       </div>
       <div class="mt-1">
         <h6 class="mb-0">Status:</h6>
-        <p>{{ $package->status }}
+        <p><strong>
+          {{ $package->status }}
+          </strong>
           @if($user->employee)
             <br>
-            <span>{{ $package->remarks }}</span>
+            <span>Remarks: {{ $package->remarks }}</span>
             <br>
             <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#updateStatus" >Update</button>
           @endif
