@@ -24,5 +24,8 @@
         "vue-template-compiler": "^2.6.10",
         "webpack-cli": "^3.3.5",
         "rtlcss": "^2.4.0"
+    },
+    "dependencies": {
+        "fullcalendar": "^5.4.0"
     }
 }

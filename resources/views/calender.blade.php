@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/calendars/fullcalendar.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/calendars/extensions/daygrid.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/calendars/extensions/timegrid.min.css')) }}">
+{{--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css">--}}
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/pickadate/pickadate.css')) }}">
+
 @endsection
 @section('page-style')
   <!-- Page css files -->
@@ -129,6 +131,7 @@
   <script src="{{ asset(mix('vendors/js/calendar/extensions/daygrid.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/calendar/extensions/timegrid.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/calendar/extensions/interactions.min.js')) }}"></script>
+{{--  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js"></script>--}}
   <script src="{{ asset(mix('vendors/js/pickers/pickadate/picker.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/pickers/pickadate/picker.date.js')) }}"></script>
 @endsection
@@ -163,9 +166,10 @@
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ["dayGrid", "timeGrid", "interaction"],
+        // disableDragging: true,
         customButtons: {
           addNew: {
-            text: ' Add',
+            text: ' Add New',
             click: function () {
               var calDate = new Date,
                 todaysDate = calDate.toISOString().slice(0, 10);
@@ -183,12 +187,12 @@
         },
         header: {
           left: "addNew",
-          center: "dayGridMonth,timeGridWeek,timeGridDay",
+          center: "dayGridMonth,timeGridWeek,timeGridDay,timeGridList",
           right: "prev,title,next"
         },
         displayEventTime: false,
         navLinks: true,
-        editable: true,
+        editable: false,
         allDay: true,
         navLinkDayClick: function (date) {
           $(".modal-calendar").modal("show");
