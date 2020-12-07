@@ -80,6 +80,23 @@
       </div>
 
     </div>
+    <div class="col-lg-3 col-md-6 col-12">
+      <div class="card">
+        <a href="/transactions/skipped">
+          <div class="card-header d-flex flex-column align-items-start pb-0">
+            <div class="avatar bg-rgba-danger p-50 m-0">
+              <div class="avatar-content">
+                <i class="feather icon-package text-danger font-medium-5"></i>
+              </div>
+            </div>
+            <h2 class="text-bold-700 mt-1 mb-25">Skipped Transactions</h2>
+            {{--        <p class="mb-0">Refund Requests</p>--}}
+          </div>
+        </a>
+
+      </div>
+
+    </div>
 
   </div>
 
