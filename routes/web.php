@@ -21,6 +21,7 @@ use Laravolt\Avatar\Facade as Avatar;
 Auth::routes();
 Route::get('/todo', 'CalenderController@index');
 Route::get('/todo/list', 'CalenderController@list');
+Route::get('/todo/remove/{id}', 'CalenderController@delete');
 Route::post('/todo/add', 'CalenderController@addTodo');
 Route::get('/find', 'Client\ClientController@find');
 Route::get('/upcoming-transactions', 'Client\ClientController@upcomingTransactions');

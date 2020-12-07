@@ -86,6 +86,7 @@
               </div>
               <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
               <fieldset class="form-label-group">
+                <input type="hidden" class="form-control" id="cal-id">
                 <input type="text" class="form-control" id="cal-event-title" placeholder="Event Title">
                 <label for="cal-event-title">Event Title</label>
               </fieldset>
@@ -200,6 +201,7 @@
         eventClick: function (info) {
           $(".modal-calendar").modal("show");
           $(".modal-calendar #cal-event-title").val(info.event.title);
+          $(".modal-calendar #cal-id").val(info.event.id);
           $(".modal-calendar #cal-start-date").val(moment(info.event.start).format('YYYY-MM-DD'));
           $(".modal-calendar #cal-end-date").val(moment(info.event.end).format('YYYY-MM-DD'));
           $(".modal-calendar #cal-description").val(info.event.extendedProps.description);
@@ -232,7 +234,9 @@
 
       // Remove Event
       $(".remove-event").on("click", function () {
-        var removeEvent = calendar.getEventById('newEvent');
+        var calId = $(".modal-calendar #cal-id").val();
+        var removeEvent = calendar.getEventById(calId);
+        axios.get('/todo/remove/'+calId)
         removeEvent.remove();
       });
 

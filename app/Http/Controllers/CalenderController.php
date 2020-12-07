@@ -42,4 +42,9 @@ class CalenderController extends Controller
   {
     return Auth::user()->todo;
   }
+
+  public function delete($id)
+  {
+    todo::find($id)->delete();
+  }
 }
