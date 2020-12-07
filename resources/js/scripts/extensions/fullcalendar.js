@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // chip text object for different event types
   var categoryText = {
     primary: "Others",
-    success: "Business",
+    success: "Client",
     danger: "Personal",
     warning: "Work"
   };

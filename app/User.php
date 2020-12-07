@@ -48,4 +48,8 @@ class User extends Authenticatable
   public function LoginLog(){
     return $this->hasMany('App\LoginLog');
   }
+
+  public function Todo(){
+    return $this->hasMany('App\todo');
+  }
 }

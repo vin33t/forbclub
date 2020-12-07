@@ -83,6 +83,13 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },{
+      "url": "todo",
+      "name": "Todo",
+      "icon": "feather icon-calendar",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },
     {
       "url": "",
