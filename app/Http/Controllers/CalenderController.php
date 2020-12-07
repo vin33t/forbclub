@@ -22,7 +22,12 @@ class CalenderController extends Controller
   public function addTodo(Request $request)
   {
 //    return $request;
+    if($request->id){
+      $todo = todo::find($request->id);
+    } else {
     $todo = new todo;
+    }
+
     $todo->startDate = $request->startDate;
     $todo->endDate = $request->endDate;
     $todo->title = $request->title;
@@ -46,5 +51,10 @@ class CalenderController extends Controller
   public function delete($id)
   {
     todo::find($id)->delete();
+  }
+
+  public function update(Request $request,$id)
+  {
+
   }
 }

@@ -107,7 +107,7 @@
               <button type="button" class="btn btn-primary cal-add-event waves-effect waves-light" disabled>
                 Add Event</button>
               <button type="button" class="btn btn-primary d-none cal-submit-event waves-effect waves-light"
-                      disabled>submit</button>
+                      disabled>Update</button>
               <button type="button" class="btn btn-flat-danger cancel-event waves-effect waves-light"
                       data-dismiss="modal">Cancel</button>
               <button type="button" class="btn btn-flat-danger remove-event d-none waves-effect waves-light"
@@ -230,6 +230,41 @@
       // Close modal on submit button
       $(".modal-calendar .cal-submit-event").on("click", function () {
         $(".modal-calendar").modal("hide");
+        var eventTitle = $("#cal-event-title").val(),
+          startDate = $("#cal-start-date").val(),
+          endDate = $("#cal-end-date").val(),
+          eventDescription = $("#cal-description").val(),
+          token = $("#_token").val(),
+          correctEndDate = new Date(endDate),
+          id = $("#cal-id").val();
+        console.log(id);
+        var bodyFormData = new FormData();
+        bodyFormData.append('id', id);
+        bodyFormData.append('startDate', startDate);
+        bodyFormData.append('endDate', endDate);
+        bodyFormData.append('title', eventTitle);
+        bodyFormData.append('description', eventDescription);
+        bodyFormData.append('_token', token);
+        bodyFormData.append('color', evtColor);
+        bodyFormData.append('eventColor', evtColor);
+        bodyFormData.append('allDay', true);
+        // console.log(bodyFormData)
+        axios({
+          method: 'post',
+          url: '/todo/add',
+          data: bodyFormData,
+          headers: {'Content-Type': 'multipart/form-data' }
+        })
+          .then(function (response) {
+            // console.log(response)
+            location.reload();
+          })
+          .catch(function (response) {
+            //handle error
+            console.log(response);
+          });
+
+
       });
 
       // Remove Event
