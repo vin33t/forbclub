@@ -48,9 +48,12 @@
                           data-toggle="modal" data-target="#editBasicClientDetails">
                     <i class="feather icon-edit-2"></i>
                   </button>
-                  <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary">
-                    <i class="feather icon-settings"></i>
+                  <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary" onclick="printClientSummary('{{ $client->slug }}')">
+                    <i class="feather icon-printer"></i>
                   </button>
+{{--                  <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary">--}}
+{{--                    <i class="feather icon-settings"></i>--}}
+{{--                  </button>--}}
                 </div>
               @endif
 
@@ -213,6 +216,12 @@
 
 @section('page-script')
   <script>
+    function printClientSummary(slug){
+      let a= document.createElement('a');
+      a.target= '_blank';
+      a.href= '/client/summary/'+slug;
+      a.click();
+    }
 
     $('#mode_of_payment').on('change', function () {
       var mode = document.getElementById('mode_of_payment').value;

@@ -27,11 +27,14 @@
                 </tr>
                 <tr>
                   <th scope="row">Number of EMI's</th>
-                  <th scope="row">@if($client->emiRegularPlan){{ $client->emiRegularPlan }} @else {{ $client->latestPackage->noOfEmi }} @endif</th>
+                  <th scope="row">
+                    @if($client->emiRegularPlan){{ $client->emiRegularPlan }} @else {{ $client->latestPackage->noOfEmi }} @endif
+                  </th>
                 </tr>
               <tr>
                   <th scope="row">Fully Paid Holiday</th>
-                  <th scope="row">@if($client->latestPackage->productName == 'Classic FCV' or $client->latestPackage->productName == 'India FCV') N/A @else 1{5N/6D 02 Adults} @endif</th>
+                  <th scope="row">
+                    @if($client->latestPackage->productName == 'Classic FCV' or $client->latestPackage->productName == 'India FCV') N/A @else 1{5N/6D 02 Adults} @endif</th>
                 </tr>
               <tr>
                   <th scope="row">Stay only Holiday</th>

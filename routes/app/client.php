@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/', 'Client\ClientController@storeClient')->name('create.client');
     Route::post('/login/{slug}', 'Client\ClientController@createLogin')->name('create.client.login');
   });
+    Route::get('/summary/{slug}', 'Client\ClientController@printSummary')->name('print.client.summary');
 
     Route::get('/reports', 'Client\ClientController@reports')->name('client.reports');
 

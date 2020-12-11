@@ -31,6 +31,15 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
 
+  public function printSummary($slug){
+    $client = Client::where('slug',$slug)->get();
+      if($client->count()){
+        $client = $client->first();
+        return view('client.summary')->with('client',$client);
+    } else{
+        abort(404);
+      }
+  }
   public function addLegalNotice(Request $request,$clientId){
 //    return $request;
     $notice = new LegalNotice();
