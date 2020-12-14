@@ -675,8 +675,10 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                 Success: {{ $client->axisPayments->where('status_description','Success')->pluck('amount')->sum()   }} |
                 Failed: {{ $client->AxisPayments->where('status_description','INITIAL REJECTION')->pluck('amount')->sum()   }}
                 |
+                @if($client->axisMis->count())
                 From {{ \Carbon\Carbon::parse($client->axisMis->last()->STARTDATE)->format('d-m-Y') }} To
                 {{ \Carbon\Carbon::parse($client->axisMis->last()->ENDDATE)->format('d-m-Y') }}
+                @endif
                 )
               </h4>
             </div>
