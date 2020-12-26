@@ -15661,6 +15661,7 @@ class ClientController extends Controller
       $package->emiAmount = $request->emiAmount;
       $package->saleBy = $request->saleBy;
       $package->saleManager = $request->saleManager;
+      $package->emiStartDate = $request->emiStartDate;
       $package->save();
       $client->save();
       $user = $client->user;

@@ -53,7 +53,11 @@
 
         <div class="col-md-12">
             <label for="phone">EMI Amount</label>
-            <input type="number" name="emiAmount" value="{{ $client->latestPackage->emiAmount }}" class="form-control">
+            <input type="number" name="emiAmount" value="{{ $client->latestPackage->emiAmount }}" class="form-control" required>
+          </div>
+        <div class="col-md-12">
+            <label for="emiStartDate">EMI Start Date</label>
+            <input type="date" name="emiStartDate" value="{{ $client->latestPackage->emiStartDate == null ? $client->latestPackage->enrollmentDate : $client->latestPackage->emiStartDate }}" class="form-control">
           </div>
         <div class="col-md-12">
           <label for="phone">Sale By</label>

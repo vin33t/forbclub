@@ -30,6 +30,7 @@ class CreateSoldPackagesTable extends Migration
       $table->string('noOfEmi')->nullable();
       $table->string('emiAmount')->nullable();
       $table->string('asc')->nullable();
+      $table->date('emiStartDate')->nullable();
       $table->timestamps();
     });
   }
