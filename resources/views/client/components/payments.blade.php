@@ -1603,7 +1603,6 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                         </tr>
                       @endforeach
                       @if($client->id == 786)
-
                         @foreach(\App\Client\Transaction\AxisNachPayment::where('client_id',590)->get() as $axisPaymentt)
                           <tr>
                             <td>{{ $axisPaymentt->date_of_transaction }}</td>
