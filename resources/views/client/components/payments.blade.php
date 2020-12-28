@@ -59,12 +59,22 @@
             $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
           }
       }
-      if($client->AxisPayments->count()){
-          foreach($client->AxisPayments as $axp){
-            if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
-              $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+      if($client->id != 590){
+        if($client->AxisPayments->count()){
+            foreach($client->AxisPayments as $axp){
+              if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
+                $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+              }
             }
+        }
+        if($client->id == 786){
+          $payAxi = \App\Client\Transaction\AxisNachPayment::where('client_id',590)->get();
+          foreach($payAxi as $paAx){
+            if($paAx->status_description == 'success' or $paAx->status_description == 'SUCCESS' or $paAx->status_description == 'Success'){
+                $totalTransactions->push(['date'=>$paAx->date_of_transaction,'amount'=>$paAx->amount,'remarks'=>$paAx->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+              }
           }
+        }
       }
 
       if($client->YesPayments->count()){
@@ -1558,7 +1568,7 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
         @endif
 
 
-        @if($client->AxisPayments->count())
+        @if($client->AxisPayments->count() and $client->id != 590)
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -1592,6 +1602,19 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                           <td>{{ $axisPayment->reason_description }}</td>
                         </tr>
                       @endforeach
+                      @if($client->id == 786)
+
+                        @foreach(\App\Client\Transaction\AxisNachPayment::where('client_id',590)->get() as $axisPaymentt)
+                          <tr>
+                            <td>{{ $axisPaymentt->date_of_transaction }}</td>
+                            <td>{{ $axisPaymentt->amount }}</td>
+                            <td>{{ $axisPaymentt->status_description }}</td>
+                            <td>{{ $axisPaymentt->reason_description }}</td>
+                          </tr>
+                        @endforeach
+                      @endif
+
+
                       </tbody>
 
                       <tfoot>
