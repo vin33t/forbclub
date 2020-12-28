@@ -1586,7 +1586,7 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                       <tbody>
                       @foreach($client->axisPayments as $axisPayment)
                         <tr>
-                          <td>{{ $axisPayment->date_of_transaction }}</td>
+                          <td>{{ $axisPayment->date_of_transaction }} {{ $axisPayment->client_id }}</td>
                           <td>{{ $axisPayment->amount }}</td>
                           <td>{{ $axisPayment->status_description }}</td>
                           <td>{{ $axisPayment->reason_description }}</td>
