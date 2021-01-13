@@ -90,6 +90,13 @@
       "i18n": "nav.app_email",
       "role": "super-admin",
       "permission": "view-import-history"
+    },{
+      "url": "queries",
+      "name": "Queries",
+      "icon": "feather icon-help-circle",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
     },
     {
       "url": "",

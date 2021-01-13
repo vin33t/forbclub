@@ -17,6 +17,7 @@ return [
     "Active Booking Requests" => "Active Booking Requests",
     "All" => "All",
     "Transactions" => "Transactions",
+    "Queries" => "Queries",
     "Closed Booking Requests" => "Closed Booking Requests",
     "Upcoming Transactions" => "Upcoming Transactions",
     "Reimbursement" => "Reimbursement",

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Client;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LegalNotice extends Model
+class Queries extends Model
 {
     protected $guarded = ['id'];
 
     public function Client(){
-      return $this->belongsTo('App\Client\Client');
-    }
+    return $this->belongsTo('App\Client\Client','clientId');
+  }
 }

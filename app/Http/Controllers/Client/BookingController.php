@@ -8,6 +8,7 @@ use App\Client\Booking\BookingInfo;
 use App\Client\Booking\Bookings;
 use App\Client\Client;
 use App\Http\Controllers\Controller;
+use App\Queries;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -862,11 +863,22 @@ class BookingController extends Controller
     $rooms = $request->rooms;
     $remarks = $request->queryRemarks;
 
-    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . ' | Destination: '. $destination . ' | Travel Date: ' . $travelDate . ' | Adults: ' .$adults . ' | Kids: '.$kids . ' | Rooms: '.$rooms . ' | Remarks: '. $remarks;
-    Mail::raw($message, function ($message) {
-          $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
-        ->subject('New Client Request');
-    });
+    $query  =  new Queries();
+    $query->clientId  =  $request->clientId;
+    $query->type  =  'booking';
+    $query->travelDate = Carbon::parse($request->travelDate)->format('Y-m-d');
+    $query->destination = $request->destination;
+    $query->adults = $request->adults;
+    $query->kids = $request->kids;
+    $query->rooms = $request->rooms;
+    $query->remarks = $request->queryRemarks;
+    $query->save();
+
+//    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . ' | Destination: '. $destination . ' | Travel Date: ' . $travelDate . ' | Adults: ' .$adults . ' | Kids: '.$kids . ' | Rooms: '.$rooms . ' | Remarks: '. $remarks;
+//    Mail::raw($message, function ($message) {
+//          $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
+//        ->subject('New Client Request');
+//    });
 
     $previousUrl = app('url')->previous();
 
@@ -879,15 +891,27 @@ class BookingController extends Controller
 
     $query = $request->otherQuery;
 
-    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . '| Query: '. $query;
-    Mail::raw($message, function ($message) {
-      $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
-        ->subject('New Client Request');
-    });
+    $query  =  new Queries();
+    $query->clientId  =  $request->clientId;
+    $query->type  =  'other';
+    $query->remarks = $request->otherQuery;
+    $query->save();
+
+//    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . '| Query: '. $query;
+//    Mail::raw($message, function ($message) {
+//      $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
+//        ->subject('New Client Request');
+//    });
 
     $previousUrl = app('url')->previous();
 
     return redirect()->to($previousUrl.'?'. http_build_query(['status'=>'success']));
+  }
+
+  public function queries(){
+    $bookingQueries = Queries::where('type','booking')->get();
+    $otherQueries = Queries::where('type','other')->get();
+    return view('query')->with('bookingQueries',$bookingQueries)->with('otherQueries',$otherQueries);
   }
 
 

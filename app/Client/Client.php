@@ -251,4 +251,8 @@ class Client extends Model
     return $this->hasMany('App\Client\LegalNotice','client_id');
   }
 
+  public function Queries(){
+    return $this->hasMany('App\Queries','clientId');
+  }
+
 }
