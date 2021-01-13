@@ -23,6 +23,7 @@ class CreateQueriesTable extends Migration
             $table->integer('kids')->nullable();
             $table->integer('rooms')->nullable();
             $table->longText('remarks')->nullable();
+            $table->boolean('mailSent')->default(0);
             $table->timestamps();
         });
     }
