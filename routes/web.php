@@ -28,6 +28,9 @@ Route::get('/upcoming-transactions', 'Client\ClientController@upcomingTransactio
 Route::get('/requests', function (){
   return view('client.requestsIndex');
 });
+
+Route::post('/sendBookingQuery', 'Client\BookingController@bookingQuery')->name('bookingQuery');
+Route::post('/sendOtherQuery', 'Client\BookingController@otherQuery')->name('otherQuery');
 Route::get('/transaction/index', function (){
   return view('client.transactionIndex');
 });

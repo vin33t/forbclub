@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use SebastianBergmann\Comparator\Book;
 use App\Client\Holiday\ClientHoliday;
 use App\Client\Holiday\ClientHolidayDetails;
@@ -850,6 +851,43 @@ class BookingController extends Controller
     $payment->paid = 1;
     $payment->save();
     return redirect()->back();
+  }
+
+  public function bookingQuery(Request $request){
+    $client = Client::find($request->clientId);
+    $destination = $request->destination;
+    $travelDate = $request->travelDate;
+    $adults = $request->adults;
+    $kids = $request->kids;
+    $rooms = $request->rooms;
+    $remarks = $request->queryRemarks;
+
+    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . ' | Destination: '. $destination . ' | Travel Date: ' . $travelDate . ' | Adults: ' .$adults . ' | Kids: '.$kids . ' | Rooms: '.$rooms . ' | Remarks: '. $remarks;
+    Mail::raw($message, function ($message) {
+          $message->to('mrd@forbclub.com')
+        ->subject('New Client Request');
+    });
+
+    $previousUrl = app('url')->previous();
+
+    return redirect()->to($previousUrl.'?'. http_build_query(['status'=>'success']));
+  }
+
+  public function otherQuery(Request $request){
+
+    $client = Client::find($request->clientId);
+
+    $query = $request->otherQuery;
+
+    $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . '| Query: '. $query;
+    Mail::raw($message, function ($message) {
+      $message->to('mrd@forbclub.com')
+        ->subject('New Client Request');
+    });
+
+    $previousUrl = app('url')->previous();
+
+    return redirect()->to($previousUrl.'?'. http_build_query(['status'=>'success']));
   }
 
 

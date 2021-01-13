@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-12">
   <div class="card">
     <div class="card-header">
-      <h4>Bookings <a href="{{ route('create.client.booking',['slug'=>$client->slug]) }}"><button class="btn btn-primary">+</button></a></h4>
+      <h4>Bookings <a href="{{ route('create.client.booking',['slug'=>$client->slug]) }}">@if($user->employee)<button class="btn btn-primary">+</button></a>@endif</h4>
     </div>
     <div class="card-body">
       @foreach($client->Bookings as $booking)
