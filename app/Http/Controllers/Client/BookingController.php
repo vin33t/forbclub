@@ -864,7 +864,7 @@ class BookingController extends Controller
 
     $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . ' | Destination: '. $destination . ' | Travel Date: ' . $travelDate . ' | Adults: ' .$adults . ' | Kids: '.$kids . ' | Rooms: '.$rooms . ' | Remarks: '. $remarks;
     Mail::raw($message, function ($message) {
-          $message->to('mrd@forbclub.com')
+          $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
         ->subject('New Client Request');
     });
 
@@ -881,7 +881,7 @@ class BookingController extends Controller
 
     $message = $client->name . ' | MAF: ' . $client->latestPackage->mafNo . '| Query: '. $query;
     Mail::raw($message, function ($message) {
-      $message->to('mrd@forbclub.com')
+      $message->from('noreply@forbclub.com')->to('mrd@forbclub.com')
         ->subject('New Client Request');
     });
 
