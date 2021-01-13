@@ -91,7 +91,7 @@
               @foreach($otherQueries as $oQuery)
                 <tr>
                   <td>{{ \Carbon\Carbon::parse($oQuery->created_at)->format('d-m-Y') }}</td>
-                  <td><a href="{{ route('view.client',['slug'=>$bQuery->client->slug]) }}" target="_blank">{{ $oQuery->client->name }} ({{ $oQuery->client->latestPackage->mafNo }})</a></td>
+                  <td><a href="{{ route('view.client',['slug'=>$oQuery->client->slug]) }}" target="_blank">{{ $oQuery->client->name }} ({{ $oQuery->client->latestPackage->mafNo }})</a></td>
                   <td>{{ $oQuery->remarks }}</td>
                 </tr>
               @endforeach
