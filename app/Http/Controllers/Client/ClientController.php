@@ -15655,6 +15655,8 @@ class ClientController extends Controller
       $client->altPhone = $request->altPhone;
       $client->emiRegularPlan = $request->emiRegularPlan;
       $package = $client->latestPackage;
+      $package->mafNo = $request->mafNo;
+      $package->fclpId = $request->fclpId;
       $package->enrollmentDate = $request->enrollmentDate;
       $package->productTenure = $request->productTenure;
       $package->productCost = $request->productCost;
