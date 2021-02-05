@@ -21,11 +21,11 @@
           </div>
           <div class="col-md-12">
             <label for="mafNo">MAF No</label>
-            <input type="date" name="mafNo" value="{{ $client->latestPackage->mafNo }}" class="form-control" required>
+            <input type="number" name="mafNo" value="{{ $client->latestPackage->mafNo }}" class="form-control" required>
           </div>
           <div class="col-md-12">
             <label for="fclpId">FCLP Id</label>
-            <input type="date" name="fclpId" value="{{ $client->latestPackage->fclpId }}" class="form-control" required>
+            <input type="number" name="fclpId" value="{{ $client->latestPackage->fclpId }}" class="form-control" required>
           </div>
           <div class="col-md-12">
             <label for="address">Address</label>
