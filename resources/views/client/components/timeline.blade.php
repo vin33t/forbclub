@@ -502,12 +502,13 @@
                   </div>
                 </div>
               </div>
-          </div>
+          
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="Submit" class="btn btn-primary">Update</button>
           </div>
           </form>
+</div>
         </div>
       </div>
       <div class="modal fade" id="addAsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

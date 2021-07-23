@@ -121,6 +121,16 @@
                       </div>
                     </div>
                   </div>
+<div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-md-4">
+                        <span>Location</span>
+                      </div>
+                      <div class="col-md-8">
+                        <input type="text" id="birthDate" class="form-control" name="location" placeholder="Location" required>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,12 +164,12 @@
                     <div class="col-12">
                       <div class="form-group row">
                         <div class="col-md-4">
-                          <span>Maf No</span>
+                          <span>Maf No.</span>
                         </div>
                         <div class="col-md-8">
                           <div class="position-relative has-icon-left">
                             <input type="text" id="email-icon" class="form-control" name="productMafNo"
-                                   placeholder="Maf No" required>
+                                   placeholder="Maf No" value="{{ (App\Client\Package\SoldPackages::all()->reverse()->first()->mafNo) + 1 }}" required>
                             <div class="form-control-position">
                               <i class="feather icon-hash"></i>
                             </div>

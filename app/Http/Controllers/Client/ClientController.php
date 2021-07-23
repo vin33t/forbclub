@@ -138,6 +138,8 @@ class ClientController extends Controller
       $client->email = $request->clientEmail;
       $client->birthDate = $request->clientBirthDate;
       $client->address = $request->address;
+      $client->location = $request->location;
+      $client->created_by = Auth::user()->id;
       if ($request->clientAltPhone) {
         $client->altPhone = $request->clientAltPhone;
       }

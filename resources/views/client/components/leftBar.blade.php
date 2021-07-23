@@ -14,6 +14,10 @@
         <h6 class="mb-0">Name:</h6>
         <p>{{ $client->name }}</p>
       </div>
+ <div class="mt-1">
+        <h6 class="mb-0">Location:</h6>
+        <p>{{ $client->location }}</p>
+      </div>
       <div class="mt-1">
         <h6 class="mb-0">Enrolled On:</h6>
         <p>{{ \Carbon\Carbon::parse($package->enrollmentDate)->format('d M, Y') }}</p>
@@ -55,6 +59,10 @@
       <div class="mt-1">
         <h6 class="mb-0">Product:</h6>
         <p>{{ $package->productType }} | {{ $package->productName }} | {{ $package->productTenure }} Years | {{ inr($package->productCost) }}</p>
+      </div>
+ <div class="mt-1">
+        <h6 class="mb-0">Created By: </h6>
+        <p>{{ $client->created_by ? \App\User::find($client->created_by) : '' }}</p>
       </div>
       <div class="mt-1">
         <h6 class="mb-0">Status:</h6>
