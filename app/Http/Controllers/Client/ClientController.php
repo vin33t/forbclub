@@ -15656,6 +15656,7 @@ class ClientController extends Controller
       $client->phone = $request->phone;
       $client->altPhone = $request->altPhone;
       $client->emiRegularPlan = $request->emiRegularPlan;
+      $client->location = $request->location;
       $package = $client->latestPackage;
       $package->mafNo = $request->mafNo;
       $package->fclpId = $request->fclpId;
