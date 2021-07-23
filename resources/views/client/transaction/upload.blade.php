@@ -39,6 +39,30 @@
 
     </div>
   </div>
+  <div class="col-lg-6 col-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body">
+              <h4>Download Sample Files</h4>
+              <hr>
+              <div class="row">
+                <div class="col-md-6">
+                  <a href="https://www.dropbox.com/scl/fi/gc53kcomn42aasg6ntf31/axis_sample_nach.xls?dl=1" target="_blank"><h3>Axis Bank</h3></a>
+                </div>
+                <div class="col-md-6">
+                  <a href="https://www.dropbox.com/scl/fi/lnuz2lcasw6wigeqqxmyh/yes_sample_nach.xlsx?dl=1" target="_blank"><h3>Yes Bank</h3></a>
+                </div>
+              </div>
+
+            </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
 
 @endsection
 
