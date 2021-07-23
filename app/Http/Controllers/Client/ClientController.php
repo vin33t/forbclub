@@ -31,16 +31,19 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
 
-  public function printSummary($slug){
-    $client = Client::where('slug',$slug)->get();
-      if($client->count()){
-        $client = $client->first();
-        return view('client.summary')->with('client',$client);
-    } else{
-        abort(404);
-      }
+  public function printSummary($slug)
+  {
+    $client = Client::where('slug', $slug)->get();
+    if ($client->count()) {
+      $client = $client->first();
+      return view('client.summary')->with('client', $client);
+    } else {
+      abort(404);
+    }
   }
-  public function addLegalNotice(Request $request,$clientId){
+
+  public function addLegalNotice(Request $request, $clientId)
+  {
 //    return $request;
     $notice = new LegalNotice();
     $notice->client_id = $clientId;
@@ -52,7 +55,8 @@ class ClientController extends Controller
     return redirect()->back();
   }
 
-  public function editLegalNotice(Request $request,$noticeId){
+  public function editLegalNotice(Request $request, $noticeId)
+  {
 //    return $request;
     $notice = LegalNotice::find($noticeId);
     $notice->noticeReason = $request->noticeReason;
@@ -63,14 +67,17 @@ class ClientController extends Controller
     return redirect()->back();
   }
 
-  public function listClients($status){
-    $packages = SoldPackages::where('status',strtoupper($status))->get();
-    return view('client.list')->with('status',$status)->with('packages',$packages);
+  public function listClients($status)
+  {
+    $packages = SoldPackages::where('status', strtoupper($status))->get();
+    return view('client.list')->with('status', $status)->with('packages', $packages);
   }
-  public function listClientBranch($branch){
+
+  public function listClientBranch($branch)
+  {
 //    return $branch;
-    $packages = SoldPackages::where('branch',strtoupper($branch))->get();
-    return view('client.list')->with('status',strtoupper($branch))->with('packages',$packages);
+    $packages = SoldPackages::where('branch', strtoupper($branch))->get();
+    return view('client.list')->with('status', strtoupper($branch))->with('packages', $packages);
   }
 
   public function upcomingTransactions()
@@ -15669,9 +15676,13 @@ class ClientController extends Controller
       $package->emiStartDate = $request->emiStartDate;
       $package->save();
       $client->save();
-      $user = $client->user;
-      $user->email = $client->email;
-      $user->save();
+      try {
+        $user = $client->user;
+        $user->email = $client->email;
+        $user->save();
+      } catch (\Exception $e) {
+        return redirect()->back();
+      }
     }
     return redirect()->back();
   }
