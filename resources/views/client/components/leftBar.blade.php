@@ -99,6 +99,7 @@
                         <option value="Breather">Breather</option>
                         <option value="Cancelled">Cancelled</option>
                         <option value="Incomplete">Incomplete</option>
+                        <option value="Full Payment">Full Payment</option>
                       </select>
                     </div>
                     <div class="col-md-12">
