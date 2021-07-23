@@ -13,7 +13,7 @@ class Client extends Model
 {
   use HasSlug;
 
-  use Searchable;
+//  use Searchable;
 
   public function getLatestPackageAttribute()
   {

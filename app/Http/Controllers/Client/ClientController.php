@@ -85,7 +85,7 @@ class ClientController extends Controller
 
   public function find(Request $request)
   {
-    $search = $request->q;
+//    $search = $request->q;
     return Client::where('name', 'like', '%' . $request->q . '%')->get();
   }
 
