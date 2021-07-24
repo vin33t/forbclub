@@ -84,7 +84,7 @@
       </div>
     @endif
     @php
-      $status = ['ACTIVE', 'CANCELLED', 'BREATHER', 'INCOMPLETE', 'ON HOLD'];
+      $status = ['ACTIVE', 'CANCELLED', 'BREATHER', 'INCOMPLETE', 'ON HOLD','FULL PAYMENT'];
     @endphp
     <div class="row">
       @if(request()->type == 'clients')
