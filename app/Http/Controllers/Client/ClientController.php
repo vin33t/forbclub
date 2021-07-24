@@ -411,9 +411,12 @@ class ClientController extends Controller
 
   public function deleteFollowUp(Request $request, $id)
   {
+
     $followUp = FollowUp::find($id);
-    if ($followUp) {
-      $followUp->delete();
+    if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')){
+      if ($followUp) {
+        $followUp->delete();
+      }
     }
     return redirect()->back();
   }
@@ -422,12 +425,14 @@ class ClientController extends Controller
   {
 //    return $request;
     $followUp = FollowUp::find($id);
-    if ($followUp) {
-      $followUp->follow_up_on = $request->followUpDate;
-      $followUp->type = $request->followUpType;
-      $followUp->subject = $request->followUpSubject;
-      $followUp->details = $request->followUpRemarks;
-      $followUp->save();
+    if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')) {
+      if ($followUp) {
+        $followUp->follow_up_on = $request->followUpDate;
+        $followUp->type = $request->followUpType;
+        $followUp->subject = $request->followUpSubject;
+        $followUp->details = $request->followUpRemarks;
+        $followUp->save();
+      }
     }
     return redirect()->back();
   }

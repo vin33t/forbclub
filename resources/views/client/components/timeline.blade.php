@@ -1,11 +1,11 @@
 <div class="col-lg-6 col-12">
   <div class="row">
-  @if(request()->status)
-    <div class="col-md-12">
-      <div class="alert alert-success" role="alert">
-        Query Sent
+    @if(request()->status)
+      <div class="col-md-12">
+        <div class="alert alert-success" role="alert">
+          Query Sent
+        </div>
       </div>
-    </div>
     @endif
     @if(!$user->employee)
       <div class="col-md-12">
@@ -13,7 +13,7 @@
           <div class="card-body">
             <h4>Queries</h4>
             <br>
-            <button class="btn btn-primary"  data-toggle="modal" data-target="#bookingQuery">Booking Query</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#bookingQuery">Booking Query</button>
             <div class="modal fade" id="bookingQuery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -31,7 +31,7 @@
                       <div class="row">
                         <div class="col-md-6">
                           <label for="destination">Destination</label>
-                          <input type="text" name="destination" id="destination"  class="form-control" required>
+                          <input type="text" name="destination" id="destination" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                           <label for="travelDate">Travel Date</label>
@@ -56,7 +56,8 @@
 
                         <div class="col-md-12">
                           <label for="queryRemarks">Remarks</label>
-                          <textarea name="queryRemarks" id="queryRemarks" cols="30" rows="10" class="form-control"></textarea>
+                          <textarea name="queryRemarks" id="queryRemarks" cols="30" rows="10"
+                                    class="form-control"></textarea>
                           {{--                          <input type="text" name="otherQuery" id="otherQuery" required>--}}
                         </div>
                       </div>
@@ -88,8 +89,9 @@
                       <div class="row">
                         <div class="col-md-12">
                           <label for="otherQuery">Other Query</label>
-                          <textarea name="otherQuery" id="otherQuery" cols="30" rows="10" class="form-control"></textarea>
-{{--                          <input type="text" name="otherQuery" id="otherQuery" required>--}}
+                          <textarea name="otherQuery" id="otherQuery" cols="30" rows="10"
+                                    class="form-control"></textarea>
+                          {{--                          <input type="text" name="otherQuery" id="otherQuery" required>--}}
                         </div>
                       </div>
                     </div>
@@ -264,16 +266,19 @@
               <div class="card-body">
                 <ul>
                   @foreach($client->followUp as $followUp)
-                    <li><strong>{{$followUp->subject}} | Added On: {{ $followUp->follow_up_on }} |</strong>
+                    <li><strong>{{$followUp->subject}} | Added On: {{ \Carbon\Carbon::parse($followUp->follow_up_on)->format('d F, Y') }} |</strong>
                       @if(Auth::user()->name == $followUp->type)
-                        <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                data-target="#editFollowUp{{ $followUp->id }}">Edit
-                        </button>
-                        <form action="{{ route('delete.followUp',['id'=>$followUp->id]) }}" method="POST">
-                          @csrf
-                          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                        </form>
+                        @if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d'))
+                          <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                  data-target="#editFollowUp{{ $followUp->id }}">Edit
+                          </button>
+                          <form action="{{ route('delete.followUp',['id'=>$followUp->id]) }}" method="POST">
+                            @csrf
+                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                          </form>
+                        @endif
                       @endif
+
                       <p>{!! $followUp->details !!}</p>
                       <strong>Added By: {{ $followUp->type }}</strong></li>
                     <div class="modal fade" id="editFollowUp{{ $followUp->id }}" tabindex="-1" role="dialog"
@@ -502,13 +507,13 @@
                   </div>
                 </div>
               </div>
-          
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="Submit" class="btn btn-primary">Update</button>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="Submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
           </div>
-          </form>
-</div>
         </div>
       </div>
       <div class="modal fade" id="addAsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
