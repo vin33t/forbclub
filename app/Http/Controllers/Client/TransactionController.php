@@ -307,10 +307,10 @@ class TransactionController extends Controller
 
     $data = (new FastExcel)->import($request->transactionFile);
 
-    if($request->bank == 'Yes'){
+    if ($request->bank == 'Yes') {
       try {
-        if ($data[0]['VALUE DATE'] == ""){
-          return \redirect()->back()->withErrors(['error'=>'VALUE DATE column cannot be empty. This Column contains the date of the transactions']);
+        if ($data[0]['VALUE DATE'] == "") {
+          return \redirect()->back()->withErrors(['error' => 'VALUE DATE column cannot be empty. This Column contains the date of the transactions']);
         }
 
         $success = 0;
@@ -367,78 +367,82 @@ class TransactionController extends Controller
         $meta->failure_amount = $failure_amount;
         $meta->transactions = $transactions_count;
         $meta->save();
-      } catch(\Exception $e){
+      } catch (\Exception $e) {
         return \redirect()->back()->withErrors($e->getMessage());
       }
 
-    } else{
+    } else {
 
-    $success = 0;
-    $transactions_count = 0;
-    $success_amount = 0;
-    $failure = 0;
-    $failure_amount = 0;
-    $meta = new AxisNachPaymentMeta;
-    $meta->file_name = $request->transactionFile->getClientOriginalName();
-    $meta->amount = $data->pluck('Amount (Rs)')->sum();
-    $meta->success = 0;
-    $meta->transactions = $transactions_count;
-    $meta->success_amount = 0;
-    $meta->failure = 0;
-    $meta->failure_amount = 0;
-    $meta->upload_date = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
-    $meta->save();
-    foreach ($data as $tran) {
+      try {
 
-      $prefix = array("F", "T", "K", "-", "f", "t", "k", "l", "p", "L", "P", "c", "C", "@", " ");
+        $success = 0;
+        $transactions_count = 0;
+        $success_amount = 0;
+        $failure = 0;
+        $failure_amount = 0;
+        $meta = new AxisNachPaymentMeta;
+        $meta->file_name = $request->transactionFile->getClientOriginalName();
+        $meta->amount = $data->pluck('Amount (Rs)')->sum();
+        $meta->success = 0;
+        $meta->transactions = $transactions_count;
+        $meta->success_amount = 0;
+        $meta->failure = 0;
+        $meta->failure_amount = 0;
+        $meta->upload_date = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
+        $meta->save();
+        foreach ($data as $tran) {
+
+          $prefix = array("F", "T", "K", "-", "f", "t", "k", "l", "p", "L", "P", "c", "C", "@", " ");
 //        dd($row);
-      $id = $tran['Transaction ID/REF'];
-      $onlyId = str_replace($prefix, "", $id);
-      if ($onlyId == 552286) {
-        $package = SoldPackages::where('fclpId', '552226')->get();
+          $id = $tran['Transaction ID/REF'];
+          $onlyId = str_replace($prefix, "", $id);
+          if ($onlyId == 552286) {
+            $package = SoldPackages::where('fclpId', '552226')->get();
 //        $package = Client::query()->where('application_no','552226')->get();
-      } else {
-        $package = SoldPackages::where('fclpId', $onlyId)->get();
+          } else {
+            $package = SoldPackages::where('fclpId', $onlyId)->get();
 //        $package = Client::query()->where('application_no', 'like', '%'.$onlyId.'%')->get();
-      }
+          }
 //      return $tran;
-      $transaction = new AxisNachPayment;
-      $transaction->meta_id = $meta->id;
-      if ($package) {
-        $transaction->client_id = $package->first()->clientId;
+          $transaction = new AxisNachPayment;
+          $transaction->meta_id = $meta->id;
+          if ($package) {
+            $transaction->client_id = $package->first()->clientId;
+          }
+          $transaction->corporate_user_no = $tran['Corporate User No'];
+          $transaction->corporate_name = $tran['Corporate Name'];
+          $transaction->umrn = $tran['UMRN'];
+          $transaction->customer_to_be_debited = $tran['Customer to be debited'];
+          $transaction->customer_ifsc = $tran['Customer IFSC'];
+          $transaction->customer_debit_ac = $tran['Customer Debit AC'];
+          $transaction->transaction_id_ref = $tran['Transaction ID/REF'];
+          $transaction->amount = $tran['Amount (Rs)'];
+          $transaction->date_of_transaction = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
+          $transaction->status_description = $tran['Status'];
+          $transaction->reason_description = $tran['Reason Description'];
+          $transaction->save();
+          if ($tran['Status'] == 'SUCCESS') {
+            $success += 1;
+            $success_amount += $tran['Amount (Rs)'];
+          } elseif ($tran['Status'] == 'FAILURE') {
+            $failure += 1;
+            $failure_amount += $tran['Amount (Rs)'];
+          }
+          $transactions_count += 1;
+        }
+        $meta->success = $success;
+        $meta->success_amount = $success_amount;
+        $meta->failure = $failure;
+        $meta->failure_amount = $failure_amount;
+        $meta->transactions = $transactions_count;
+        $meta->save();
+      } catch (\Exception $e) {
+        return \redirect()->back()->withErrors($e->getMessage());
       }
-      $transaction->corporate_user_no = $tran['Corporate User No'];
-      $transaction->corporate_name = $tran['Corporate Name'];
-      $transaction->umrn = $tran['UMRN'];
-      $transaction->customer_to_be_debited = $tran['Customer to be debited'];
-      $transaction->customer_ifsc = $tran['Customer IFSC'];
-      $transaction->customer_debit_ac = $tran['Customer Debit AC'];
-      $transaction->transaction_id_ref = $tran['Transaction ID/REF'];
-      $transaction->amount = $tran['Amount (Rs)'];
-      $transaction->date_of_transaction = Carbon::parse(Carbon::createFromFormat('d/m/Y', $data[0]['Date of Txn']))->format('Y-m-d');
-      $transaction->status_description = $tran['Status'];
-      $transaction->reason_description = $tran['Reason Description'];
-      $transaction->save();
-      if ($tran['Status'] == 'SUCCESS') {
-        $success += 1;
-        $success_amount += $tran['Amount (Rs)'];
-      } elseif ($tran['Status'] == 'FAILURE') {
-        $failure += 1;
-        $failure_amount += $tran['Amount (Rs)'];
-      }
-      $transactions_count += 1;
-    }
-    $meta->success = $success;
-    $meta->success_amount = $success_amount;
-    $meta->failure = $failure;
-    $meta->failure_amount = $failure_amount;
-    $meta->transactions = $transactions_count;
-    $meta->save();
-
     }
 
 //    return $request;
-    return \redirect()->back();
+    return redirect()->back()->with('message', 'FILE UPLOADED');
   }
 
   public function disableNach(Request $request)
@@ -1007,8 +1011,8 @@ class TransactionController extends Controller
           $payment->delete();
           $meta->delete();
         }
-          return '200';
-      } catch (\Exception $e){
+        return '200';
+      } catch (\Exception $e) {
         return '500';
       }
     }
@@ -1022,16 +1026,16 @@ class TransactionController extends Controller
         $file_name = $meta->file_name;
         $transactions = $meta->payments;
         return (new FastExcel($transactions))->download($file_name . '.xlsx');
-      } catch (\Exception $e){
+      } catch (\Exception $e) {
         return \redirect()->back();
       }
-    }    elseif ($bank == 'yes') {
+    } elseif ($bank == 'yes') {
       try {
         $meta = YesNachPaymentMeta::find($importId);
         $file_name = $meta->file_name;
         $transactions = $meta->payments;
         return (new FastExcel($transactions))->download($file_name . '.xlsx');
-      } catch (\Exception $e){
+      } catch (\Exception $e) {
         return \redirect()->back();
       }
     }
