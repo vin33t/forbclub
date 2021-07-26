@@ -4,6 +4,18 @@
 
 @section('content')
   <div class="row">
+      @if($errors->any())
+    <div class="col-md-12">
+      <div class="alert alert-danger" role="alert">
+        Error While Uploading File <br>
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>@if($error == 'A non well formed numeric value encountered') AMOUNT Column has INTEGER Values stored as TEXT. Convert them to numbers first <a href="https://support.microsoft.com/en-us/office/fix-text-formatted-numbers-by-applying-a-number-format-6599c03a-954d-4d83-b78a-23af2c8845d0" target="_blank">CLICK HERE</a> to know more @else {{$error}} @endif</li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+      @endif
     <div class="col-lg-6 col-12">
       <div class="row">
         <div class="col-md-12">

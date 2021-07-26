@@ -308,61 +308,68 @@ class TransactionController extends Controller
     $data = (new FastExcel)->import($request->transactionFile);
 
     if($request->bank == 'Yes'){
-      $success = 0;
-      $transactions_count = 0;
-      $success_amount = 0;
-      $failure = 0;
-      $failure_amount = 0;
-      $meta = new YesNachPaymentMeta();
-      $meta->file_name = $request->transactionFile->getClientOriginalName();
-      $meta->amount = $data->pluck('AMOUNT')->sum();
-      $meta->success = 0;
-      $meta->transactions = $transactions_count;
-      $meta->success_amount = 0;
-      $meta->failure = 0;
-      $meta->failure_amount = 0;
-      $meta->upload_date = Carbon::parse(Carbon::createFromFormat('Y-d-m', Carbon::parse($data[0]['VALUE DATE'])->format('Y-m-d')))->format('Y-m-d');
-      $meta->save();
-      foreach ($data as $tran) {
-//        return $tran['RECEIVER ACCOUNT'];
-        $oldPay = YesNachPayment::where('RECEIVER_ACCOUNT',$tran['RECEIVER ACCOUNT'])->get();
-        if($oldPay->count() > 0){
-          $id = $oldPay->first()->client_id;
-        } else {
-          $id = null;
+      try {
+        if ($data[0]['VALUE DATE'] == ""){
+          return \redirect()->back()->withErrors(['error'=>'VALUE DATE column cannot be empty. This Column contains the date of the transactions']);
         }
-        $transaction = new YesNachPayment();
-        $transaction->meta_id = $meta->id;
-        $transaction->client_id = $id;
-        $transaction->ITEM_TYPE = $tran['ITEM TYPE'];
-        $transaction->ITEM_REFERENCE = $tran['ITEM REFERENCE'];
-        $transaction->ITEM_SEQUENCE_NUMBER = $tran['ITEM SEQUENCE NUMBER'];
-        $transaction->STATUS = $tran['STATUS'];
-        $transaction->CLEARING_STATUS = $tran['CLEARING STATUS'];
-        $transaction->VALUE_DATE = Carbon::parse(Carbon::createFromFormat('Y-d-m', Carbon::parse($tran['VALUE DATE'])->format('Y-m-d')))->format('Y-m-d');
-        $transaction->SENDER = $tran['SENDER'];
-        $transaction->RECEIVER = $tran['RECEIVER'];
-        $transaction->REASON_CODE = $tran['REASON CODE'];
-        $transaction->CURRENCY = $tran['CURRENCY'];
-        $transaction->AMOUNT = $tran['AMOUNT'];
-        $transaction->RECEIVER_ACCOUNT = $tran['RECEIVER ACCOUNT'];
-        $transaction->NAME = $tran['NAME'];
-        $transaction->save();
-        if ($tran['STATUS'] == 'RETURNED') {
-          $success += 1;
-          $success_amount += $tran['AMOUNT'];
-        } elseif ($tran['STATUS'] == 'ACCEPTED') {
-          $failure += 1;
-          $failure_amount += $tran['AMOUNT'];
+
+        $success = 0;
+        $transactions_count = 0;
+        $success_amount = 0;
+        $failure = 0;
+        $failure_amount = 0;
+        $meta = new YesNachPaymentMeta();
+        $meta->file_name = $request->transactionFile->getClientOriginalName();
+        $meta->amount = $data->pluck('AMOUNT')->sum();
+        $meta->success = 0;
+        $meta->transactions = $transactions_count;
+        $meta->success_amount = 0;
+        $meta->failure = 0;
+        $meta->failure_amount = 0;
+        $meta->upload_date = Carbon::parse(Carbon::createFromFormat('Y-d-m', Carbon::parse($data[0]['VALUE DATE'])->format('Y-m-d')))->format('Y-m-d');
+        $meta->save();
+        foreach ($data as $tran) {
+          $oldPay = YesNachPayment::where('RECEIVER_ACCOUNT', $tran['RECEIVER ACCOUNT'])->get();
+          if ($oldPay->count() > 0) {
+            $id = $oldPay->first()->client_id;
+          } else {
+            $id = null;
+          }
+          $transaction = new YesNachPayment();
+          $transaction->meta_id = $meta->id;
+          $transaction->client_id = $id;
+          $transaction->ITEM_TYPE = $tran['ITEM TYPE'];
+          $transaction->ITEM_REFERENCE = $tran['ITEM REFERENCE'];
+          $transaction->ITEM_SEQUENCE_NUMBER = $tran['ITEM SEQUENCE NUMBER'];
+          $transaction->STATUS = $tran['STATUS'];
+          $transaction->CLEARING_STATUS = $tran['CLEARING STATUS'];
+          $transaction->VALUE_DATE = Carbon::parse(Carbon::createFromFormat('Y-d-m', Carbon::parse($tran['VALUE DATE'])->format('Y-m-d')))->format('Y-m-d');
+          $transaction->SENDER = $tran['SENDER'];
+          $transaction->RECEIVER = $tran['RECEIVER'];
+          $transaction->REASON_CODE = $tran['REASON CODE'];
+          $transaction->CURRENCY = $tran['CURRENCY'];
+          $transaction->AMOUNT = $tran['AMOUNT'];
+          $transaction->RECEIVER_ACCOUNT = $tran['RECEIVER ACCOUNT'];
+          $transaction->NAME = $tran['NAME'];
+          $transaction->save();
+          if ($tran['STATUS'] == 'RETURNED') {
+            $success += 1;
+            $success_amount += $tran['AMOUNT'];
+          } elseif ($tran['STATUS'] == 'ACCEPTED') {
+            $failure += 1;
+            $failure_amount += $tran['AMOUNT'];
+          }
+          $transactions_count += 1;
         }
-        $transactions_count += 1;
+        $meta->success = $success;
+        $meta->success_amount = $success_amount;
+        $meta->failure = $failure;
+        $meta->failure_amount = $failure_amount;
+        $meta->transactions = $transactions_count;
+        $meta->save();
+      } catch(\Exception $e){
+        return \redirect()->back()->withErrors($e->getMessage());
       }
-      $meta->success = $success;
-      $meta->success_amount = $success_amount;
-      $meta->failure = $failure;
-      $meta->failure_amount = $failure_amount;
-      $meta->transactions = $transactions_count;
-      $meta->save();
 
     } else{
 
