@@ -96,6 +96,7 @@
             <strong>
             Down Payment: {{ $client->downPayment }} <br>
             Total Paid Amount(incl. DP): {{ $client->paidAmount }} <br>
+            Add On Amount: {{ $client->addOnAmount }} <br>
             Pending Amount: {{ $client->latestPackage->productCost - $client->paidAmount }}
             </strong>
             @if(count($client->transactionSummaryChart))

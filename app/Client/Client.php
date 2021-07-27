@@ -43,22 +43,22 @@ class Client extends Model
   {
     $totalTransactions = collect();
     if($this->cashPayments->count()){
-      foreach($this->CashPayments as $ca){
+      foreach($this->CashPayments->where('isAddon',0) as $ca){
         $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
       }
     }
     if($this->cardPayments->count()){
-      foreach($this->CardPayments as $cad){
+      foreach($this->CardPayments->where('isAddon',0) as $cad){
         $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
       }
     }
     if($this->chequePayments->count()){
-      foreach($this->chequePayments as $che){
+      foreach($this->chequePayments->where('isAddon',0) as $che){
         $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
       }
     }
     if($this->otherPayments->count()){
-      foreach($this->otherPayments as $oth){
+      foreach($this->otherPayments->where('isAddon',0) as $oth){
         $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
       }
     }
@@ -80,6 +80,33 @@ class Client extends Model
     }
 
     return $totalTransactions->pluck('amount')->sum();
+  }
+
+  public function getAddOnAmountAttribute()
+  {
+    $addOnTransactions = collect();
+    if($this->cashPayments->count()){
+      foreach($this->CashPayments->where('isAddon', 1) as $ca){
+        $addOnTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
+      }
+    }
+    if($this->cardPayments->count()){
+      foreach($this->CardPayments->where('isAddon', 1) as $cad){
+        $addOnTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
+      }
+    }
+    if($this->chequePayments->count()){
+      foreach($this->chequePayments->where('isAddon', 1) as $che){
+        $addOnTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
+      }
+    }
+    if($this->otherPayments->count()){
+      foreach($this->otherPayments->where('isAddon', 1) as $oth){
+        $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
+      }
+    }
+
+    return $addOnTransactions->pluck('amount')->sum();
   }
 
   public function getTransactionSummaryAttribute()
