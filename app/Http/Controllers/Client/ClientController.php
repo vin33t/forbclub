@@ -51,6 +51,11 @@ class ClientController extends Controller
     $notice->noticeDate = $request->noticeDate;
     $notice->hearingDate = $request->hearingDate;
     $notice->noticeDescription = $request->noticeDescription;
+    if ($request->file('noticeDocument')) {
+      $fileName = $request->file('noticeDocument')->getClientOriginalName();
+      $notice->attachment = $fileName;
+      $request->file('noticeDocument')->move(public_path('legalAttachments'), $fileName);
+    }
     $notice->save();
     return redirect()->back();
   }
@@ -413,7 +418,7 @@ class ClientController extends Controller
   {
 
     $followUp = FollowUp::find($id);
-    if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')){
+    if (\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')) {
       if ($followUp) {
         $followUp->delete();
       }
@@ -425,7 +430,7 @@ class ClientController extends Controller
   {
 //    return $request;
     $followUp = FollowUp::find($id);
-    if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')) {
+    if (\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d')) {
       if ($followUp) {
         $followUp->follow_up_on = $request->followUpDate;
         $followUp->type = $request->followUpType;

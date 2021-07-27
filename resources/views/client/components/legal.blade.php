@@ -15,6 +15,7 @@
                   <th>Notice Date</th>
                   <th>Notice Description</th>
                   <th>Hearing Date</th>
+                  <th>Attachment</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -25,6 +26,15 @@
                     <td>{{ \Carbon\Carbon::parse($notice->noticeDate)->format('d-m-Y') }}</td>
                     <td>{{ $notice->noticeDescription }}</td>
                     <td>{{ \Carbon\Carbon::parse($notice->hearingDate)->format('d-m-Y') }}</td>
+                    <td>
+                      @if($notice->attachment)
+                      <a href=" {{ \Illuminate\Support\Facades\URL::asset('legalAttachments/' . $notice->attachment) }}">
+                       Download Attachment
+                      </a>
+                        @else
+                        No Attachment
+                        @endif
+                    </td>
                     <td>
                       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editLegalNotice{{ $notice->id }}">
                         <i class="fa fa-edit"></i>

@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ route('add.legal.notice',['clientId'=>$client->id]) }}" method="POST">
+      <form action="{{ route('add.legal.notice',['clientId'=>$client->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
           <div class="row">
