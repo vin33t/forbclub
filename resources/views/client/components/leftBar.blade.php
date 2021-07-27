@@ -22,7 +22,7 @@
         <h6 class="mb-0">Enrolled On:</h6>
         <p>{{ \Carbon\Carbon::parse($package->enrollmentDate)->format('d M, Y') }}</p>
       </div>
-      <div class="mt-1">
+      <div class="mt-1 alert alert-warning">
         <h6 class="mb-0">Membership Expiring On:</h6>
         <p>{{  \Carbon\Carbon::parse($package->enrollmentDate)->addYears($package->productTenure)->format('d M, Y') }}</p>
       </div>
