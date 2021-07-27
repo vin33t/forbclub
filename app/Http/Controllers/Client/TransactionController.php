@@ -88,7 +88,7 @@ class TransactionController extends Controller
           'body' => 'Client made a payment of ' . inr($transaction->amount) . ' using Card (' . $transaction->cardType . ') ending wth ' . ' card ending with ' . $transaction->cardLastFourDigits . ' for the month of ' . Carbon::parse($request->paymentReceivedOn)->format('F Y')
         ]);
         DB::commit();
-        notifyToast('success', 'Saved', 'Card Transaction Saved');
+        notifyToast('success', 'Saved', 'Cheque Transaction Saved');
       } catch (\Exception $e) {
         DB::rollBack();
       }

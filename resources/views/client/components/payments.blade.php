@@ -40,25 +40,26 @@
   @php
     $totalTransactions = collect();
       if($client->cashPayments->count()){
-          foreach($client->CashPayments as $ca){
+          foreach($client->CashPayments->where('isAddon',0) as $ca){
             $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
           }
       }
       if($client->cardPayments->count()){
-          foreach($client->CardPayments as $cad){
+          foreach($client->CardPayments->where('isAddon',0) as $cad){
             $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
           }
       }
       if($client->chequePayments->count()){
-          foreach($client->chequePayments as $che){
+          foreach($client->chequePayments->where('isAddon',0) as $che){
             $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
           }
       }
       if($client->otherPayments->count()){
-          foreach($client->otherPayments as $oth){
+          foreach($client->otherPayments->where('isAddon',0) as $oth){
             $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
           }
       }
+
       if($client->id != 590){
         if($client->AxisPayments->count()){
             foreach($client->AxisPayments as $axp){
@@ -121,7 +122,8 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
               FCLP Cost: {{ $client->latestPackage->productCost }} <br>
               Downpayment: {{ $client->downPayment }} <br>
               Total Payment Done(Including DP): {{ $totalTransactions->pluck('amount')->sum() }} <br>
-              Pending Payment: {{ $client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum()  }}
+              Pending Payment: {{ $client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum()  }} <br>
+              Add On Payment: {{ $client->addOnPayment }}
               <br>
               @if($user->employee)
                 @if($client->refundRequest)

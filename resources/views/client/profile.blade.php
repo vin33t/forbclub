@@ -148,14 +148,16 @@
     @endif
     <section id="profile-info">
       <div class="row">
-        @if($client->latestPackage->status == 'Cancelled')
-          <div class="col-md-12">
-            <div class="alert alert-danger">
-              Client Cancelled
-              ({{ $client->latestPackage->remarks == ''? 'CANCELLED DUE TO NON PAYMENT' : $client->latestPackage->remarks }}
-              )
+        @if($client->latestPackage)
+          @if($client->latestPackage->status == 'Cancelled')
+            <div class="col-md-12">
+              <div class="alert alert-danger">
+                Client Cancelled
+                ({{ $client->latestPackage->remarks == ''? 'CANCELLED DUE TO NON PAYMENT' : $client->latestPackage->remarks }}
+                )
+              </div>
             </div>
-          </div>
+          @endif
         @endif
 
         @if(request()->show == 'payments')
