@@ -285,6 +285,8 @@ class TransactionController extends Controller
             $foo->put('DEBIT','YES');
           }
         }
+      } else {
+            $foo->put('DEBIT','YES');
       }
 
       if (Carbon::parse($client->AxisMis->sortBy('created_at')->last()->ENDDATE)->gt(Carbon::now())) {
