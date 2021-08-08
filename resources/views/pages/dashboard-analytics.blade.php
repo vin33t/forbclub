@@ -20,58 +20,80 @@
   {{-- Dashboard Analytics Start --}}
   <section id="dashboard-analytics">
     @if(!request()->type)
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-12">
-        <div class="card">
-          <div class="card-header d-flex flex-column align-items-start pb-0">
-            <div class="avatar bg-rgba-warning p-50 m-0">
-              <div class="avatar-content">
-                <i class="feather icon-user text-danger font-medium-5"></i>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="card">
+            <div class="card-header d-flex flex-column align-items-start pb-0">
+              <div class="avatar bg-rgba-warning p-50 m-0">
+                <div class="avatar-content">
+                  <i class="feather icon-user text-danger font-medium-5"></i>
+                </div>
               </div>
-            </div>
-            <a href="{{ route('dashboard',['type'=>'clients']) }}">
-              <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Client\Client::all()->count() }}</h2>
-              <p class="mb-0">{{ __('Clients') }}</p>
+              <a href="{{ route('dashboard',['type'=>'clients']) }}">
+                <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Client\Client::all()->count() }}</h2>
+                <p class="mb-0">{{ __('Clients') }}</p>
 
-            </a>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-12">
-        <div class="card">
-          <div class="card-header d-flex flex-column align-items-start pb-0">
-            <div class="avatar bg-rgba-warning p-50 m-0">
-              <div class="avatar-content">
-                <i class="feather icon-package text-warning font-medium-5"></i>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="card">
+            <div class="card-header d-flex flex-column align-items-start pb-0">
+              <div class="avatar bg-rgba-warning p-50 m-0">
+                <div class="avatar-content">
+                  <i class="feather icon-package text-warning font-medium-5"></i>
+                </div>
               </div>
-            </div>
-            @php
-              $reimbursements =  \App\Reimbursement::all();
+              @php
+                $reimbursements =  \App\Reimbursement::all();
 
-    $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
-    $reimbursementClaimRejected = $reimbursements->where('rejected',1)->pluck('amount')->sum();
-    $reimbursementClaimProcessed = $reimbursements->where('reimbursed',1)->pluck('amount')->sum();
-    $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
-            @endphp
-            <h2 class="text-bold-700 mt-1 mb-25">{{ $reimbursementClaimPending }}</h2>
-            <p class="mb-0">Pending Reimbursement</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-12">
-        <div class="card">
-          <div class="card-header d-flex flex-column align-items-start pb-0">
-            <div class="avatar bg-rgba-warning p-50 m-0">
-              <div class="avatar-content">
-                <i class="feather icon-user text-danger font-medium-5"></i>
-              </div>
+      $reimbursementClaimReceived = $reimbursements->pluck('amount')->sum();
+      $reimbursementClaimRejected = $reimbursements->where('rejected',1)->pluck('amount')->sum();
+      $reimbursementClaimProcessed = $reimbursements->where('reimbursed',1)->pluck('amount')->sum();
+      $reimbursementClaimPending = $reimbursementClaimReceived - $reimbursementClaimProcessed - $reimbursementClaimRejected;
+              @endphp
+              <h2 class="text-bold-700 mt-1 mb-25">{{ $reimbursementClaimPending }}</h2>
+              <p class="mb-0">Pending Reimbursement</p>
             </div>
-            <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Employee::all()->count() }}</h2>
-            <p class="mb-0">Employee</p>
           </div>
         </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <div class="card">
+            <div class="card-header d-flex flex-column align-items-start pb-0">
+              <div class="avatar bg-rgba-warning p-50 m-0">
+                <div class="avatar-content">
+                  <i class="feather icon-user text-danger font-medium-5"></i>
+                </div>
+              </div>
+              <h2 class="text-bold-700 mt-1 mb-25">{{ \App\Employee::all()->count() }}</h2>
+              <p class="mb-0">Employee</p>
+            </div>
+          </div>
+        </div>
+{{--        <div class="col-lg-3 col-md-6 col-12">--}}
+{{--          <div class="card">--}}
+{{--            <div class="card-header d-flex flex-column align-items-start pb-0">--}}
+{{--              <div class="avatar bg-rgba-warning p-50 m-0">--}}
+{{--                <div class="avatar-content">--}}
+{{--                  <i class="feather icon-mail text-danger font-medium-5"></i>--}}
+{{--                </div>--}}
+{{--                @if(!\Illuminate\Support\Facades\Queue::size())--}}
+{{--                      <a href="javascript:void(0)">--}}
+{{--                    @else--}}
+{{--                  <a href="{{ route('release-ekits') }}">--}}
+{{--                        @endif--}}
+{{--                        <button class="btn btn-danger" @if(!\Illuminate\Support\Facades\Queue::size()) disabled @endif>--}}
+{{--                          Release Now--}}
+{{--                        </button>--}}
+{{--                      </a>--}}
+{{--              </div>--}}
+{{--              <h2 class="text-bold-700 mt-1 mb-25">{{ \Illuminate\Support\Facades\Queue::size() }}</h2>--}}
+{{--              <p class="mb-0">E-kits not Released</p>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+{{--        </div>--}}
       </div>
-    </div>
     @endif
     @if(request()->type == 'clients')
 
@@ -88,9 +110,9 @@
     @endphp
     <div class="row">
       @if(request()->type == 'clients')
-          @foreach($status as $clientStatus)
-            <div class="col-lg-3 col-md-6 col-12">
-              <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
+        @foreach($status as $clientStatus)
+          <div class="col-lg-3 col-md-6 col-12">
+            <a href="{{ route('view.client.status',['status'=>$clientStatus]) }}">
 
               <div class="card">
                 <div class="card-header d-flex flex-column align-items-start pb-0">
@@ -100,25 +122,25 @@
                     </div>
                   </div>
 
-                    <h2
-                      class="text-bold-700 mt-1 mb-25">{{ \App\Client\Package\SoldPackages::where('status',$clientStatus)->count() }}</h2>
-                    <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
+                  <h2
+                    class="text-bold-700 mt-1 mb-25">{{ \App\Client\Package\SoldPackages::where('status',$clientStatus)->count() }}</h2>
+                  <p class="mb-0">{{ strtoupper($clientStatus) }}</p>
                 </div>
               </div>
-              </a>
-            </div>
+            </a>
+          </div>
 
         @endforeach
-        @endif
+      @endif
     </div>
-      @if(request()->type == 'clients')
+    @if(request()->type == 'clients')
 
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <div class="card">
-              <div class="card-header"><h3>Clients By Branch</h3></div>
-              <div class="card-body">
-                <div class="row">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="card">
+            <div class="card-header"><h3>Clients By Branch</h3></div>
+            <div class="card-body">
+              <div class="row">
                 <div class="col-lg-3 col-md-6 col-12">
                   <a href="{{ route('view.client.branch',['branch'=>'chandigarh']) }}">
 
@@ -155,12 +177,12 @@
                     </div>
                   </a>
                 </div>
-                </div>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-      @endif
+      </div>
+    @endif
   </section>
   <!-- Dashboard Analytics end -->
 @endsection

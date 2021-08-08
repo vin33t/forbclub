@@ -38,6 +38,13 @@ Route::get('/transaction/index', function (){
   return view('client.transactionIndex');
 });
 
+Route::get('/release-ekits', function (){
+//  \Illuminate\Support\Facades\Artisan::call('queue:work');
+  exec('php artisan queue:work');
+
+  return redirect()->back();
+})->name('release-ekits');
+
 Route::get('/agent', function () {
   $res = [
     'listItems' => [

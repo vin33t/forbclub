@@ -235,6 +235,7 @@ class TransactionController extends Controller
 
   public function downloadAxisMisFile(Request $request)
   {
+//    return $request;
     $collection = collect();
     $clients = Client::find(AxisMis::where('client_id', '!=', null)->pluck('client_id')->unique());
     foreach ($clients as $client) {
@@ -273,6 +274,19 @@ class TransactionController extends Controller
       $foo->put('INWARD_DATE', $client->AxisMis->sortBy('created_at')->last()->INWARD_DATE);
       $foo->put('SP_BANK', $client->AxisMis->sortBy('created_at')->last()->SP_BANK);
       $foo->put('SCHEME', $client->AxisMis->sortBy('created_at')->last()->SCHEME);
+      if($client->DisableNach->count()){
+        if($client->DisableNach()->where('permanent',1)->get()->count()){
+          $foo->put('DEBIT','NO');
+        }
+        else{
+          if($client->DisbaleNach->where('year',$request->year)->where('month',$request->month)->first()){
+            $foo->put('DEBIT','NO');
+          }else{
+            $foo->put('DEBIT','YES');
+          }
+        }
+      }
+
       if (Carbon::parse($client->AxisMis->sortBy('created_at')->last()->ENDDATE)->gt(Carbon::now())) {
         $collection->push($foo);
       }
