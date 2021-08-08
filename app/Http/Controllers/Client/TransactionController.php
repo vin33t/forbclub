@@ -279,7 +279,7 @@ class TransactionController extends Controller
           $foo->put('DEBIT','NO');
         }
         else{
-          if($client->DisbaleNach->where('year',$request->year)->where('month',$request->month)->first()){
+          if($client->DisableNach()->where('year',$request->year)->where('month',$request->month)->first()){
             $foo->put('DEBIT','NO');
           }else{
             $foo->put('DEBIT','YES');
