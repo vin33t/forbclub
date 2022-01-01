@@ -132,7 +132,7 @@
                 <th scope="row">{{ $client->latestPackage->productCost }}</th>
               </tr>
               <tr>
-                <th scope="row">Number of EMI's</th>
+                <th scope="row">Number of EMIs</th>
                 <th scope="row">
                   @if($client->emiRegularPlan){{ $client->emiRegularPlan }} @else {{ $client->latestPackage->noOfEmi }} @endif
                 </th>
@@ -267,8 +267,7 @@
                 <ul>
                   @foreach($client->followUp as $followUp)
                     <li><strong>{{$followUp->subject}} | Added On: {{ \Carbon\Carbon::parse($followUp->follow_up_on)->format('d F, Y') }} |</strong>
-                      @if(Auth::user()->name == $followUp->type)
-{{--                        @if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d') )--}}
+
                         @if(Auth::user()->Employee->id == 121)
                           <button class="btn btn-primary btn-sm" data-toggle="modal"
                                   data-target="#editFollowUp{{ $followUp->id }}">Edit
@@ -278,7 +277,7 @@
                             <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                           </form>
                         @endif
-                      @endif
+                     
 
                       <p>{!! $followUp->details !!}</p>
                       <strong>Added By: {{ $followUp->type }}</strong></li>
