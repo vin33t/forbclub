@@ -417,12 +417,12 @@ class ClientController extends Controller
 
   public function addDocument(Request $request)
   {
-    $client = Client::find($request->clientId);
     $request->validate([
-      'clientId'=>'required|clients,id|integer',
+      'clientId'=>'required|integer',
       'documentDescription'=>'required|string',
       'document'=>'required'
     ]);
+    $client = Client::find($request->clientId);
     if ($request->hasFile('document')) {
       $documentName = $client->ftkId . '_' . $client->name . '_uploadedDocument_' . time() . '.' . $request->document->getClientOriginalExtension();
       $request->document->move(storage_path('app/public/uploads/documents'), $documentName);
