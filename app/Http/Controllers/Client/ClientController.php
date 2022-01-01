@@ -11,6 +11,7 @@ use App\Client\Transaction\CardPayment;
 use App\Client\Transaction\CashPayment;
 use App\Client\Transaction\ChequePayment;
 use App\Client\Transaction\OtherPayment;
+use App\ClientDocuments;
 use App\EkitLog;
 use App\Employee;
 use App\Http\Controllers\Controller;
@@ -416,7 +417,23 @@ class ClientController extends Controller
 
   public function addDocument(Request $request)
   {
-    return $request;
+    $client = Client::find($request->clientId);
+    $request->validate([
+      'clientId'=>'required|clients,id|integer',
+      'documentDescription'=>'required|string',
+      'document'=>'required|file'
+    ]);
+    if ($request->hasFile('document')) {
+      $documentName = $client->ftkId . '_' . $client->name . '_uploadedDocument_' . time() . '.' . $request->document->getClientOriginalExtension();
+      $request->document->move(storage_path('app/public/uploads/documents'), $documentName);
+      ClientDocuments::create([
+        'client_id' => $client->id,
+        'documentDescription' => 'maf',
+        'document' => $documentName,
+        'addedBy' => Auth::user()->id,
+      ]);
+    }
+    return redirect()->back();
   }
 
   public function deleteFollowUp(Request $request, $id)

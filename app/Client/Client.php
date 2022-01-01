@@ -282,4 +282,7 @@ class Client extends Model
     return $this->hasMany('App\Queries','clientId');
   }
 
+  public function Documents(){
+    return $this->hasMany('App\ClientDocuments');
+  }
 }

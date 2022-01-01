@@ -421,19 +421,19 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="{{ route('add.document') }}" method="POST">
+              <form action="{{ route('add.document') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-md-12">
-                      <input type="hidden" name="id" value="{{ $client->id }}">
+                      <input type="hidden" name="clientId" value="{{ $client->id }}">
                       <label for="documentDescription">Document Description</label>
                       <input type="text" name="documentDescription" class="form-control" placeholder="Document/File Description"
                              required>
                     </div>
                     <div class="col-md-12">
                       <label for="document">Document</label>
-                      <input type="file" name="document" class="form-control" placeholder="Document">
+                      <input type="file" name="document" class="form-control" placeholder="Document" required>
                     </div>
                   </div>
                 </div>
