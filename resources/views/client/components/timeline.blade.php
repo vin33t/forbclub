@@ -268,7 +268,8 @@
                   @foreach($client->followUp as $followUp)
                     <li><strong>{{$followUp->subject}} | Added On: {{ \Carbon\Carbon::parse($followUp->follow_up_on)->format('d F, Y') }} |</strong>
                       @if(Auth::user()->name == $followUp->type)
-                        @if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d'))
+{{--                        @if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d') )--}}
+                        @if(Auth::user()->Employee->id == 121)
                           <button class="btn btn-primary btn-sm" data-toggle="modal"
                                   data-target="#editFollowUp{{ $followUp->id }}">Edit
                           </button>
@@ -333,7 +334,7 @@
               </div>
             @else
               <div class="card-body">
-                No Notes Yet
+                No FollowUps Yet
               </div>
             @endif
           </div>
