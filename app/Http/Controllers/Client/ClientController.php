@@ -427,7 +427,7 @@ class ClientController extends Controller
       $documentName = $client->ftkId . '_' . $client->name . '_uploadedDocument_' . time() . '.' . $request->document->getClientOriginalExtension();
       $request->document->move(storage_path('app/public/uploads/documents'), $documentName);
       ClientDocuments::create([
-        'clientId' => $client->id,
+        'client_id' => $client->id,
         'documentDescription' => 'maf',
         'document' => $documentName,
         'addedBy' => Auth::user()->id,
