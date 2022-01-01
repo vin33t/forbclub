@@ -409,7 +409,9 @@
                       <li><strong>Uploaded On: {{ \Carbon\Carbon::parse($document->created_at)->format('d F, Y') }} |</strong>
 
                         <p>{!! $document->description !!}</p>
-                        <strong>Added By: {{ User::find($document->addedBy)->name }}</strong></li>
+                        <a href="{{ asset('/storage/uploads/documents/'.$document->document) }}" target="_blank"><button class="btn btn-primary btn-sm">Download</button></a>
+
+                        <strong>Added By: {{ App\User::find($document->addedBy)->name }}</strong></li>
 
                     @endforeach
                   </ul>
