@@ -421,13 +421,13 @@ class ClientController extends Controller
     $request->validate([
       'clientId'=>'required|clients,id|integer',
       'documentDescription'=>'required|string',
-      'document'=>'required|file'
+      'document'=>'required'
     ]);
     if ($request->hasFile('document')) {
       $documentName = $client->ftkId . '_' . $client->name . '_uploadedDocument_' . time() . '.' . $request->document->getClientOriginalExtension();
       $request->document->move(storage_path('app/public/uploads/documents'), $documentName);
       ClientDocuments::create([
-        'client_id' => $client->id,
+        'clientId' => $client->id,
         'documentDescription' => 'maf',
         'document' => $documentName,
         'addedBy' => Auth::user()->id,

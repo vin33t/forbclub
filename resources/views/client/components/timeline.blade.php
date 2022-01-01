@@ -402,11 +402,23 @@
                   <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addDocument">Add New</button>
                 </h4>
               </div>
+              @if($client->Documents->count())
+                <div class="card-body">
+                  <ul>
+                    @foreach($client->Documents as $document)
+                      <li><strong>Uploaded On: {{ \Carbon\Carbon::parse($document->created_at)->format('d F, Y') }} |</strong>
 
+                        <p>{!! $document->description !!}</p>
+                        <strong>Added By: {{ User::find($document->addedBy)->name }}</strong></li>
+
+                    @endforeach
+                  </ul>
+                </div>
+              @else
                 <div class="card-body">
                   No Documents Yet
                 </div>
-
+              @endif
             </div>
           </div>
         </div>
