@@ -62,7 +62,7 @@
       </div>
  <div class="mt-1">
         <h6 class="mb-0">Created By: </h6>
-        <p>{{ $client->created_by ? \App\User::find($client->created_by) : '' }}</p>
+        <p>{{ $client->created_by ? \App\User::find($client->created_by)->name : '' }}</p>
       </div>
       <div class="mt-1">
         <h6 class="mb-0">Status:</h6>

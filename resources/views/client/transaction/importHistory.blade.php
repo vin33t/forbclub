@@ -48,7 +48,7 @@
                       <td>{{ $meta->transactions }}</td>
                       <td>{{ $meta->failure }}</td>
                       <td>
-                        <button class="btn btn-danger btn-sm" onclick=deleteAxisNach('{{ $meta->id }}','axis') >
+                        <button class="btn btn-danger btn-sm" onclick=deleteNach('{{ $meta->id }}','axis') >
                           <i class="fa fa-trash"></i>
                         </button>
                         <a href="{{ route('download.import.file',['importId'=>$meta->id,'bank'=>'axis']) }}">
@@ -118,7 +118,10 @@
                       <td>{{ $meta->failure_amount }}</td>
                       <td>{{ $meta->transactions }}</td>
                       <td>{{ $meta->failure }}</td>
-                      <td>
+                      <td> 
+                       <button class="btn btn-danger btn-sm" onclick=deleteNach('{{ $meta->id }}','yes') >
+                          <i class="fa fa-trash"></i>
+                        </button>
                         <a href="{{ route('download.import.file',['importId'=>$meta->id,'bank'=>'yes']) }}">
                           <button class="btn btn-success btn-sm" >
                             <i class="fa fa-download"></i>
@@ -166,7 +169,7 @@
   {{-- Page js files --}}
   <script src="{{ asset(mix('js/scripts/datatables/datatable.js')) }}"></script>
   <script>
-    function deleteAxisNach(id, bank){
+    function deleteNach(id, bank){
       var confirmation = prompt("Please Type \"CONFIRM\" to delete this File");
       if (confirmation != null) {
         if(confirmation === 'CONFIRM'){

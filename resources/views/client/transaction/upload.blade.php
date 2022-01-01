@@ -83,6 +83,11 @@
                 <div class="col-md-6">
                   <a href="https://www.dropbox.com/scl/fi/lnuz2lcasw6wigeqqxmyh/yes_sample_nach.xlsx?dl=1"
                      target="_blank"><h3>Yes Bank</h3></a>
+<br>Instructions to Upload Yes Bank Transaction File
+ <ul>
+<li><strong>VALUEDATE</strong> column should contain date in <strong>mm-dd-yyyy</strong> format.</li>
+<li><strong>AMOUNT</strong> column's data should be converted to integer.</li>
+</ul>
                 </div>
               </div>
 

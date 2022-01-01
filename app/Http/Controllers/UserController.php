@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,5 +39,18 @@ class UserController extends Controller
       notifyToast('error','OOPS!!','Incorrect Old Password');
       return redirect()->back();
     }
+  }
+
+  public function updateDetails(Request $request){
+    $request->validate([
+      'userName'=>'required|string',
+      'userEmail'=>'required'
+    ]);
+    Auth::user()->update([
+      'name'=>$request->userName,
+      'email'=>$request->userEmail
+    ]);
+    notifyToast('success','Updated','Profile Details Updated');
+    return redirect()->back();
   }
 }

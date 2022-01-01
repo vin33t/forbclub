@@ -414,6 +414,11 @@ class ClientController extends Controller
     return redirect()->back();
   }
 
+  public function addDocument(Request $request)
+  {
+    return $request;
+  }
+
   public function deleteFollowUp(Request $request, $id)
   {
 

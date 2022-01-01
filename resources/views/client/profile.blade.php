@@ -127,10 +127,11 @@
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addRefundRequest">Refund Request</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#addLegalNotice">Legal Notice</a>
+           
           </div>
-          <a href="{{ $client->emails->count() ? route('emails.search.client',['slug'=>$client->slug ]) : 'javascript:viod(0)'  }}">
-            <button class="btn btn-primary">{{ $client->emails->count() }} Mails</button>
-          </a>
+{{--          <a href="{{ $client->emails->count() ? route('emails.search.client',['slug'=>$client->slug ]) : 'javascript:viod(0)'  }}">--}}
+{{--            <button class="btn btn-primary">{{ $client->emails->count() }} Mails</button>--}}
+{{--          </a>--}}
         </div>
       </div>
       @if($client->refundRequest)
@@ -195,6 +196,7 @@
 
     @include('client.components.editBasic',['client'=>$client])
     @include('client.components.addLegalNotice',['client'=>$client])
+    @include('client.components.addFile',['client'=>$client])
 
   @endif
 @endsection

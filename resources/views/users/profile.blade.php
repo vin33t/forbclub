@@ -22,21 +22,27 @@
             <div class="card-title">Account</div>
             <div class="row">
               <div class="col-2 users-view-image">
-                <img src="{{ $user->employee->photo }}" class="w-100 rounded mb-2"
-                     alt="avatar">
+{{--                <img src="{{ $user->employee->photo }}" class="w-100 rounded mb-2"--}}
+{{--                     alt="avatar">--}}
 {{--                <img src="{{ asset('images/portrait/small/avatar-default.png') }}" class="w-100 rounded mb-2"--}}
 {{--                     alt="avatar">--}}
                 <!-- height="150" width="150" -->
               </div>
+              <form action="{{ route('update.profile.details') }}" method="POST">
+                @csrf
               <div class="col-sm-4 col-12">
                 <table>
                   <tr>
                     <td class="font-weight-bold">Name</td>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                      <input type="text" class="form-control" name="userName" value="{{ $user->name }}" required>
+                    </td>
                   </tr>
                   <tr>
                     <td class="font-weight-bold">Email</td>
-                    <td>{{ $user->email }}</td>
+                    <td>
+                      <input type="text" class="form-control" name="userEmail" value="{{ $user->email }}" required>
+                    </td>
                   </tr>
                   <tr>
                     <td class="font-weight-bold">Last Login</td>
@@ -59,16 +65,23 @@
                     <td class="font-weight-bold">Role</td>
                     <td>@foreach($user->roles as $role) {{ strtoupper(str_replace('-',' ',$role->name)) }}, @endforeach</td>
                   </tr>
+                  <tr>
+                    <td>
+                    <button class="btn btn-primary" type="submit">Update</button>
+                    </td>
+                  </tr>
                 </table>
               </div>
-              <div class="col-12">
+              </form>
+{{--              <div class="col-12">--}}
 {{--                <a href="{{ route('edit.profile',['userId'=>$user->id]) }}" class="btn btn-primary mr-1"><i class="feather icon-edit-1"></i> Edit</a>--}}
-              </div>
+{{--              </div>--}}
             </div>
           </div>
         </div>
       </div>
       <!-- account end -->
+
       <!-- information start -->
       <div class="col-md-6 col-12 ">
         <div class="card">

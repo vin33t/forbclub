@@ -391,6 +391,63 @@
       {{--end followUp--}}
     @endif
 
+      @if($user->employee)
+
+        {{--    Documents --}}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Documents
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addDocument">Add New</button>
+                </h4>
+              </div>
+
+                <div class="card-body">
+                  No Documents Yet
+                </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addDocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Document</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="{{ route('add.document') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <input type="hidden" name="id" value="{{ $client->id }}">
+                      <label for="documentDescription">Document Description</label>
+                      <input type="text" name="documentDescription" class="form-control" placeholder="Document/File Description"
+                             required>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="document">Document</label>
+                      <input type="file" name="document" class="form-control" placeholder="Document">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="Submit" class="btn btn-primary">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {{--end followUp--}}
+      @endif
+
 
     @if($user->employee)
 

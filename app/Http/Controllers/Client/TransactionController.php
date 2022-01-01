@@ -928,6 +928,7 @@ class TransactionController extends Controller
         $transaction->remarks = $request->paymentCardRemarks;
         $transaction->isDp = $request->paymentDownPayment ? 1 : 0;
         $transaction->isAddon = $request->paymentAddOn ? 1 : 0;
+        $transaction->isBreather = $request->paymentBreatherCharges ? 1 : 0;
         $transaction->save();
         if ($request->has('paymentForMonth')) {
           $co = 0;

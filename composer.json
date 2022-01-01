@@ -30,6 +30,7 @@
         "realrashid/sweet-alert": "^3.1",
         "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-db-snapshots": "^1.6",
         "spatie/laravel-permission": "^3.8",
         "spatie/laravel-searchable": "^1.7",
         "spatie/laravel-sluggable": "^2.2",

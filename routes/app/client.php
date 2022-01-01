@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
 
   Route::post('add/asc','Client\ClientController@addAsc')->name('add.asc');
   Route::post('add/followUp','Client\ClientController@addFollowUp')->name('add.followUp');
+  Route::post('add/document','Client\ClientController@addDocument')->name('add.document');
   Route::post('delete/followUp/{id}','Client\ClientController@deleteFollowUp')->name('delete.followUp');
   Route::post('update/followUp/{id}','Client\ClientController@updateFollowUp')->name('update.followUp');
   Route::post('upload/maf','Client\ClientController@uploadMaf')->name('upload.maf');

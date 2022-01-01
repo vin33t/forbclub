@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/profile', 'UserController@profile')->name('profile');
   Route::post('/profile/update/password', 'UserController@updatePassword')->name('update.profile.password');
+  Route::post('/profile/update/details', 'UserController@updateDetails')->name('update.profile.details');
 
   Route::get('/', 'DashboardController@dashboardAnalytics')->name('home');
   Route::get('/dashboard', 'DashboardController@dashboardAnalytics')->name('dashboard');

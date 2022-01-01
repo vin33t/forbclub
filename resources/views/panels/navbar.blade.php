@@ -93,7 +93,7 @@
 
                     @if(\Illuminate\Support\Facades\Auth::user()->employee)
                         <img class="round"
-                             src="{{ \Illuminate\Support\Facades\Auth::user()->employee->photo }}" alt="avatar"
+                             src="{{ avatar(\Illuminate\Support\Facades\Auth::user()->name) }}" alt="avatar"
                              height="40"
                              width="40"/>
                       @elseif(\Illuminate\Support\Facades\Auth::user()->client)
@@ -103,7 +103,7 @@
                              width="40"/>
                       @else
                         <img class="round"
-                             src="{{ \Illuminate\Support\Facades\Auth::user()->client->photo }}" alt="avatar"
+                             src="{{ avatar(\Illuminate\Support\Facades\Auth::user()->name) }}" alt="avatar"
                              height="40"
                              width="40"/>
 

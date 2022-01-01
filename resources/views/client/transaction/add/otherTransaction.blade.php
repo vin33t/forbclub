@@ -31,7 +31,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-6">
               <fieldset>
                 <div class="vs-checkbox-con vs-checkbox-success">
                   <input type="checkbox" name="paymentDownPayment">
@@ -44,7 +44,7 @@
                 </div>
               </fieldset>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-6">
               <fieldset>
                 <div class="vs-checkbox-con vs-checkbox-success">
                   <input type="checkbox" name="paymentAddOn">
@@ -54,6 +54,19 @@
                       </span>
                     </span>
                   <span class="">Add On</span>
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <fieldset>
+                <div class="vs-checkbox-con vs-checkbox-success">
+                  <input type="checkbox" name="paymentBreatherCharges">
+                  <span class="vs-checkbox">
+                      <span class="vs-checkbox--check">
+                        <i class="vs-icon feather icon-check"></i>
+                      </span>
+                    </span>
+                  <span class="">Breather Charges</span>
                 </div>
               </fieldset>
             </div>
