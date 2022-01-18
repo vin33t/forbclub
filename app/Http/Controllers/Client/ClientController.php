@@ -32,6 +32,12 @@ use Illuminate\Support\Facades\Storage;
 class ClientController extends Controller
 {
 
+
+  public function listAll(){
+    $packages = SoldPackages::all();
+    return view('client.listAll')->with('packages', $packages);
+  }
+
   public function printSummary($slug)
   {
     $client = Client::where('slug', $slug)->get();

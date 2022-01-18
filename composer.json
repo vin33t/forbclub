@@ -38,6 +38,7 @@
         "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.6",
         "beyondcode/laravel-dump-server": "^1.0",
         "facade/ignition": "^2.0",
         "filp/whoops": "^2.0",

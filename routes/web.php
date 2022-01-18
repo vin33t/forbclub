@@ -231,4 +231,9 @@ Route::middleware('auth')->group(function () {
 // locale Route
   Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
+
+
+
+  Route::get('/viewAllClients','Client\ClientController@listAll')->name('view.client.all');
+
 });
