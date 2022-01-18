@@ -1035,6 +1035,18 @@ class TransactionController extends Controller
         return '500';
       }
     }
+	 if ($bank == 'yes') {
+      try {
+        $meta = YesNachPaymentMeta::find($importId);
+        foreach ($meta->payments as $payment) {
+          $payment->delete();
+          $meta->delete();
+        }
+        return '200';
+      } catch (\Exception $e) {
+        return '500';
+      }
+    }
   }
 
   public function importHistoryDownload($importId, $bank)
