@@ -268,16 +268,17 @@
                   @foreach($client->followUp as $followUp)
                     <li><strong>{{$followUp->subject}} | Added On: {{ \Carbon\Carbon::parse($followUp->follow_up_on)->format('d F, Y') }} |</strong>
 
-                        @if(Auth::user()->Employee->id == 121)
+{{--                        @if(Auth::user()->Employee->id == 121)--}}
+                        @if(\Carbon\Carbon::parse($followUp->created_at)->format('Y-m-d') == \Carbon\Carbon::now()->format('Y-m-d'))
                           <button class="btn btn-primary btn-sm" data-toggle="modal"
                                   data-target="#editFollowUp{{ $followUp->id }}">Edit
                           </button>
-                          <form action="{{ route('delete.followUp',['id'=>$followUp->id]) }}" method="POST">
-                            @csrf
-                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                          </form>
+{{--                          <form action="{{ route('delete.followUp',['id'=>$followUp->id]) }}" method="POST">--}}
+{{--                            @csrf--}}
+{{--                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>--}}
+{{--                          </form>--}}
                         @endif
-                     
+
 
                       <p>{!! $followUp->details !!}</p>
                       <strong>Added By: {{ $followUp->type }}</strong></li>

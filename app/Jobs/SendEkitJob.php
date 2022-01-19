@@ -49,8 +49,8 @@ class SendEkitJob implements ShouldQueue
 
         sleep(1);
         Mail::to('travel@forbclub.com')->send(new Welcome($this->details['id']));
-//        sleep(1);
-//        Mail::to('anish.r@forbclub.com')->send(new Welcome($this->details['id']));
+        sleep(1);
+        Mail::to('noreply@forbclub.com')->send(new Welcome($this->details['id']));
 
 
     sleep(1);
@@ -59,9 +59,9 @@ class SendEkitJob implements ShouldQueue
     Mail::to('mrd@forbclub.com')->send(new SendEkit1($this->details['id']));
     sleep(1);
         Mail::to('travel@forbclub.com')->send(new SendEkit1($this->details['id']));
-//        sleep(1);
-//        Mail::to('vinay.chugh@forbclub.com')->send(new SendEkit1($this->details['id']));
-//        sleep(1);
+        sleep(1);
+        Mail::to('noreply@forbclub.com')->send(new SendEkit1($this->details['id']));
+        sleep(1);
 
 
     Mail::to($this->details['email'])->send(new SendEkit($this->details['id']));
@@ -69,9 +69,9 @@ class SendEkitJob implements ShouldQueue
     Mail::to('mrd@forbclub.com')->send(new SendEkit($this->details['id']));
     sleep(1);
         Mail::to('travel@forbclub.com')->send(new SendEkit($this->details['id']));
-//        sleep(1);
-//        Mail::to('vinay.chugh@forbclub.com')->send(new SendEkit($this->details['id']));
-//        sleep(1);
+        sleep(1);
+        Mail::to('noreply@forbclub.com')->send(new SendEkit($this->details['id']));
+        sleep(1);
 
 //    $el = new EkitLog;
 //    $el->client_id = $this->details['id'];
