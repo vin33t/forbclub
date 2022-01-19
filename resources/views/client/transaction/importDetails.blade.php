@@ -47,7 +47,7 @@
                       <td>{{ $transaction->amount }}</td>
                       <td>{{ $transaction->umrn }}</td>
                       <td>{{ $transaction->customer_debit_ac }}</td>
-                      <td>{{ $transaction->date_of_transaction }}</td>
+                      <td>{{ \Carbon\Carbon::parse($transaction->date_of_transaction)->format('d-m-Y') }}</td>
                       <td>{{ $transaction->status_description }}</td>
                       <td>{{ $transaction->reason_description }}</td>
                     </tr>
@@ -105,7 +105,7 @@
                       <td>@if($transaction->client){{ $transaction->client->phone }}@endif</td>
                       <td>{{ $transaction->AMOUNT }}</td>
                       <td>{{ $transaction->RECEIVER_ACCOUNT }}</td>
-                      <td>{{ $transaction->VALUE_DATE }}</td>
+                      <td>{{ \Carbon\Carbon::parse($transaction->VALUE_DATE)->format('d-m-Y') }}</td>
                       <td>{{ $transaction->STATUS }}</td>
                       <td>{{ $transaction->REASON_CODE }}</td>
                     </tr>

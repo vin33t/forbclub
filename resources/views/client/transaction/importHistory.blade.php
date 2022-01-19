@@ -41,7 +41,7 @@
                       <td> <a href="{{ route('display.transaction.nach.import.history.details',['importId'=>$meta->id,'bank'=>'axis']) }}">{{ \Carbon\Carbon::parse($meta->upload_date)->format('F') }}                    </a>
                       </td>
                       <td>{{ \Carbon\Carbon::parse($meta->upload_date)->format('Y') }}</td>
-                      <td>{{ $meta->upload_date }}</td>
+                      <td>{{ \Carbon\Carbon::parse($meta->upload_date)->format('d-m-Y') }}</td>
                       <td>{{ $meta->amount }}</td>
                       <td>{{ $meta->success_amount }}</td>
                       <td>{{ $meta->failure_amount }}</td>
@@ -112,13 +112,13 @@
                       <td> <a href="{{ route('display.transaction.nach.import.history.details',['importId'=>$meta->id,'bank'=>'yes']) }}">{{ \Carbon\Carbon::parse($meta->upload_date)->format('F') }}                    </a>
                       </td>
                       <td>{{ \Carbon\Carbon::parse($meta->upload_date)->format('Y') }}</td>
-                      <td>{{ $meta->upload_date }}</td>
-                      <td>{{ $meta->amount }}</td>
+                      <td>{{ \Carbon\Carbon::parse($meta->upload_date)->format('d-m-Y') }}</td>
+                        <td>{{ $meta->amount }}</td>
                       <td>{{ $meta->success_amount }}</td>
                       <td>{{ $meta->failure_amount }}</td>
                       <td>{{ $meta->transactions }}</td>
                       <td>{{ $meta->failure }}</td>
-                      <td> 
+                      <td>
                        <button class="btn btn-danger btn-sm" onclick=deleteNach('{{ $meta->id }}','yes') >
                           <i class="fa fa-trash"></i>
                         </button>

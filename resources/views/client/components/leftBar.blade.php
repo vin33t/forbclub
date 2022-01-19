@@ -255,7 +255,7 @@
         </strong>
         <ul>
           @foreach($client->ekitLogs as $log)
-             <li>{{ \Carbon\Carbon::parse($log->create_at)->format('d-m-y h:i A') }}</li>
+             <li>{{ \Carbon\Carbon::parse($log->created_at)->format('d-M-y h:i A') }}</li>
           @endforeach
         </ul>
       </div>
