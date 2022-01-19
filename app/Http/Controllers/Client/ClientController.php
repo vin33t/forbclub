@@ -33,8 +33,13 @@ class ClientController extends Controller
 {
 
 
-  public function listAll(){
-    $packages = SoldPackages::all();
+  public function listAll(Request $request){
+    if($request->from && $request->to){
+      $sp = SoldPackages::whereDate('enrollmentDate', '>=', Carbon::parse($request->from)->format('y-m-d'))->whereDate('enrollmentDate', '<=', Carbon::parse($request->to)->format('y-m-d'));
+      $packages = $sp->get();
+    } else {
+        $packages = SoldPackages::all();
+    }
     return view('client.listAll')->with('packages', $packages);
   }
 
