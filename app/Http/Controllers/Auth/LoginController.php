@@ -94,8 +94,10 @@ class LoginController extends Controller
         'browser' => $browser . ' - ' . $agent->version($browser),
         'platform' => $platform . ' - ' . $agent->version($platform),
         'device' => $agent->deviceType(),
-        'location' => $ipData['city'] . ', ' . $ipData['country_name'] . ', ' . $ipData['zip'],
-        'long_lat' => $ipData['longitude'] . ', ' . $ipData['latitude'],
+        'location' => '',
+//        'location' => $ipData['city'] . ', ' . $ipData['country_name'] . ', ' . $ipData['zip'],
+        'long_lat' => '',
+//        'long_lat' => $ipData['longitude'] . ', ' . $ipData['latitude'],
       ]);
     }
   }
