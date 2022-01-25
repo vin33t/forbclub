@@ -41,22 +41,22 @@
     $totalTransactions = collect();
       if($client->cashPayments->count()){
           foreach($client->CashPayments->where('isAddon',0) as $ca){
-            $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp]);
+            $totalTransactions->push(['date'=>$ca->paymentDate,'amount'=>$ca->amount,'remarks'=>$ca->remarks,'mode'=>'Cash','dp'=>$ca->isDp, 'breather'=>0]);
           }
       }
       if($client->cardPayments->count()){
           foreach($client->CardPayments->where('isAddon',0) as $cad){
-            $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp]);
+            $totalTransactions->push(['date'=>$cad->paymentDate,'amount'=>$cad->amount,'remarks'=>$cad->remarks,'mode'=>'Card','dp'=>$cad->isDp, 'breather'=>0]);
           }
       }
       if($client->chequePayments->count()){
           foreach($client->chequePayments->where('isAddon',0) as $che){
-            $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp]);
+            $totalTransactions->push(['date'=>$che->paymentDate,'amount'=>$che->amount,'remarks'=>$che->remarks,'mode'=>'Cheque','dp'=>$che->isDp, 'breather'=>0]);
           }
       }
       if($client->otherPayments->count()){
           foreach($client->otherPayments->where('isAddon',0) as $oth){
-            $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp]);
+            $totalTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'remarks'=>$oth->remarks,'mode'=>$oth->modeOfPayment,'dp'=>$oth->isDp, 'breather'=>$oth->isBreather]);
           }
       }
 
@@ -64,7 +64,7 @@
         if($client->AxisPayments->count()){
             foreach($client->AxisPayments as $axp){
               if($axp->status_description == 'success' or $axp->status_description == 'SUCCESS' or $axp->status_description == 'Success'){
-                $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+                $totalTransactions->push(['date'=>$axp->date_of_transaction,'amount'=>$axp->amount,'remarks'=>$axp->reason_description,'mode'=>'AXIS NACH','dp'=>'', 'breather'=>0]);
               }
             }
         }
@@ -72,7 +72,7 @@
           $payAxi = \App\Client\Transaction\AxisNachPayment::where('client_id',590)->get();
           foreach($payAxi as $paAx){
             if($paAx->status_description == 'success' or $paAx->status_description == 'SUCCESS' or $paAx->status_description == 'Success'){
-                $totalTransactions->push(['date'=>$paAx->date_of_transaction,'amount'=>$paAx->amount,'remarks'=>$paAx->reason_description,'mode'=>'AXIS NACH','dp'=>'']);
+                $totalTransactions->push(['date'=>$paAx->date_of_transaction,'amount'=>$paAx->amount,'remarks'=>$paAx->reason_description,'mode'=>'AXIS NACH','dp'=>'', 'breather'=>0]);
               }
           }
         }
@@ -121,7 +121,7 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
             <div class="card-body card-dashboard">
               <strong>FCLP Cost</strong>: {{ inr($client->latestPackage->productCost) }} <br>
               <strong>Downpayment</strong>: {{ inr($client->downPayment) }} <br>
-              <strong>Total Payment Done(Including DP)</strong>: {{ inr($totalTransactions->pluck('amount')->sum()) }} <br>
+              <strong>Total Payment Done(Including DP)</strong>: {{ inr($totalTransactions->where('breather',0)->pluck('amount')->sum()) }} <br>
               <strong>Pending Payment</strong>: {{ inr($client->latestPackage->productCost - $totalTransactions->pluck('amount')->sum())  }} <br>
               <strong>Add On Payment</strong>: {{ inr($client->addOnPayment) }} <br>
               <strong>Breather Charges</strong>: {{ inr($client->otherPayments ? $client->otherPayments->where('isBreather',1)->sum('amount') : '0') }}
@@ -176,13 +176,22 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach($totalTransactions as $transaciton)
+                  @foreach($totalTransactions as $transaction)
                     <tr>
-                      <td>{{ $transaciton['date'] }}</td>
-                      <td>{{ $transaciton['amount'] }}</td>
-                      <td>{{ $transaciton['mode'] }}</td>
-                      <td>{{ $transaciton['remarks'] }}</td>
-                      <td>{{ $transaciton['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
+                      <td>{{ $transaction['date'] }}</td>
+                      <td>{{ $transaction['amount'] }}</td>
+                      <td>{{ $transaction['mode'] }}</td>
+                      <td>{{ $transaction['remarks'] }}</td>
+                      <td>
+{{--                        {{ $transaction['dp'] == 1 ? 'Downpayment' : 'EMI' }}--}}
+                                                @if($transaction['breather'] == 1)
+                                                  Breather
+                                                @elseif($transaction['dp'] == 1)
+                                                  Downpayment
+                                                @else
+                                                  EMI
+                                                @endif
+                      </td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -1067,13 +1076,13 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach($totalTransactions as $transaciton)
+                  @foreach($totalTransactions as $transaction)
                     <tr>
-                      <td>{{ $transaciton['date'] }}</td>
-                      <td>{{ $transaciton['amount'] }}</td>
-                      <td>{{ $transaciton['mode'] }}</td>
-                      <td>{{ $transaciton['remarks'] }}</td>
-                      <td>{{ $transaciton['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
+                      <td>{{ $transaction['date'] }}</td>
+                      <td>{{ $transaction['amount'] }}</td>
+                      <td>{{ $transaction['mode'] }}</td>
+                      <td>{{ $transaction['remarks'] }}</td>
+                      <td>{{ $transaction['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -1757,13 +1766,13 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach($addOnTransactions as $transaciton)
+                  @foreach($addOnTransactions as $transaction)
                     <tr>
-                      <td>{{ $transaciton['date'] }}</td>
-                      <td>{{ $transaciton['amount'] }}</td>
-                      <td>{{ $transaciton['mode'] }}</td>
-                      <td>{{ $transaciton['remarks'] }}</td>
-                      <td>{{ $transaciton['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
+                      <td>{{ $transaction['date'] }}</td>
+                      <td>{{ $transaction['amount'] }}</td>
+                      <td>{{ $transaction['mode'] }}</td>
+                      <td>{{ $transaction['remarks'] }}</td>
+                      <td>{{ $transaction['dp'] == 1 ? 'Downpayment' : 'EMI' }}</td>
                     </tr>
                   @endforeach
                   </tbody>
