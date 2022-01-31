@@ -317,12 +317,16 @@
                         <select name="productName" id="product-name" class="form-control" required>
                           <option value="">--SELECT--</option>
                           <option value="Exclusive India">Exclusive India</option>
+                          <option value="Rookie">Rookie</option>
+                          <option value="Standard">Standard</option>
                           <option value="Classic">Classic</option>
                           <option value="Imperia">Imperia</option>
                           <option value="Luxe">Luxe</option>
                           <option value="Royale">Royale</option>
                           <option value="Classic FCV">Classic FCV</option>
                           <option value="India FCV">India FCV</option>
+                          <option value="Exotic">Exotic</option>
+                          <option value="Presidential">Presidential</option>
                         </select>
                       </div>
                     </div>

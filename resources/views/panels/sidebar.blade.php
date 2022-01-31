@@ -49,6 +49,16 @@
         @endforeach
       @endif
       {{-- Foreach menu item ends --}}
+
+{{--      <li class="navigation-header">--}}
+{{--        <span>Tools</span>--}}
+{{--      </li>--}}
+{{--      <li class="nav-item">--}}
+{{--        <a href="javascript:void(0)">--}}
+{{--          <i class="fa fa-calculator" data-toggle="modal" data-target="##calculator-modal"></i>--}}
+{{--          <span class="menu-title" >Calculator</span>--}}
+{{--        </a>--}}
+{{--      </li>--}}
     </ul>
   </div>
 </div>
