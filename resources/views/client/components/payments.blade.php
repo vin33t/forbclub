@@ -184,8 +184,10 @@ $addOnTransactions->push(['date'=>$oth->paymentDate,'amount'=>$oth->amount,'rema
                       <td>{{ $transaction['remarks'] }}</td>
                       <td>
 {{--                        {{ $transaction['dp'] == 1 ? 'Downpayment' : 'EMI' }}--}}
-                                                @if($transaction['breather'] == 1)
+                                                @if(array_key_exists('breather', $transaction))
+                                                  @if($transaction['breather'] == 1)
                                                   Breather
+                                                    @endif
                                                 @elseif($transaction['dp'] == 1)
                                                   Downpayment
                                                 @else
