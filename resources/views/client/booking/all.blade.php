@@ -76,10 +76,14 @@
                       <td>{{ $booking->offerStatus != NULL ? strtoupper($booking->offerStatus) : 'Offer Not Sent Yet' }}</td>
                       <td>{{ $booking->offerStatusUpdatedBy != NULL ? App\User::find($booking->offerStatusUpdatedBy)->name : 'Not Updated' }}</td>
                       <td>@if(!$booking->ClientHoliday) @if($booking->BookingOffer){{ '₹ ' . IND_money_format($booking->BookingOffer->BookingOfferInfo->pluck('our_price')->sum()) }} @else {{ 'Offer Not Sent Yet' }}@endif  @else
+{{--                                    $total = $details->ClientHolidayTransactions->pluck('amount');--}}
                           @php
                             $total = 0;
                                 foreach($booking->ClientHoliday->ClientHolidayDetails as $details) {
-                                    $total = $details->ClientHolidayTransactions->pluck('amount')->sum();
+                                    $tranD = $details->ClientHolidayTransactions->pluck('amount');
+                                    foreach($tranD as $tr){
+                                      $total = $total + (int)$tr;
+                                    }
                             }
                           @endphp {{ '₹ ' . IND_money_format($total) }} @endif</td>
                       {{-- <td>{{ \Carbon\Carbon::parse($booking->created_at)->toDayDateTimeString() }} <br> ({{ $booking->created_at->diffForHumans() }})</td> --}}

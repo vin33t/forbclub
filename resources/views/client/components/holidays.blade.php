@@ -195,14 +195,13 @@
                           $bookingAmount += $offer->add_on_service_price;
                       }
                   }
-               $holidayAmount = 0;
+                              $holidayAmount = 0;
                               $holidayAmountPaidByClient = 0;
                               foreach($b->ClientHoliday->ClientHolidayDetails as $details){
                                   foreach ($details->ClientHolidayTransactions as $transaction){
-                                      $holidayAmount += $transaction->amount;
-                                      $holidayAmountPaidByClient += $details->amount_paid_by_client;
+                                      $holidayAmount = $holidayAmount + (int)$transaction->amount;
                                   }
-
+                                      $holidayAmountPaidByClient = $holidayAmountPaidByClient + $details->amount_paid_by_client;
                               }
                 @endphp
                 <hr>
@@ -307,11 +306,17 @@
                   $total_amount_add_on = 0;
                   $total_amount_fclp = 0;
                   foreach(\App\Client\Holiday\ClientHolidayDetails::where('client_holiday_id',$ch->id)->get() as $chd){
-                      $total_amount = $total_amount + $chd->ClientHolidayTransactions->pluck('amount')->sum();
-                      $total_amount_add_on += $chd->ClientHolidayTransactions->where('add_on',1)->pluck('amount')->sum();
-                      $total_amount_fclp += $chd->ClientHolidayTransactions->where('add_on',0)->pluck('amount')->sum();
-                      $total_paid = $total_paid + $chd->ClientHolidayTransactions->where('paid',1)->pluck('amount')->sum();
-                      $total_unpaid = $total_unpaid + $chd->ClientHolidayTransactions->where('paid',0)->pluck('amount')->sum();
+                      foreach($chd->ClientHolidayTransactions as $tra){
+                        $total_amount += (int)$tra->amount;
+                        if($tra->add_on == 1){
+                            $total_amount_add_on = (int)$tra->amount;
+                            $total_paid = (int)$tra->amount;
+                        } else {
+                          $total_amount_fclp = (int)$tra->amount;
+                          $total_unpaid = (int)$tra->amount;
+                        }
+                      }
+
                   }
                 @endphp
                 <div class="row">
