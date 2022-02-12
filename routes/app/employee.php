@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/edit/{id}', 'EmployeeController@updateEmployee')->name('edit.employee');
 
   Route::prefix('create')->middleware(['role_or_permission:super-admin|create-employee'])->group(function () {
+    Route::post('/new/employee', 'SettingsController@createEmployee')->name('add.new.employee');
     Route::get('/employee', 'SettingsController@createEmployee')->name('create.employee');
     Route::post('/role', 'SettingsController@createEmployee')->name('create.employee');
   });

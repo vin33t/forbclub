@@ -42,7 +42,9 @@
                       <div class="card-header">
                         <h4 class="card-title">{{ $employees }} Employees
                         </h4>
-                      </div>
+                     @include('employee.components.addNew')
+                        </div>
+
                       <div class="card-content">
                         <div class="card-body card-dashboard">
                           <p class="card-text">
