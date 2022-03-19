@@ -3,6 +3,7 @@
 return [
     "Email Templates" => "Email Templates",
     "Dashboard" => "Dashboard",
+    "Reports" => "Reports",
     "Client" => "Client",
     "Create Client" => "Create Client",
     "Import History" => "Import History",

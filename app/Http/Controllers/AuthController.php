@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use Spatie\Permission\Models\Role;
 use Validator;
 class AuthController extends Controller
 {
@@ -35,6 +36,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+        $user->assignRole(Role::findByName($request->roleName));
         if($user->save()){
             return response()->json([
                 'message' => 'Successfully created user!'

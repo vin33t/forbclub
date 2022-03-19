@@ -99,6 +99,14 @@
       "permission": "view-import-history"
     },
     {
+      "url": "reports",
+      "name": "Reports",
+      "icon": "feather icon-list",
+      "i18n": "nav.app_email",
+      "role": "super-admin",
+      "permission": "view-import-history"
+    },
+    {
       "url": "",
       "navheader": "Settings",
       "icon": ""

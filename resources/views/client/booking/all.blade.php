@@ -49,6 +49,7 @@
                   <thead>
                   <tr>
                     <th>#</th>
+                    <th>BR Number</th>
                     <th>Added On</th>
                     <th>Booking Request Date</th>
                     <th>Client Name</th>
@@ -65,6 +66,7 @@
                   @foreach($bookings as $booking)
                     <tr>
                       <td>{{ $loop->index + 1 }}</td>
+                      <td>{{ $booking->bookingRequestNumber }}</td>
                       <td>{{ $booking->created_at }}</td>
                       <td>{{ $booking->bookingRequestDate }}</td>
                       <td><a
@@ -159,6 +161,7 @@
                   <tfoot>
                   <tr>
                     <th>#</th>
+                    <th>BR Number</th>
                     <th>Added On</th>
                     <th>Booking Request Date</th>
                     <th>Client Name</th>

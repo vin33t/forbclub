@@ -52,6 +52,9 @@ class BookingController extends Controller
     public function storeBooking(Request $request,$slug)
     {
       $client = Client::where('slug',$slug)->first();
+      $package = $client->latestPackage;
+//      $bookings = Bookings::latest()->first();
+     $bNo =  'FORB'.Carbon::parse($package->enrollmentDate)->format('y').'-'.$package->productName[0].$package->mafNo.'-';
       try {
       DB::beginTransaction();
       $b =  new Bookings;
@@ -66,6 +69,9 @@ class BookingController extends Controller
       $b->remarks = $request->remarks;
       $b->addedBy =Auth::user()->id;
       $b->save();
+      $b->bookingRequestNumber = $bNo.$b->id;
+      $b->save();
+
       foreach($request->destination as $index => $d){
         $bi = new BookingInfo();
         $bi->bookings_id = $b->id;

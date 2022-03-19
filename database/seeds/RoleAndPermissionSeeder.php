@@ -11,6 +11,7 @@ class RoleAndPermissionSeeder extends Seeder
      */
   public function run()
   {
+
 //      Role Permissions
     \App\PermissionGroup::create([
       'group_name' => 'Role',

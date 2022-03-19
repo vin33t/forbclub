@@ -11,7 +11,7 @@
                width="35">
         </div>
         <div class="user-page-info">
-          <h6 class="mb-0">{{ $booking->holidayType }}</h6>
+          <h6 class="mb-0">{{ $booking->holidayType }} <strong>({{ $booking->bookingRequestNumber }})</strong></h6>
         </div>
 {{--        <button type="button" class="btn btn-primary btn-icon ml-auto"  data-toggle="modal" data-target="#pacakgeBenefit{{$booking->id}}"><i class="feather icon-eye"></i>--}}
         </button>
