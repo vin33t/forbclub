@@ -45,15 +45,15 @@
             <div class="row">
               <div class="col-md-3">
                 <label for="booking_request_date">Booking Request On</label>
-                <input type="date" required name="booking_request_date" class="form-control">
+                <input type="date" required name="booking_request_date" class="form-control" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}">
               </div>
               <div class="col-md-3">
                 <label for="travel_date">Travel Date</label>
                 <input type="date" required  name="travel_date" class="form-control" id="travel_date">
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label for="nights">No. of Nights</label>
-                <input type="number" required name="total_nights" id="total_nights" class="form-control ">
+                <input type="number" required name="total_nights" id="total_nights" class="form-control " placeholder="Nights" readonly  onclick="updateNights()">
               </div>
 
               <div class="col-md-3">
@@ -65,6 +65,7 @@
                   <option value="Adjustment">Adjustment</option>
                   <option value="Flight Only">Flight Only</option>
                   <option value="Offer Nights">Offer Nights</option>
+                  <option value="Voucher Nights">Voucher Nights</option>
                 </select>
               </div>
             </div>
@@ -81,21 +82,25 @@
               </div>
             </div><hr>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label for="Destination">Destination</label>
-                <input type="text" name="destination[]" required class="form-control">
+                <input type="text" name="destination[]" required class="form-control" placeholder="Destination">
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label for="Destination">Nights</label>
-                <input type="number" name="nights[]" required class="form-control">
+                <input type="number" name="nights[]" required class="form-control" onkeyup="updateNights(this.value)" placeholder="Nights">
+              </div>
+              <div class="col-md-2">
+                <label for="rooms">Rooms</label>
+                <input type="number" required name="rooms[]" min="1" class="form-control" placeholder="Rooms">
               </div>
               <div class="col-md-3">
                 <label for="adults">Adults</label>
-                <input type="number" name="adults[]" required class="form-control">
+                <input type="number" name="adults[]" required class="form-control" placeholder="Adults">
               </div>
               <div class="col-md-3">
                 <label for="kids">Kids</label>
-                <input type="number" name="kids[]" class="form-control" required>
+                <input type="number" name="kids[]" class="form-control" required placeholder="kids">
               </div>
             </div>
             <div class="row">
@@ -217,21 +222,25 @@
   <script>
     function addMore(){
       var data = '<div class="remove"><hr><div class="row">'+
-        '                        <div class="col-md-3">'+
+        '                        <div class="col-md-2">'+
         '<label for="Destination">Destination</label>'+
-        '<input type="text" name="destination[]" required class="form-control">'+
+        '<input type="text" name="destination[]" required class="form-control" placeholder="Destination">'+
         '                        </div>'+
-        '                        <div class="col-md-3">'+
+        '                        <div class="col-md-2">'+
         '<label for="nights">Nights</label>'+
-        '<input type="number" name="nights[]" required class="form-control">'+
+        '<input type="number" name="nights[]" required class="form-control" placeholder="Nights">'+
         '                        </div>'+
+        '  <div class="col-md-2">\n' +
+        '                <label for="Destination">Rooms</label>\n' +
+        '                <input type="number" name="rooms[]" required class="form-control" placeholder="Rooms">\n' +
+        '              </div>'+
         '                        <div class="col-md-3">'+
         '<label for="adults">Adults</label>'+
-        '<input type="number" name="adults[]" required class="form-control">'+
+        '<input type="number" name="adults[]" required class="form-control" placeholder="Adults">'+
         '                        </div>'+
         '                        <div class="col-md-3">'+
         '<label for="kids">Kids</label>'+
-        '<input type="number" required name="kids[]" class="form-control">'+
+        '<input type="number" required name="kids[]" class="form-control" placeholder="Kids">'+
         '                        </div>'+
         '</div>'+
         '<div class="row">'+
@@ -255,6 +264,22 @@
     function remove(foo){
       $(foo).parents(".remove").remove();
     }
+    var totalNights = 0;
+    function UpdateTotalNights(){
+      // console.log(totalNights)
+      $('#total_nights').val(totalNights);
+
+    }
+    UpdateTotalNights();
+
+    function updateNights(){
+      console.log('asdasdasd')
+      //   totalNights = totalNights + parseInt(nights);
+      //   UpdateTotalNights();
+    }
+    $(function() {
+      // updateNights(){}
+    });
   </script>
 
 @endsection
