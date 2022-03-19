@@ -110,7 +110,17 @@ class ClientController extends Controller
   public function find(Request $request)
   {
 //    $search = $request->q;
-    return Client::where('name', 'like', '%' . $request->q . '%')->get();
+//    return Client::where('name', 'like', '%' . $request->q . '%')->get();
+    $clients = Client::where('name', 'like', '%' . $request->q . '%')->get();
+
+    return $clients->map(function($client){
+      if($client->Packages->count()){
+          $package = $client->latestPackage;
+         $client->mafNo = $package->mafNo;
+         $client->fclpId = $package->fclpId;
+      }
+      return $client;
+    });
   }
 
   public function viewClient($slug)

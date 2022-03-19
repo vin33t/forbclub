@@ -69,7 +69,7 @@
           '<div class="list-group search-results-dropdown">'
         ],
         suggestion: function (data) {
-          return '<a href="/booking/create/' +  data.slug + '" class="list-group-item" onclick="block()">' + data.name + ' - @' + data.phone + ' - ' + data.email +'</a>'
+          return '<a href="/booking/create/' +  data.slug + '" class="list-group-item" onclick="block()">' + data.name + '(Maf: '+ data.mafNo +') - @' + data.phone + ' - FCLP: ' + data.fclpId +'</a>'
         }
       }
     });
