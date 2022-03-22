@@ -53,7 +53,7 @@
               </div>
               <div class="col-md-2">
                 <label for="nights">No. of Nights</label>
-                <input type="number" required name="total_nights" id="total_nights" class="form-control " placeholder="Nights" readonly  onclick="updateNights()">
+                <input type="number" required name="total_nights" id="total_nights" class="form-control " placeholder="Nights">
               </div>
 
               <div class="col-md-3">
@@ -272,11 +272,11 @@
     }
     UpdateTotalNights();
 
-    function updateNights(){
-      console.log('asdasdasd')
-      //   totalNights = totalNights + parseInt(nights);
-      //   UpdateTotalNights();
-    }
+    // function updateNights(){
+    //   console.log('asdasdasd')
+    //   //   totalNights = totalNights + parseInt(nights);
+    //   //   UpdateTotalNights();
+    // }
     $(function() {
       // updateNights(){}
     });
