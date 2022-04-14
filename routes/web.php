@@ -17,6 +17,7 @@ use Laravolt\Avatar\Facade as Avatar;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//nish@813
 
 Auth::routes();
 Route::get('/todo', 'CalenderController@index');

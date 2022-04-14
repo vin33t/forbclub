@@ -15,6 +15,76 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+          <div class="card-header">Client Summary</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>1</td>
+                <td>Total Members</td>
+                <td><strong>{{ $clients->count() }}</strong></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Total Payment Received Till Date</td>
+                <td><strong>{{ inr($totalPaymentReceived) }}</strong></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Payment Start Dtae</td>
+                <td><strong>{{ \Carbon\Carbon::parse($firstPayment)->format('l, d F, Y') }}</strong></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Last Payment Received Date</td>
+                <td><strong>{{ \Carbon\Carbon::parse($latestPayment)->format('l, d F, Y') }}</strong></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Active Members</td>
+                <td><strong>{{ $clientStatus['ACTIVE'] }}</strong></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Cancelled Members</td>
+                <td><strong>{{ $clientStatus['CANCELLED'] }}</strong></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Active Member Amount</td>
+                <td><strong>{{ inr($activeMemberAmount) }}</strong></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Cancelled Member Amount</td>
+                <td><strong>{{ inr($cancelledMemberAmount) }}</strong></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Downpayment</td>
+                <td><strong>{{ inr($totalDownPayment) }}</strong></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>EMI's</td>
+                <td><strong>{{ inr($totalEmis) }}</strong></td>
+              </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
           <div class="card-header">Filter Clients</div>
           <form action="" method="get">
             @csrf
