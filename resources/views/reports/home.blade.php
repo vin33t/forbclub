@@ -33,46 +33,72 @@
               </tr>
               <tr>
                 <td>2</td>
+                <td>Total Product Cost</td>
+                <td><strong>{{ inr($totalProductCost) }}</strong></td>
+              </tr>
+              <tr>
+                <td>3</td>
                 <td>Total Payment Received Till Date</td>
                 <td><strong>{{ inr($totalPaymentReceived) }}</strong></td>
               </tr>
               <tr>
-                <td>3</td>
+                <td>4</td>
                 <td>Payment Start Dtae</td>
                 <td><strong>{{ \Carbon\Carbon::parse($firstPayment)->format('l, d F, Y') }}</strong></td>
               </tr>
               <tr>
-                <td>4</td>
+                <td>5</td>
                 <td>Last Payment Received Date</td>
                 <td><strong>{{ \Carbon\Carbon::parse($latestPayment)->format('l, d F, Y') }}</strong></td>
               </tr>
               <tr>
-                <td>5</td>
+                <td>6</td>
                 <td>Active Members</td>
                 <td><strong>{{ $clientStatus['ACTIVE'] }}</strong></td>
               </tr>
               <tr>
-                <td>6</td>
+                <td>7</td>
                 <td>Cancelled Members</td>
                 <td><strong>{{ $clientStatus['CANCELLED'] }}</strong></td>
               </tr>
               <tr>
-                <td>7</td>
+                <td>8</td>
+                <td>Breather</td>
+                <td><strong>{{ $clientStatus['BREATHER'] }}</strong></td>
+              </tr>
+              <tr>
+              <tr>
+                <td>9</td>
+                <td>Incomplete</td>
+                <td><strong>{{ $clientStatus['INCOMPLETE'] }}</strong></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>On Hold</td>
+                <td><strong>{{ $clientStatus['ON HOLD'] }}</strong></td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Full Payment</td>
+                <td><strong>{{ $clientStatus['FULL PAYMENT'] }}</strong></td>
+              </tr>
+              <tr>
+                <td>12</td>
                 <td>Active Member Amount</td>
                 <td><strong>{{ inr($activeMemberAmount) }}</strong></td>
               </tr>
               <tr>
-                <td>8</td>
+                <td>13</td>
                 <td>Cancelled Member Amount</td>
                 <td><strong>{{ inr($cancelledMemberAmount) }}</strong></td>
               </tr>
               <tr>
-                <td>9</td>
+                <td>14</td>
                 <td>Downpayment</td>
                 <td><strong>{{ inr($totalDownPayment) }}</strong></td>
               </tr>
               <tr>
-                <td>10</td>
+                <td>15</td>
                 <td>EMI's</td>
                 <td><strong>{{ inr($totalEmis) }}</strong></td>
               </tr>

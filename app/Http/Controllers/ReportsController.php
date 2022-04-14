@@ -8,6 +8,7 @@ class ReportsController extends Controller
 {
     public function index(){
       $clients = \App\Client\Client::all();
+//      $clients = \App\Client\Client::all()->take(50);
 
       $totalTransactions = collect();
       $totalDownPayment = 0;
@@ -19,7 +20,14 @@ class ReportsController extends Controller
         if ($client->cashPayments->count()) {
           foreach ($client->CashPayments as $ca) {
             $totalTransactions->push(['date' => $ca->paymentDate, 'amount' => $ca->amount, 'remarks' => $ca->remarks, 'mode' => 'Cash', 'dp' => $ca->isDp]);
-            $ca->isDp ? $totalDownPayment += $ca->amount : $totalEmis += $totalDownPayment += $ca->amount;
+//            $ca->isDp ? $totalDownPayment += $ca->amount : $totalEmis += $totalDownPayment += $ca->amount;
+            if($ca->isDp){
+              $totalDownPayment += $ca->amount;
+            } else {
+              if(!$ca->isAddon){
+                $totalEmis += $ca->amount;
+              }
+            }
             if($client->latestPackage->status == 'ACTIVE'){
                   $activeMemberAmount += $ca->amount;
             } elseif($client->latestPackage->status == 'CANCELLED'){
@@ -30,7 +38,14 @@ class ReportsController extends Controller
         if ($client->cardPayments->count()) {
           foreach ($client->CardPayments as $cad) {
             $totalTransactions->push(['date' => $cad->paymentDate, 'amount' => $cad->amount, 'remarks' => $cad->remarks, 'mode' => 'Card', 'dp' => $cad->isDp]);
-            $cad->isDp ? $totalDownPayment += $cad->amount : $totalEmis += $totalDownPayment += $cad->amount;
+//            $cad->isDp ? $totalDownPayment += $cad->amount : $totalEmis += $totalDownPayment += $cad->amount;
+            if($cad->isDp){
+              $totalDownPayment += $cad->amount;
+            } else {
+              if(!$cad->isAddon){
+                $totalEmis += $cad->amount;
+              }
+            }
             if($client->latestPackage->status == 'ACTIVE'){
               $activeMemberAmount += $cad->amount;
             } elseif($client->latestPackage->status == 'CANCELLED'){
@@ -41,7 +56,14 @@ class ReportsController extends Controller
         if ($client->chequePayments->count()) {
           foreach ($client->chequePayments as $che) {
             $totalTransactions->push(['date' => $che->paymentDate, 'amount' => $che->amount, 'remarks' => $che->remarks, 'mode' => 'Cheque', 'dp' => $che->isDp]);
-            $che->isDp ? $totalDownPayment += $che->amount : $totalEmis += $che->amount;
+//            $che->isDp ? $totalDownPayment += $che->amount : $totalEmis += $che->amount;
+            if($che->isDp){
+              $totalDownPayment += $che->amount;
+            } else {
+              if(!$che->isAddon){
+                $totalEmis +=  $che->amount;
+              }
+            }
             if($client->latestPackage->status == 'ACTIVE'){
               $activeMemberAmount += $che->amount;
             } elseif($client->latestPackage->status == 'CANCELLED'){
@@ -52,7 +74,14 @@ class ReportsController extends Controller
         if ($client->otherPayments->count()) {
           foreach ($client->otherPayments as $oth) {
             $totalTransactions->push(['date' => $oth->paymentDate, 'amount' => $oth->amount, 'remarks' => $oth->remarks, 'mode' => $oth->modeOfPayment, 'dp' => $oth->isDp]);
-            $oth->isDp ? $totalDownPayment += $oth->amount : $totalEmis +=  $oth->amount;
+//            $oth->isDp ? $totalDownPayment += $oth->amount : $totalEmis +=  $oth->amount;
+            if($oth->isDp){
+              $totalDownPayment += $oth->amount;
+            } else {
+              if(!$oth->isAddon){
+                $totalEmis += $oth->amount;
+              }
+            }
             if($client->latestPackage->status == 'ACTIVE'){
               $activeMemberAmount += $oth->amount;
             } elseif($client->latestPackage->status == 'CANCELLED'){
@@ -94,11 +123,16 @@ class ReportsController extends Controller
       $totalPaymentReceived = $totalTransactions->pluck('amount')->sum();
       $firstPayment = $totalTransactions->first()['date'];
       $latestPayment = $totalTransactions->last()['date'];
-      $status = ['ACTIVE', 'CANCELLED'];
+      $status = ['ACTIVE', 'CANCELLED', 'BREATHER', 'INCOMPLETE', 'ON HOLD','FULL PAYMENT'];
       $clientStatus = null;
       foreach($status as $clientSt){
         $clientStatus[$clientSt] = \App\Client\Package\SoldPackages::where('status',$clientSt)->count();
       }
+
+      $totalProductCost = \App\Client\Package\SoldPackages::all()->pluck('productCost')->sum();
+
+//      Total Product Cost
+      //
 //      return $totalPaymentReceived;
       return view('reports.home')->with([
         'clients' => $clients,
@@ -110,6 +144,7 @@ class ReportsController extends Controller
         'clientStatus'=> $clientStatus,
         'activeMemberAmount'=> $activeMemberAmount,
         'cancelledMemberAmount'=> $cancelledMemberAmount,
+        'totalProductCost'=> $totalProductCost,
       ]);
     }
 }
